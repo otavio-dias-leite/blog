@@ -1,0 +1,112 @@
+:root{
+  --bg:#07111c;
+  --cyan:#55d6f2;
+  --amber:#ffbf43;
+  --text:#eff7fc;
+  --muted:#9bb0bf;
+  --line:rgba(85,214,242,.16);
+  --mono:'Fira Code',monospace;
+  --body:'Inter',sans-serif;
+  --display:'Orbitron',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:var(--body);
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 50% -12%,rgba(21,67,96,.48),transparent 68%),
+    linear-gradient(rgba(85,214,242,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(85,214,242,.035) 1px,transparent 1px);
+  background-size:100% 100%,40px 40px,40px 40px;
+  background-attachment:fixed;
+}
+a{color:inherit}
+button{font:inherit}
+.wrap{width:min(1040px,calc(100% - 44px));margin:0 auto}
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(5,14,23,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between}
+.brand{
+  font:800 1rem var(--display);
+  letter-spacing:.1em;
+  text-decoration:none;
+  color:var(--amber);
+  text-shadow:0 0 14px rgba(255,191,67,.18);
+}
+.brand::before{content:'⚡';margin-right:.5rem;font-family:var(--body);font-size:.95rem}
+.translate{
+  border:1px solid var(--line);
+  background:rgba(11,27,42,.55);
+  color:var(--muted);
+  padding:7px 10px;
+  cursor:pointer;
+  font:500 .72rem var(--mono);
+}
+.translate:hover{border-color:var(--cyan);color:var(--cyan)}
+.lightning{
+  position:absolute;
+  right:-.25rem;
+  top:74px;
+  font-size:clamp(15rem,34vw,28rem);
+  line-height:.7;
+  color:rgba(85,214,242,.035);
+  text-shadow:0 0 55px rgba(85,214,242,.045);
+  pointer-events:none;
+  user-select:none;
+  transform:rotate(-7deg);
+}
+main{position:relative}
+.posts{position:relative;z-index:1;padding:74px 0 100px}
+.post-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 120px;
+  gap:24px;
+  align-items:baseline;
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+}
+.post-row:first-child{border-top:1px solid var(--line)}
+.post-title{
+  font-size:clamp(1.05rem,2vw,1.28rem);
+  font-weight:500;
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.post-title:hover{color:var(--amber)}
+.post-date{color:var(--muted);font:500 .74rem var(--mono);text-align:right;white-space:nowrap}
+.article{max-width:840px;padding:74px 0 100px}
+.back{display:inline-block;color:var(--muted);font:500 .74rem var(--mono);text-decoration:none;margin-bottom:24px}
+.back:hover{color:var(--cyan)}
+.article-date{color:var(--muted);font:500 .74rem var(--mono);margin-bottom:14px}
+.article h1{margin:0 0 42px;font:800 clamp(2.25rem,6vw,4.6rem)/1.06 var(--display);letter-spacing:-.04em;color:var(--text)}
+.article-body{font-size:1.06rem;line-height:1.8;color:#d9e5eb}
+.article-body p{margin:0 0 1.35rem}
+.article-body h2,.article-body h3{font-family:var(--display);margin:2.4rem 0 1rem}
+.article-body a{color:var(--cyan)}
+.article-body code{font-family:var(--mono);font-size:.92em;color:var(--amber)}
+.article-body pre{overflow:auto;padding:18px;border:1px solid var(--line);background:#091621}
+.article-body blockquote{margin:1.5rem 0;padding:0 0 0 18px;border-left:2px solid var(--amber);color:var(--muted)}
+.comments{margin-top:76px;padding-top:28px;border-top:1px dashed var(--line)}
+.comments-heading{margin-bottom:20px;font:700 1rem var(--display);letter-spacing:.02em}
+.giscus{min-height:20px}
+.not-found{position:relative;min-height:100vh;display:grid;place-items:center;overflow:hidden}
+.error-code{position:relative;z-index:1;font:900 clamp(5rem,18vw,12rem) var(--display);color:var(--amber);text-shadow:0 0 30px rgba(255,191,67,.18)}
+@media(max-width:700px){
+  .wrap{width:min(100% - 28px,1040px)}
+  .posts{padding-top:52px}
+  .post-row{grid-template-columns:1fr;gap:8px}
+  .post-date{text-align:left}
+  .lightning{right:-3rem;top:90px;font-size:16rem}
+  .article{padding-top:54px}
+  .article h1{margin-bottom:30px}
+}

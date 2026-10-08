@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ .Site.Params.description }}">
+  <title>{{ .Site.Title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ "style.css" | relURL }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{{ "/" | relURL }}">OTÁVIO LEITE</a>
+      <button class="translate" type="button" onclick="window.open('https://translate.google.com/translate?sl=auto&tl=pt-BR&u='+encodeURIComponent(location.href),'_blank','noopener')">PT-BR</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="lightning" aria-hidden="true">⚡</div>
+    <section class="posts" aria-label="Posts">
+      {{ range .Site.RegularPages }}
+        <article class="post-row">
+          <a class="post-title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+        </article>
+      {{ end }}
+    </section>
+  </main>
+</body>
+</html>

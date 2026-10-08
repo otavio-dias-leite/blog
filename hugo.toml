@@ -1,0 +1,17 @@
+baseURL = 'https://otavio-dias-leite.github.io/blog/'
+languageCode = 'en-us'
+defaultContentLanguage = 'en'
+title = 'Otávio Leite — Blog'
+enableRobotsTXT = true
+canonifyURLs = false
+
+[permalinks]
+posts = '/posts/:slug/'
+
+[params]
+author = 'Otávio Leite'
+description = 'Personal notes.'
+giscusRepo = 'otavio-dias-leite/blog'
+giscusRepoId = '1409465245'
+giscusCategory = ''
+giscusCategoryId = ''
