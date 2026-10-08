@@ -1,7 +1,15 @@
 # Otávio Leite — Blog
 
-Hugo site for personal notes.
+Minimal Hugo blog using the visual language of the portfolio.
 
-The visual language follows the portfolio: dark technical grid, Orbitron, Inter, Fira Code, cyan accents and amber emphasis.
+The home contains only the blog identity and published posts. Each post displays its publication date, content, and a comments area.
 
-Comments are prepared for Giscus. Set the GitHub Discussions category values in `hugo.toml` when the repository is ready for Giscus.
+Add Markdown posts under `content/posts/`.
+
+Run locally with:
+
+```bash
+hugo server
+```
+
+The project intentionally does not include generated `public/` output, forum, chat, projects, biography, or other portfolio sections.

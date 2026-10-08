@@ -3,33 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{ .Summary }}">
   <title>{{ .Title }} — {{ .Site.Title }}</title>
+  <meta name="description" content="{{ .Summary }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ "style.css" | relURL }}">
 </head>
 <body>
+  <div class="background-bolt" aria-hidden="true">⚡</div>
+
   <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="{{ "/" | relURL }}">OTÁVIO LEITE</a>
-      <button class="translate" type="button" onclick="window.open('https://translate.google.com/translate?sl=auto&tl=pt-BR&u='+encodeURIComponent(location.href),'_blank','noopener')">PT-BR</button>
+    <div class="shell">
+      <a class="brand" href="{{ "/" | relURL }}"><span class="brand-bolt">⚡</span>Otávio Leite</a>
     </div>
   </header>
 
-  <main class="wrap article">
-    <a class="back" href="{{ "/" | relURL }}">← Back</a>
-    <div class="article-date">{{ .Date.Format "2006.01.02" }}</div>
+  <main class="shell article">
+    <div class="article-date">{{ .Date.Format "02.01.2006" }}</div>
     <h1>{{ .Title }}</h1>
-    <div class="article-body">{{ .Content }}</div>
+
+    <div class="article-body">
+      {{ .Content }}
+    </div>
 
     <section class="comments" aria-label="Comments">
-      <div class="comments-heading">Comments</div>
-      <div class="giscus"></div>
+      <div class="comments-line"></div>
+      <script src="https://giscus.app/client.js"
+        data-repo="otavio-dias-leite/blog"
+        data-repo-id=""
+        data-category="General"
+        data-category-id=""
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark_dimmed"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+      </script>
     </section>
   </main>
-
-  {{ partial "giscus.html" . }}
 </body>
 </html>
