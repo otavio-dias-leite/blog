@@ -86,3 +86,37 @@ body{
   .article{padding:56px 0 80px}
   .article h1{font-size:2.35rem;margin-bottom:32px}
 }
+
+.translate-wrap{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+}
+#site-language{
+  appearance:none;
+  min-width:128px;
+  padding:8px 28px 8px 10px;
+  color:var(--muted);
+  background:rgba(11,27,42,.76);
+  border:1px solid var(--line);
+  border-radius:4px;
+  font:500 .72rem var(--mono);
+  cursor:pointer;
+}
+#site-language:hover,
+#site-language:focus{
+  color:var(--cyan);
+  border-color:var(--cyan);
+  outline:none;
+}
+.google-widget{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.goog-te-banner-frame.skiptranslate{display:none!important}
+body{top:0!important}
+.goog-te-gadget{font-size:0!important}
+.goog-te-gadget .goog-te-combo{font-size:0!important}
+.skiptranslate{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:700px){
+  .translate-wrap{margin-left:0}
+  #site-language{min-width:112px}
+}
