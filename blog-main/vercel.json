@@ -1,0 +1,63 @@
+{
+  "buildCommand": "hugo --minify --baseURL /blog/",
+  "outputDirectory": "public",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/blog/admin",
+      "destination": "/api/admin"
+    },
+    {
+      "source": "/blog/admin/",
+      "destination": "/api/admin"
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/:path*"
+    }
+  ],
+  "functions": {
+    "api/admin.js": {
+      "includeFiles": [
+        "private/admin.html"
+      ]
+    }
+  },
+  "headers": [
+    {
+      "source": "/blog/admin/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "hugo"
+}
