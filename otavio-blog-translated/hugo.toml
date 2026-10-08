@@ -1,7 +1,0 @@
-baseURL = "https://otavio-dias-leite.github.io/blog/"
-languageCode = "pt-br"
-title = "Otávio Leite"
-enableRobotsTXT = true
-
-[params]
-  author = "Otávio Leite"
