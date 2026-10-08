@@ -1,0 +1,4 @@
+baseURL = 'https://otavio-dias-leite.github.io/blog/'
+languageCode = 'pt-BR'
+title = 'Otávio Leite'
+disableKinds = ['taxonomy','term','RSS']

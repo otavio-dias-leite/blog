@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ .Site.Title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ "style.css" | relURL }}">
+</head>
+<body><div class="bolt">⚡</div>
+<header><div class="wrap"><a class="brand" href="{{ "/" | relURL }}">⚡ Otávio Leite</a></div></header>
+<main class="wrap posts">
+{{ range .Site.RegularPages.ByDate.Reverse }}
+<article><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2>{{ .Title }}</h2></a><span>↗</span></article>
+{{ end }}
+</main>
+</body></html>
