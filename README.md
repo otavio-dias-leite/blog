@@ -19,9 +19,9 @@ Blog em Hugo com painel administrativo próprio em `/admin/` (compatível també
 
 ## Idiomas e tradução automática
 
-O seletor no cabeçalho oferece **EN-US** e **PT-BR**. O inglês é o padrão. Ao abrir um post, o blog traduz seu conteúdo para o idioma selecionado, mesmo quando o texto original foi escrito em outro idioma.
+O seletor no cabeçalho oferece **EN-US**, **PT-BR** e **中文 (chinês simplificado)**. O inglês é o padrão. Ao abrir um post, o blog traduz seu conteúdo para o idioma selecionado, mesmo quando o texto original foi escrito em outro idioma.
 
-A detecção e a tradução são feitas sob demanda pelo serviço público LibreTranslate (instância Argos Open Tech). O resultado é armazenado no navegador para evitar traduzir novamente o mesmo trecho. Se o serviço estiver indisponível, o post permanece acessível no idioma original.
+A detecção de idioma é feita uma vez por artigo, usando uma amostra maior do texto, antes de traduzir para o idioma escolhido. A tradução usa o serviço público LibreTranslate (instância Argos Open Tech), com tentativas automáticas em caso de falha, concorrência limitada e cache local no navegador. Se a detecção falhar, o serviço de tradução ainda pode tentar identificar a origem automaticamente. Se a tradução estiver indisponível, o post permanece acessível no idioma original.
 
 Para indicar explicitamente o idioma de um post, adicione `lang` ao front matter:
 
@@ -32,7 +32,7 @@ lang: "pt-BR"
 ---
 ```
 
-Idiomas aceitos como origem incluem códigos ISO 639-1, como `en`, `pt-BR`, `es`, `fr` e `de`. Se `lang` for omitido, a API recebe a origem como `auto` e detecta o idioma. Não é necessário criar duas versões do mesmo post.
+Idiomas aceitos como origem incluem códigos ISO 639-1, como `en`, `pt-BR`, `es`, `fr`, `de` e `zh` (chinês). Se `lang` for omitido, a API recebe a origem como `auto` e detecta o idioma. Não é necessário criar duas versões do mesmo post.
 
 ## Editor, Markdown e mídia
 
