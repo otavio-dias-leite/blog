@@ -48,9 +48,14 @@
     <main class="panel login-card">
       <div class="mark"><svg class="lock-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="10" width="15" height="11" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14.2v2.7"/></svg></div>
       <h1>Admin do blog</h1>
-      <p>Entre com a conta GitHub autorizada para editar os posts. O painel não expõe os posts nem a API sem uma sessão válida.</p>
-      <a class="btn primary" href="/api/auth/login" style="display:inline-block;text-decoration:none">Entrar com GitHub</a>
-      <div class="notice">Conta autorizada: <strong>@otavio-dias-leite</strong> · acesso restrito ao proprietário do blog.</div>
+      <p>Entre com suas credenciais para administrar as publicações.</p>
+      <form id="loginForm" autocomplete="on">
+        <label class="field"><span class="label">Usuário</span><input class="input" id="username" name="username" autocomplete="username" required></label>
+        <label class="field" style="margin-top:12px"><span class="label">Senha</span><input class="input" id="password" name="password" type="password" autocomplete="current-password" required></label>
+        <button class="btn primary" id="loginBtn" type="submit" style="margin-top:16px;width:100%">Entrar</button>
+        <p id="loginError" class="status error" role="alert"></p>
+      </form>
+      <div class="footer-note">Acesso privado · sessão expira após 8 horas.</div>
     </main>
   </div>
 
@@ -498,6 +503,17 @@
       }
     }
 
+    $('loginForm').addEventListener('submit',async event=>{
+      event.preventDefault();
+      const button=$('loginBtn'), error=$('loginError');
+      button.disabled=true; button.textContent='Entrando…'; error.textContent='';
+      try {
+        await api('/api/auth/login',{method:'POST',body:JSON.stringify({username:$('username').value,password:$('password').value})});
+        $('password').value='';
+        await boot();
+      } catch(err) { error.textContent=err.message || 'Não foi possível entrar.'; }
+      finally { button.disabled=false; button.textContent='Entrar'; }
+    });
     $('newPost').addEventListener('click',()=>setEditor(null));
     $('refreshPosts').addEventListener('click',()=>loadPosts(state.currentSlug));
     $('imageUpload').addEventListener('change',event=>uploadImage(event.target.files?.[0]));
