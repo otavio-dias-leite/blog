@@ -2,9 +2,30 @@
   "use strict";
 
   const STORAGE_KEY = "otavio-blog-language-v7";
-  const CACHE_KEY = "otavio-blog-translation-cache-v4";
+  const CACHE_KEY = "otavio-blog-translation-cache-v5";
   const LANGUAGES = { "en-US": "en", "pt-BR": "pt", "zh-CN": "zh" };
-  const API_URL = "https://translate.argosopentech.com";
+  const TRANSLATORS = [
+    async (text, source, target) => {
+      const url = new URL("https://translate.googleapis.com/translate_a/single");
+      url.search = new URLSearchParams({client:"gtx",sl:source==="auto"?"auto":source,tl:target,dt:"t",q:text}).toString();
+      const response = await fetch(url,{headers:{Accept:"application/json"}});
+      if(!response.ok) throw new Error("Google Translate HTTP "+response.status);
+      const data = await response.json();
+      const translated = Array.isArray(data?.[0]) ? data[0].map(part=>part?.[0]||"").join("") : "";
+      if(!translated.trim()) throw new Error("Empty translation");
+      return translated;
+    },
+    async (text, source, target) => {
+      const url = new URL("https://api.mymemory.translated.net/get");
+      url.search = new URLSearchParams({q:text,langpair:(source==="auto"?"pt":source)+"|"+target}).toString();
+      const response = await fetch(url,{headers:{Accept:"application/json"}});
+      if(!response.ok) throw new Error("MyMemory HTTP "+response.status);
+      const data = await response.json();
+      if(Number(data?.responseStatus)!==200 || !data?.responseData?.translatedText) throw new Error("MyMemory translation failed");
+      return data.responseData.translatedText;
+    }
+  ];
+
   const originalHTML = new WeakMap();
   const cache = new Map();
   let savedCache = {};
@@ -32,28 +53,18 @@
 
   async function api(path, payload) {
     let lastError;
-    for (let attempt = 0; attempt < 4; attempt++) {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 25000);
+    for (const translate of TRANSLATORS) {
       try {
-        const response = await fetch(API_URL + path, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify(payload),
-          signal: controller.signal,
-          mode: "cors"
-        });
-        if (!response.ok) {
-          const detail = await response.text().catch(() => "");
-          throw new Error("Translation API " + response.status + (detail ? ": " + detail.slice(0, 180) : ""));
+        if(path==="/detect") {
+          const sample=String(payload.q||"").slice(0,1200);
+          const probe=await translate(sample,"auto","en");
+          return [{language:/[\u4e00-\u9fff]/.test(sample)?"zh":/[\u3040-\u30ff]/.test(sample)?"ja":/[áàâãéêíóôõúç]/i.test(sample)?"pt":"en",confidence:0.7,probe}];
         }
-        return await response.json();
-      } catch (error) {
-        lastError = error;
-        if (attempt < 3) await wait(700 * (attempt + 1));
-      } finally { clearTimeout(timeout); }
+        const translatedText=await translate(String(payload.q||""),payload.source,payload.target);
+        return {translatedText};
+      } catch(error) { lastError=error; }
     }
-    throw lastError || new Error("Translation service unavailable");
+    throw lastError || new Error("Translation services unavailable");
   }
 
   async function detectLanguage(text) {
