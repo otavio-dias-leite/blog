@@ -18,3 +18,42 @@
 @media(prefers-reduced-motion:reduce){.glitch::before,.glitch::after{animation:none}}
 
 @media(max-width:700px){.blog-intro{padding-top:44px}}
+
+
+/* Hidden Google Translate engine: only the site's own language buttons remain visible. */
+#google_translate_element {
+  position: fixed !important;
+  width: 1px !important;
+  height: 1px !important;
+  left: -10000px !important;
+  top: -10000px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-menu-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip {
+  display: none !important;
+  visibility: hidden !important;
+}
+body { top: 0 !important; }
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.language-switch button.active {
+  color: #160d20;
+  background: var(--purple);
+  border-color: var(--purple);
+  box-shadow: 0 0 16px rgba(186,126,255,.2);
+}
+.language-switch button.active:hover,
+.language-switch button.active:focus {
+  color: #160d20;
+  background: #d8b8ff;
+  border-color: #d8b8ff;
+}
