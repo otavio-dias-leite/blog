@@ -1,6 +1,6 @@
 # Otávio Leite — Blog
 
-Blog em Hugo com administração própria em `/blog/admin/`.
+Blog em Hugo com painel administrativo próprio em `/admin/` (compatível também com `/blog/admin/`).
 
 ## Recursos
 
@@ -10,7 +10,8 @@ Blog em Hugo com administração própria em `/blog/admin/`.
 - Criar, editar, excluir e renomear posts.
 - Data/hora local preenchida automaticamente com o momento atual.
 - Slug automático, tags, categorias, descrição, capa e rascunho/publicado.
-- Preview Markdown, barra de ferramentas, contador visual de status e rascunho local.
+- Editor Markdown com pré-visualização, tabelas, listas, blocos de código, upload de imagens e incorporação de YouTube, Vimeo e vídeos hospedados.
+- Painel responsivo com criação, edição, publicação como rascunho, exclusão, renomeação, busca e restauração de rascunho local.
 - Cada alteração gera commit no branch `main`; o GitHub Actions recompila o site público.
 - Sessão em cookie HttpOnly, Secure e criptografado no backend.
 
