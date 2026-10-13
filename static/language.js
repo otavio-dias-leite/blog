@@ -63,11 +63,11 @@
   }
 
   // GTranslate reads this configuration and attaches behavior to data-gt-lang links.
-  window.gtranslateSettings = {
+  window.gtranslateSettings = window.gtranslateSettings || {};
+  window.gtranslateSettings["otavio-blog"] = {
     default_language: "en",
     languages: ["en", "pt"],
-    detect_browser_language: false,
-    wrapper_selector: "#gtranslate_engine"
+    detect_browser_language: false
   };
 
   activeLanguage = detectActiveLanguage();
