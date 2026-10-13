@@ -79,13 +79,13 @@
           <label class="field"><span class="label">Slug</span><input id="slug" class="input" maxlength="90" placeholder="como-comecei-com-esp32"></label>
           <label class="field"><span class="label">Data de publicação</span><input id="date" class="input" type="datetime-local"></label>
           <label class="field"><span class="label">Idioma original</span><select id="lang" class="select">
+            <option value="en">English (default)</option>
             <option value="auto">Detectar automaticamente</option>
-            <option value="en">English</option>
             <option value="pt-BR">Português (Brasil)</option>
             <option value="es">Español</option>
             <option value="fr">Français</option>
             <option value="de">Deutsch</option>
-            <option value="zh">中文（简体）</option>
+            <option value="zh-CN">Mandarin / 中文（简体）</option>
             <option value="ja">日本語</option>
           </select></label>
           <div class="field"><span class="label">Status</span><label class="switch-row"><input id="draft" class="switch" type="checkbox"><span>Salvar como rascunho</span></label></div>
@@ -295,7 +295,7 @@
       $('title').value = post?.title || '';
       $('slug').value = post?.slug || '';
       $('date').value = post?.date ? localDateValue(new Date(post.date)) : localDateValue();
-      $('lang').value = post?.lang || 'auto';
+      $('lang').value = post?.lang || 'en';
       $('draft').checked = Boolean(post?.draft);
       $('description').value = post?.description || '';
       $('tags').value = (post?.tags || []).join(', ');
