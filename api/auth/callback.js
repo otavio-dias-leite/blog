@@ -66,7 +66,7 @@ module.exports = async function handler(req, res) {
     clearCookie(res, COOKIE_STATE);
     clearCookie(res, COOKIE_VERIFIER);
 
-    res.writeHead(302, { Location: '/admin/' });
+    res.writeHead(302, { Location: '/blog/admin/' });
     res.end();
   } catch (error) {
     res.status(500).send(error.message || 'Falha ao concluir o login.');
