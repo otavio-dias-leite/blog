@@ -14,7 +14,25 @@ Blog em Hugo com painel administrativo próprio em `/admin/` (compatível també
 - Painel responsivo com criação, edição, publicação como rascunho, exclusão, renomeação, busca e restauração de rascunho local.
 - Cada alteração gera commit no branch `main`; o GitHub Actions recompila o site público.
 - Sessão em cookie HttpOnly, Secure e criptografado no backend.
+- Conteúdo multilíngue: posts podem ser escritos em qualquer idioma; o idioma de origem é detectado automaticamente e o visitante escolhe inglês ou português.
+- Inglês é o idioma padrão para novas visitas; a preferência escolhida fica salva no navegador.
 
+## Idiomas e tradução automática
+
+O seletor no cabeçalho oferece **EN-US** e **PT-BR**. O inglês é o padrão. Ao abrir um post, o blog traduz seu conteúdo para o idioma selecionado, mesmo quando o texto original foi escrito em outro idioma.
+
+A detecção e a tradução são feitas sob demanda pelo serviço público LibreTranslate (instância Argos Open Tech). O resultado é armazenado no navegador para evitar traduzir novamente o mesmo trecho. Se o serviço estiver indisponível, o post permanece acessível no idioma original.
+
+Para indicar explicitamente o idioma de um post, adicione `lang` ao front matter:
+
+```yaml
+---
+title: "Um post em português"
+lang: "pt-BR"
+---
+```
+
+Idiomas aceitos como origem incluem códigos ISO 639-1, como `en`, `pt-BR`, `es`, `fr` e `de`. Se `lang` for omitido, a API recebe a origem como `auto` e detecta o idioma. Não é necessário criar duas versões do mesmo post.
 
 ## Editor, Markdown e mídia
 
