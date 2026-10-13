@@ -68,33 +68,50 @@
   }
 
   async function detectLanguage(text) {
-    const sample = String(text || "").replace(/\s+/g, " ").trim().slice(0, 4500);
-    if (!sample) return "auto";
-    const result = await api("/detect", { q: sample });
-    if (!Array.isArray(result) || !result.length) throw new Error("Could not detect source language");
-    const detected = [...result].sort((a, b) => (b.confidence || 0) - (a.confidence || 0))[0];
-    return sourceCode(detected.language || "auto");
+    const sample=String(text||"").replace(/\s+/g," ").trim().slice(0,1200);
+    if(!sample)return "pt";
+    try {
+      const url=new URL("https://translate.googleapis.com/translate_a/single");
+      url.search=new URLSearchParams({client:"gtx",sl:"auto",tl:"en",dt:"t",q:sample}).toString();
+      const response=await fetch(url);
+      if(!response.ok)throw new Error("Detection failed");
+      const data=await response.json();
+      const detected=sourceCode(data?.[2]||"auto");
+      if(detected!=="auto")return detected;
+    } catch {}
+    if(/[\u4e00-\u9fff]/.test(sample))return "zh";
+    if(/[\u3040-\u30ff]/.test(sample))return "ja";
+    return "pt";
   }
 
   async function translateHTML(html, source, target) {
-    const key = cacheKey(html, source, target);
-    if (cache.has(key)) return cache.get(key);
-    if (savedCache[key]) {
-      cache.set(key, savedCache[key]);
-      return savedCache[key];
+    const key=cacheKey(html,source,target);
+    if(cache.has(key))return cache.get(key);
+    if(savedCache[key]){cache.set(key,savedCache[key]);return savedCache[key];}
+    const template=document.createElement("template");
+    template.innerHTML=html;
+    const walker=document.createTreeWalker(template.content,NodeFilter.SHOW_TEXT);
+    const nodes=[];
+    while(walker.nextNode()){
+      const node=walker.currentNode;
+      if(!node.nodeValue.trim())continue;
+      const parent=node.parentElement;
+      if(parent&&parent.closest("script,style,code,pre,svg,math"))continue;
+      nodes.push(node);
     }
-    const result = await api("/translate", { q: html, source, target, format: "html" });
-    if (!result || typeof result.translatedText !== "string" || !result.translatedText.trim()) {
-      throw new Error("The translation service returned an empty result");
+    for(let i=0;i<nodes.length;i++){
+      const node=nodes[i],original=node.nodeValue;
+      const leading=original.match(/^\s*/)?.[0]||"",trailing=original.match(/\s*$/)?.[0]||"";
+      const text=original.trim();
+      if(!text)continue;
+      const result=await api("/translate",{q:text,source,target});
+      if(result.translatedText)node.nodeValue=leading+result.translatedText+trailing;
     }
-    const translated = result.translatedText;
-    cache.set(key, translated);
-    savedCache[key] = translated;
-    const keys = Object.keys(savedCache);
-    if (keys.length > 250) {
-      for (const oldKey of keys.slice(0, keys.length - 250)) delete savedCache[oldKey];
-    }
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify(savedCache)); } catch {}
+    const translated=template.innerHTML;
+    cache.set(key,translated);savedCache[key]=translated;
+    const keys=Object.keys(savedCache);
+    if(keys.length>250)for(const oldKey of keys.slice(0,keys.length-250))delete savedCache[oldKey];
+    try{localStorage.setItem(CACHE_KEY,JSON.stringify(savedCache));}catch{}
     return translated;
   }
 
