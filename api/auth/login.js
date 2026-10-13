@@ -1,40 +1,22 @@
-const {
-  COOKIE_STATE,
-  COOKIE_VERIFIER,
-  callbackUrl,
-  randomString,
-  requireEnv,
-  serializeCookie,
-  setCookie,
-  sha256,
-} = require('../_lib/auth');
+const crypto = require('node:crypto');
+const { ALLOWED_LOGIN, COOKIE_SESSION, requireEnv, sealSession, serializeCookie, setCookie } = require('../_lib/auth');
 
 module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Método não permitido.' });
   try {
     requireEnv();
-    if (req.method !== 'GET') return res.status(405).json({ error: 'Método não permitido.' });
-
-    const state = randomString(32);
-    const verifier = randomString(48);
-    const challenge = sha256(verifier).toString('base64url');
-    const redirectUri = callbackUrl(req);
-
-    setCookie(res, serializeCookie(COOKIE_STATE, state, { maxAge: 600 }));
-    setCookie(res, serializeCookie(COOKIE_VERIFIER, verifier, { maxAge: 600 }));
-
-    const params = new URLSearchParams({
-      client_id: process.env.GITHUB_CLIENT_ID,
-      redirect_uri: redirectUri,
-      scope: 'public_repo',
-      state,
-      code_challenge: challenge,
-      code_challenge_method: 'S256',
-      allow_signup: 'false',
-    });
-
-    res.writeHead(302, { Location: `https://github.com/login/oauth/authorize?${params.toString()}` });
-    res.end();
+    const { username = '', password = '' } = req.body || {};
+    const suppliedUser = Buffer.from(String(username));
+    const expectedUser = Buffer.from(process.env.ADMIN_USERNAME);
+    const suppliedPass = Buffer.from(String(password));
+    const expectedPass = Buffer.from(process.env.ADMIN_PASSWORD);
+    const userOk = suppliedUser.length === expectedUser.length && crypto.timingSafeEqual(suppliedUser, expectedUser);
+    const passOk = suppliedPass.length === expectedPass.length && crypto.timingSafeEqual(suppliedPass, expectedPass);
+    if (!userOk || !passOk) return res.status(401).json({ error: 'Usuário ou senha incorretos.' });
+    const session = sealSession({ login: ALLOWED_LOGIN, exp: Date.now() + 8 * 60 * 60 * 1000 });
+    setCookie(res, serializeCookie(COOKIE_SESSION, session, { maxAge: 8 * 60 * 60 }));
+    return res.status(200).json({ ok: true, redirect: '/blog/admin/' });
   } catch (error) {
-    res.status(500).json({ error: error.message || 'Falha ao iniciar o login.' });
+    return res.status(500).json({ error: error.message || 'Falha no login.' });
   }
 };
