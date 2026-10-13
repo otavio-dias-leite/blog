@@ -87,19 +87,6 @@
     return translated;
   }
 
-  function status(message, isError = false) {
-    let element = document.querySelector(".translation-status");
-    if (!element) {
-      element = document.createElement("p");
-      element.className = "translation-status";
-      element.setAttribute("role", "status");
-      document.querySelector("header")?.insertAdjacentElement("afterend", element);
-    }
-    element.textContent = message || "";
-    element.hidden = !message;
-    element.dataset.state = isError ? "error" : "info";
-  }
-
   function setButtons(language) {
     document.querySelectorAll("[data-blog-language]").forEach(button => {
       const active = button.dataset.blogLanguage === language;
@@ -126,7 +113,6 @@
   async function translateElements(elements, source, target, currentRun) {
     const originals = elements.map(element => ({ element, html: getOriginal(element) }));
     let cursor = 0;
-    let failed = false;
     const workers = Array.from({ length: Math.min(3, originals.length) }, async () => {
       while (cursor < originals.length && currentRun === runId) {
         const item = originals[cursor++];
@@ -134,8 +120,6 @@
           const translated = await translateHTML(item.html, source, target);
           if (currentRun === runId) item.element.innerHTML = translated;
         } catch (error) {
-          failed = true;
-          console.error("Blog translation failed for a content block:", error);
           if (currentRun === runId) item.element.innerHTML = item.html;
         }
       }
@@ -150,7 +134,6 @@
     const currentRun = ++runId;
     document.documentElement.lang = language;
     setButtons(language);
-    status("Translating page…");
 
     let failed = false;
     const article = document.querySelector("main.article");
@@ -162,9 +145,8 @@
         const sample = blocks.map(element => element.textContent).join(" ").slice(0, 4500);
         const source = declared === "auto" ? await detectLanguage(sample) : declared;
         if (currentRun !== runId) return;
-        if (source !== target) failed = await translateElements(blocks, source, target, currentRun);
+        if (source !== target) await translateElements(blocks, source, target, currentRun);
       } catch (error) {
-        console.error("Could not determine or translate the article language:", error);
         failed = true;
       }
       if (currentRun !== runId) return;
@@ -187,7 +169,6 @@
           if (currentRun !== runId) return;
           if (source !== target) failed = (await translateElements(group, source, target, currentRun)) || failed;
         } catch (error) {
-          console.error("Could not translate post titles:", error);
           failed = true;
         }
       }
@@ -195,9 +176,6 @@
 
     if (currentRun !== runId) return;
     try { localStorage.setItem(STORAGE_KEY, language); } catch {}
-    status(failed
-      ? "Translation could not be completed for every block. Check your connection and try again."
-      : "");
   }
 
   document.addEventListener("click", event => {
