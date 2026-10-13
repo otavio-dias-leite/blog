@@ -9,6 +9,38 @@
     :root{--bg:#090611;--panel:#171025;--panel2:#211333;--line:rgba(177,128,245,.16);--lavender:#c8a4ff;--purple:#bb81ff;--text:#eff7fc;--muted:#b9abc9;--danger:#ff6b7a;--success:#70e1ae;--body:Inter,ui-sans-serif,system-ui,sans-serif;--mono:'Fira Code',ui-monospace,monospace}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:var(--body);background:var(--bg);background-image:radial-gradient(ellipse at 50% -10%,rgba(68,33,104,.45),transparent 70%),linear-gradient(rgba(177,128,245,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(177,128,245,.04) 1px,transparent 1px);background-size:100% 100%,40px 40px,40px 40px;background-attachment:fixed}button,input,textarea{font:inherit}.wrap{width:min(1380px,calc(100% - 40px));margin:auto}a{color:inherit}.topbar{position:sticky;top:0;z-index:10;background:rgba(8,5,17,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.topbar .wrap{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:800;letter-spacing:-.02em;color:var(--purple);text-decoration:none}.brand span{color:var(--muted);font-weight:600;margin-left:10px}.session{display:flex;align-items:center;gap:12px}.avatar{width:32px;height:32px;border-radius:50%;border:1px solid var(--line)}.btn{border:1px solid var(--line);background:#171025;color:var(--text);padding:10px 13px;border-radius:9px;cursor:pointer;transition:.18s}.btn:hover{border-color:rgba(177,128,245,.45);transform:translateY(-1px)}.btn.primary{background:var(--lavender);color:#150d21;border-color:var(--lavender);font-weight:800}.btn.danger{color:#ffdfe3;border-color:rgba(255,107,122,.25)}.btn.small{padding:8px 10px;font-size:.9rem}.layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:20px;padding:24px 0 60px}.panel{background:rgba(9,6,17,.78);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 50px rgba(0,0,0,.14)}.sidebar{overflow:hidden}.side-head{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}.side-head input{width:100%}.input,.textarea,.select{width:100%;border:1px solid rgba(177,128,245,.14);background:#10091a;color:var(--text);border-radius:9px;padding:11px 12px;outline:none}.input:focus,.textarea:focus,.select:focus{border-color:rgba(177,128,245,.48);box-shadow:0 0 0 3px rgba(177,128,245,.08)}.post-list{max-height:calc(100vh - 150px);overflow:auto}.post-item{width:100%;padding:14px 16px;border:0;border-bottom:1px solid rgba(177,128,245,.08);background:transparent;color:var(--text);text-align:left;cursor:pointer}.post-item:hover,.post-item.active{background:rgba(36,20,54,.72)}.post-item strong{display:block;font-size:.98rem;margin-bottom:5px}.post-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font:500 .72rem var(--mono)}.badge{padding:3px 6px;border-radius:999px;font:600 .68rem var(--mono);border:1px solid rgba(186,126,255,.25);color:var(--purple)}.badge.published{color:var(--success);border-color:rgba(112,225,174,.24)}.empty{padding:26px;color:var(--muted);text-align:center}.editor{padding:24px}.editor-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:20px}.editor-head h1{margin:0;font-size:1.7rem}.muted{color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.label{font-size:.78rem;color:var(--muted);font-weight:700;letter-spacing:.02em}.switch-row{display:flex;align-items:center;gap:10px;min-height:44px}.switch{appearance:none;width:42px;height:24px;background:#211433;border:1px solid var(--line);border-radius:999px;position:relative;cursor:pointer;transition:.15s}.switch:after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:.15s}.switch:checked{background:rgba(186,126,255,.25);border-color:rgba(186,126,255,.5)}.switch:checked:after{left:21px;background:var(--purple)}.editor-body{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.body-pane{display:flex;flex-direction:column;gap:8px}.body-toolbar{display:flex;gap:6px;flex-wrap:wrap}.body-toolbar .btn{padding:7px 9px;font:600 .8rem var(--mono)}#content{min-height:520px;resize:vertical;line-height:1.65}.preview{min-height:520px;border:1px solid rgba(177,128,245,.14);border-radius:9px;background:#10091a;padding:16px;overflow:auto;line-height:1.75}.preview h1,.preview h2,.preview h3{line-height:1.2}.preview pre{background:#0a0612;border:1px solid var(--line);padding:13px;overflow:auto}.preview code{font-family:var(--mono);font-size:.92em}.preview blockquote{border-left:3px solid var(--purple);padding-left:12px;color:#c9d6de}.preview a{color:var(--lavender)}.status{min-height:24px;margin:14px 0 0;color:var(--muted);font:500 .8rem var(--mono)}.status.ok{color:var(--success)}.status.error{color:#ff9ba6}.login{min-height:100vh;display:grid;place-items:center;padding:25px}.login-card{width:min(520px,100%);padding:30px}.login-card .mark{font-size:3rem}.login-card h1{margin:6px 0 10px;font-size:2rem}.login-card p{color:var(--muted);line-height:1.7}.notice{margin-top:18px;padding:12px 14px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:.85rem}.footer-note{margin-top:12px;color:var(--muted);font-size:.76rem}.kbd{font:600 .72rem var(--mono);padding:2px 5px;border:1px solid var(--line);border-bottom-color:rgba(177,128,245,.35);border-radius:5px;background:#10091a}.hidden{display:none!important}@media(max-width:980px){.layout{grid-template-columns:1fr}.post-list{max-height:300px}.editor-body{grid-template-columns:1fr}}@media(max-width:700px){.wrap{width:min(100% - 24px,1380px)}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.editor{padding:16px}.editor-head{flex-direction:column}.topbar .wrap{align-items:flex-start;padding:12px 0;flex-direction:column}.session{width:100%;justify-content:space-between}}
     .lock-mark{width:1em;height:1em;display:inline-block;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+    .editor{min-width:0}
+    .editor-head{position:sticky;top:72px;z-index:4;background:rgba(9,6,17,.96);padding:12px 0;border-bottom:1px solid var(--line)}
+    .body-toolbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;padding:10px;background:rgba(23,16,37,.65);border:1px solid var(--line);border-radius:10px}
+    .body-toolbar .btn{min-height:34px}
+    .body-toolbar .btn:hover,.upload-trigger:hover{color:var(--purple);border-color:var(--purple)}
+    .upload-trigger{display:inline-flex;align-items:center;cursor:pointer}
+    .media-btn{border-color:rgba(186,126,255,.35);color:var(--lavender)}
+    .media-help{font-size:.78rem;line-height:1.5;color:var(--muted);padding:2px 2px 5px}
+    .editor-body{align-items:start}
+    .body-pane{min-width:0}
+    #content{min-height:620px;font:500 .88rem/1.75 var(--mono);tab-size:2}
+    .preview{min-height:620px;max-height:900px;overflow:auto;overflow-wrap:anywhere}
+    .preview img{display:block;max-width:100%;height:auto;border-radius:8px;margin:12px 0}
+    .preview table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+    .table-scroll{max-width:100%;overflow-x:auto}
+    .preview th,.preview td{border:1px solid var(--line);padding:8px;text-align:left}
+    .preview th{background:rgba(187,129,255,.1)}
+    .preview blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--purple);background:rgba(187,129,255,.07)}
+    .preview ul,.preview ol{padding-left:24px}
+    .preview input[type=checkbox]{accent-color:var(--purple)}
+    .preview hr{border:0;border-top:1px solid var(--line);margin:20px 0}
+    .preview .embed-frame{position:relative;width:100%;aspect-ratio:16/9;margin:16px 0;background:#05030a;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+    .preview .embed-frame iframe,.preview .embed-frame video{width:100%;height:100%;border:0;display:block}
+    .preview pre{white-space:pre;overflow:auto;border-radius:8px}
+    .post-item{display:block}
+    .post-item .post-excerpt{display:block;color:var(--muted);font-size:.78rem;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .post-actions{display:flex;justify-content:flex-end;margin-top:7px}
+    .post-actions a{color:var(--lavender);font-size:.75rem;text-decoration:none}
+    .refresh-posts{margin-left:16px}
+    @media(max-width:980px){.editor-head{position:static}.editor-body{grid-template-columns:1fr}#content,.preview{min-height:420px;max-height:none}}
+
   </style>
 </head>
 <body>
@@ -31,7 +63,8 @@
     <main class="wrap layout">
       <aside class="panel sidebar">
         <div class="side-head"><input id="search" class="input" placeholder="Buscar posts…" aria-label="Buscar posts"></div>
-        <button id="newPost" class="btn primary" style="margin:14px 16px;width:calc(100% - 32px)">＋ Novo post</button>
+        <button id="newPost" class="btn primary" style="margin:14px 16px 8px;width:calc(100% - 32px)">＋ Nova postagem</button>
+        <button id="refreshPosts" class="btn small refresh-posts" type="button" style="margin:0 16px 12px;width:calc(100% - 32px)">↻ Atualizar lista</button>
         <div id="postList" class="post-list"></div>
       </aside>
 
@@ -53,11 +86,34 @@
         </div>
 
         <div class="editor-body">
-          <div class="body-pane"><div class="label">Conteúdo · Markdown <span class="muted">(Ctrl/⌘ + S para salvar)</span></div><div id="toolbar" class="body-toolbar"><button class="btn" data-md="bold">B</button><button class="btn" data-md="italic"><em>I</em></button><button class="btn" data-md="h2">H2</button><button class="btn" data-md="h3">H3</button><button class="btn" data-md="strike">S</button><button class="btn" data-md="image">Imagem</button><button class="btn" data-md="table">Tabela</button><button class="btn" data-md="hr">—</button><button class="btn" data-md="quote">❯</button><button class="btn" data-md="ul">• Lista</button><button class="btn" data-md="ol">1. Lista</button><button class="btn" data-md="code">`code`</button><button class="btn" data-md="link">Link</button></div><textarea id="content" class="textarea" spellcheck="true" placeholder="Escreva seu post em Markdown…"></textarea></div>
+          <div class="body-pane"><div class="label">Conteúdo · Markdown <span class="muted">(Ctrl/⌘ + S para salvar)</span></div><div id="toolbar" class="body-toolbar" aria-label="Ferramentas de formatação">
+            <button class="btn" type="button" data-md="bold" title="Negrito"><strong>B</strong></button>
+            <button class="btn" type="button" data-md="italic" title="Itálico"><em>I</em></button>
+            <button class="btn" type="button" data-md="strike" title="Riscado"><s>S</s></button>
+            <button class="btn" type="button" data-md="h1">H1</button>
+            <button class="btn" type="button" data-md="h2">H2</button>
+            <button class="btn" type="button" data-md="h3">H3</button>
+            <button class="btn" type="button" data-md="quote" title="Citação">❯</button>
+            <button class="btn" type="button" data-md="ul">• Lista</button>
+            <button class="btn" type="button" data-md="ol">1. Lista</button>
+            <button class="btn" type="button" data-md="task">☑ Tarefa</button>
+            <button class="btn" type="button" data-md="code">Código</button>
+            <button class="btn" type="button" data-md="codeblock">Bloco de código</button>
+            <button class="btn" type="button" data-md="link">Link</button>
+            <button class="btn" type="button" data-md="image">Imagem por URL</button>
+            <label class="btn upload-trigger" for="imageUpload">Enviar imagem</label>
+            <input id="imageUpload" class="hidden" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif">
+            <button class="btn" type="button" data-md="table">Tabela</button>
+            <button class="btn" type="button" data-md="hr">Divisor</button>
+            <button class="btn media-btn" type="button" data-md="youtube">YouTube</button>
+            <button class="btn media-btn" type="button" data-md="vimeo">Vimeo</button>
+            <button class="btn media-btn" type="button" data-md="video">Vídeo MP4</button>
+          </div>
+          <div class="media-help">Suporta Markdown, tabelas, imagens, blocos de código e vídeos. Para vídeos, use YouTube/Vimeo ou um endereço MP4/WebM hospedado.</div><textarea id="content" class="textarea" spellcheck="true" placeholder="Escreva seu post em Markdown…"></textarea></div>
           <div class="body-pane"><div class="label">Pré-visualização</div><div id="preview" class="preview"></div></div>
         </div>
         <div id="status" class="status" role="status" aria-live="polite"></div>
-        <div class="footer-note">O botão Salvar cria um commit no branch <span class="kbd">main</span>. O GitHub Actions recompila o blog público a partir do Markdown.</div>
+        <div class="footer-note">As alterações são salvas como Markdown no GitHub. Publicar/atualizar cria um commit no branch <span class="kbd">main</span> e inicia a recompilação automática.</div>
       </section>
     </main>
   </div>
@@ -88,27 +144,138 @@
     function csv(value) { return value.split(',').map(v=>v.trim()).filter(Boolean); }
     function escapeHtml(value) { return String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 
-    function markdownPreview(source) {
-      let md = String(source || '').replace(/\r\n?/g,'\n');
-      const fences = [];
-      md = md.replace(/```([\s\S]*?)```/g, (_, code) => { const i=fences.push(`<pre><code>${escapeHtml(code.trim())}</code></pre>`) - 1; return `@@FENCE${i}@@`; });
-      let html = escapeHtml(md);
-      html = html.replace(/`([^`]+)`/g,'<code>$1</code>');
-      html = html.replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>');
-      html = html.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
-      html = html.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/__([^_]+)__/g,'<strong>$1</strong>');
-      html = html.replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/_([^_]+)_/g,'<em>$1</em>');
-      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-      html = html.replace(/^(?:- |\* )(.+)$/gm,'<li>$1</li>');
-      html = html.replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`);
-      html = html.replace(/^(\d+)\. (.+)$/gm,'<li>$2</li>');
-      html = html.replace(/\n{2,}/g,'\n\n').split('\n\n').map(block => {
-        const t=block.trim(); if (!t) return ''; if (/^<(h1|h2|h3|blockquote|ul|pre)/.test(t) || /^@@FENCE\d+@@$/.test(t)) return t; return `<p>${t.replace(/\n/g,'<br>')}</p>`;
-      }).join('');
-      html = html.replace(/@@FENCE(\d+)@@/g, (_,i)=>fences[Number(i)]);
-      return html || '<span class="muted">A prévia aparecerá aqui.</span>';
+    function safeMediaUrl(value) {
+      const url = String(value || '').trim();
+      if (/^https:\/\//i.test(url) || /^\/blog\/uploads\/[a-zA-Z0-9._-]+$/.test(url)) return url;
+      return '';
     }
 
+    function renderInlineMarkdown(source) {
+      let value = escapeHtml(source);
+      const code = [];
+      value = value.replace(/`([^`]+)`/g, (_, text) => {
+        const token = '%%INLINECODE' + code.length + '%%';
+        code.push('<code>' + text + '</code>');
+        return token;
+      });
+      value = value.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+        const safe = safeMediaUrl(src.replace(/&amp;/g, '&'));
+        return safe ? '<img loading="lazy" alt="' + alt + '" src="' + safe + '">' : alt;
+      });
+      value = value.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+        const safe = /^(https?:\/\/|mailto:|\/blog\/)/i.test(href) ? href : '';
+        return safe ? '<a href="' + safe + '" target="_blank" rel="noopener noreferrer">' + label + '</a>' : label;
+      });
+      value = value.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/__([^_]+)__/g, '<strong>$1</strong>')
+        .replace(/~~([^~]+)~~/g, '<del>$1</del>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(/_([^_]+)_/g, '<em>$1</em>');
+      value = value.replace(/%%INLINECODE(\d+)%%/g, (_, index) => code[Number(index)] || '');
+      return value;
+    }
+
+    function markdownPreview(source) {
+      const lines = String(source || '').replace(/\r\n?/g, '\n').split('\n');
+      const output = [];
+      let i = 0;
+      const cells = (line) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(cell => cell.trim());
+      const isTableRule = (line) => cells(line).length > 1 && cells(line).every(cell => /^:?-{3,}:?$/.test(cell));
+      while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+
+        const codeStart = line.match(/^\s*```([\w+-]*)\s*$/);
+        if (codeStart) {
+          const language = escapeHtml(codeStart[1] || 'text');
+          const codeLines = [];
+          i++;
+          while (i < lines.length && !/^\s*```\s*$/.test(lines[i])) codeLines.push(lines[i++]);
+          if (i < lines.length) i++;
+          output.push('<pre><code class="language-' + language + '">' + escapeHtml(codeLines.join('\n')) + '</code></pre>');
+          continue;
+        }
+
+        const youtube = line.match(/^\s*\{\{<\s*youtube\s+(?:id="([A-Za-z0-9_-]{11})"|([A-Za-z0-9_-]{11}))(?:\s+title="([^"]*)")?\s*>\}\}\s*$/);
+        if (youtube) {
+          const id = youtube[1] || youtube[2];
+          output.push('<div class="embed-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/' + id + '" title="' + escapeHtml(youtube[3] || 'YouTube video') + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>');
+          i++; continue;
+        }
+
+        const vimeo = line.match(/^\s*\{\{<\s*vimeo\s+(?:id="([0-9]{6,12})"|([0-9]{6,12}))(?:\s+title="([^"]*)")?\s*>\}\}\s*$/);
+        if (vimeo) {
+          const id = vimeo[1] || vimeo[2];
+          output.push('<div class="embed-frame"><iframe loading="lazy" src="https://player.vimeo.com/video/' + id + '" title="' + escapeHtml(vimeo[3] || 'Vimeo video') + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>');
+          i++; continue;
+        }
+
+        const video = line.match(/^\s*\{\{<\s*video\s+src="([^"]+)"\s*>\}\}\s*$/);
+        if (video) {
+          const src = safeMediaUrl(video[1]);
+          if (src) output.push('<div class="embed-frame"><video controls playsinline preload="metadata" src="' + src + '"></video></div>');
+          i++; continue;
+        }
+
+        if (i + 1 < lines.length && line.includes('|') && isTableRule(lines[i + 1])) {
+          const headers = cells(line);
+          i += 2;
+          let table = '<div class="table-scroll"><table><thead><tr>' + headers.map(cell => '<th>' + renderInlineMarkdown(cell) + '</th>').join('') + '</tr></thead><tbody>';
+          while (i < lines.length && lines[i].includes('|') && lines[i].trim()) {
+            table += '<tr>' + cells(lines[i]).map(cell => '<td>' + renderInlineMarkdown(cell) + '</td>').join('') + '</tr>';
+            i++;
+          }
+          output.push(table + '</tbody></table></div>');
+          continue;
+        }
+
+        const heading = line.match(/^(#{1,6})\s+(.+)$/);
+        if (heading) {
+          const level = heading[1].length;
+          output.push('<h' + level + '>' + renderInlineMarkdown(heading[2]) + '</h' + level + '>');
+          i++; continue;
+        }
+
+        if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) {
+          output.push('<hr>'); i++; continue;
+        }
+
+        if (/^\s*>/.test(line)) {
+          const quote = [];
+          while (i < lines.length && /^\s*>/.test(lines[i])) quote.push(lines[i++].replace(/^\s*>\s?/, ''));
+          output.push('<blockquote>' + quote.map(renderInlineMarkdown).join('<br>') + '</blockquote>');
+          continue;
+        }
+
+        if (/^\s*(?:[-*+] |\d+\. )/.test(line)) {
+          const ordered = /^\s*\d+\. /.test(line);
+          const tag = ordered ? 'ol' : 'ul';
+          const items = [];
+          while (i < lines.length && /^\s*(?:[-*+] |\d+\. )/.test(lines[i])) {
+            const match = lines[i++].match(/^\s*(?:[-*+] |\d+\. )(.*)$/);
+            const task = match[1].match(/^\[([ xX])\]\s*(.*)$/);
+            if (task) {
+              items.push('<li class="task-item"><input type="checkbox" disabled ' + (task[1].toLowerCase() === 'x' ? 'checked' : '') + '> ' + renderInlineMarkdown(task[2]) + '</li>');
+            } else {
+              items.push('<li>' + renderInlineMarkdown(match[1]) + '</li>');
+            }
+          }
+          output.push('<' + tag + '>' + items.join('') + '</' + tag + '>');
+          continue;
+        }
+
+        const paragraph = [];
+        while (i < lines.length && lines[i].trim() &&
+          !/^\s*(#{1,6}\s|>|```|---$|\*\*\*$|___$|[-*+] |\d+\. )/.test(lines[i]) &&
+          !(i + 1 < lines.length && lines[i].includes('|') && isTableRule(lines[i + 1])) &&
+          !/^\s*\{\{<\s*(youtube|vimeo|video)\b/.test(lines[i])) {
+          paragraph.push(lines[i++]);
+        }
+        if (!paragraph.length) { output.push('<p>' + renderInlineMarkdown(line) + '</p>'); i++; }
+        else output.push('<p>' + paragraph.map(renderInlineMarkdown).join('<br>') + '</p>');
+      }
+      return output.join('\n') || '<span class="muted">A prévia aparecerá aqui.</span>';
+    }
     function setStatus(message='', type='') { const el=$('status'); el.textContent=message; el.className=`status ${type}`.trim(); }
     function setEditor(post=null) {
       state.currentSlug = post?.slug || null;
@@ -186,6 +353,7 @@
         localStorage.removeItem(state.localDraftKey);
         state.currentSlug=payload.slug; state.originalSlug=payload.slug;
         await loadPosts(payload.slug);
+        lastSavedSnapshot = currentSnapshot(); state.isDirty = false;
         setStatus('Post salvo. O commit dispara o deploy público configurado automaticamente.','ok');
       } catch(e) { setStatus(e.message,'error'); }
       finally { state.loading=false; $('saveBtn').disabled=false; }
@@ -201,22 +369,108 @@
     function renderPreview(){ $('preview').innerHTML=markdownPreview($('content').value); }
     function persistDraft(){ const payload={...postPayload(),savedAt:Date.now()}; localStorage.setItem(state.localDraftKey,JSON.stringify(payload)); }
 
-    function insertMarkdown(type){
-      const el=$('content'); const start=el.selectionStart,end=el.selectionEnd,text=el.value,selected=text.slice(start,end); let before='',after='',replacement=selected;
-      if(type==='bold'){before='**';after='**';replacement=selected||'texto'}
-      if(type==='italic'){before='*';after='*';replacement=selected||'texto'}
-      if(type==='h2'){before='## ';after='';replacement=selected||'Título'}
-      if(type==='h3'){before='### ';after='';replacement=selected||'Subtítulo'}
-      if(type==='strike'){before='~~';after='~~';replacement=selected||'texto'}
-      if(type==='image'){before='![';after='](https://url-da-imagem)';replacement=selected||'descrição'}
-      if(type==='table'){before='| Coluna 1 | Coluna 2 |\n| --- | --- |\n| ';after=' |';replacement=selected||'Valor 1 | Valor 2'}
-      if(type==='hr'){before='\n---\n';after='';replacement=''}
-      if(type==='quote'){before='> ';after='';replacement=selected||'Citação'}
-      if(type==='ul'){before='- ';after='';replacement=selected||'item'}
-      if(type==='ol'){before='1. ';after='';replacement=selected||'item'}
-      if(type==='code'){before='`';after='`';replacement=selected||'código'}
-      if(type==='link'){before='[';after='](https://)';replacement=selected||'texto'}
-      el.setRangeText(before+replacement+after,start,end,'end'); renderPreview(); persistDraft(); el.focus();
+    function insertMarkdown(type) {
+      const el = $('content');
+      const start = el.selectionStart;
+      const end = el.selectionEnd;
+      const selected = el.value.slice(start, end);
+      const linePrefix = (prefix, fallback) => ({before: prefix, after: '', value: selected || fallback});
+      let before = '', after = '', replacement = selected;
+
+      if (type === 'bold') { before = '**'; after = '**'; replacement = selected || 'texto em negrito'; }
+      if (type === 'italic') { before = '*'; after = '*'; replacement = selected || 'texto em itálico'; }
+      if (type === 'strike') { before = '~~'; after = '~~'; replacement = selected || 'texto riscado'; }
+      if (type === 'h1') { before = '# '; replacement = selected || 'Título'; }
+      if (type === 'h2') { before = '## '; replacement = selected || 'Subtítulo'; }
+      if (type === 'h3') { before = '### '; replacement = selected || 'Seção'; }
+      if (type === 'quote') { before = '> '; replacement = selected || 'Citação'; }
+      if (type === 'ul') { before = '- '; replacement = selected || 'Item da lista'; }
+      if (type === 'ol') { before = '1. '; replacement = selected || 'Item numerado'; }
+      if (type === 'task') { before = '- [ ] '; replacement = selected || 'Tarefa'; }
+      if (type === 'code') { before = '`'; after = '`'; replacement = selected || 'código'; }
+      if (type === 'codeblock') { before = '```text\n'; after = '\n```'; replacement = selected || 'seu código aqui'; }
+      if (type === 'image') {
+        const url = prompt('URL da imagem (https://...)');
+        if (!url) return;
+        before = '!['; after = '](' + url.trim() + ')'; replacement = selected || 'descrição da imagem';
+      }
+      if (type === 'link') {
+        const url = prompt('Endereço do link (https://...)');
+        if (!url) return;
+        before = '['; after = '](' + url.trim() + ')'; replacement = selected || 'texto do link';
+      }
+      if (type === 'table') {
+        before = ''; after = '';
+        replacement = '| Coluna 1 | Coluna 2 |\n| --- | --- |\n| Conteúdo | Conteúdo |';
+      }
+      if (type === 'hr') { before = '\n'; after = '\n'; replacement = '---'; }
+      if (type === 'youtube') {
+        const entered = prompt('Cole a URL ou o ID do vídeo do YouTube:');
+        if (!entered) return;
+        let id = entered.trim();
+        try {
+          if (id.includes('://')) {
+            const u = new URL(id);
+            id = u.hostname.includes('youtu.be') ? u.pathname.slice(1) : (u.searchParams.get('v') || u.pathname.split('/').filter(Boolean).pop());
+          }
+        } catch { /* treat input as an ID */ }
+        if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return setStatus('ID ou URL do YouTube inválido.', 'error');
+        replacement = '{{< youtube id="' + id + '" >}}';
+      }
+      if (type === 'vimeo') {
+        const entered = prompt('Cole a URL ou o ID do vídeo do Vimeo:');
+        if (!entered) return;
+        let id = entered.trim();
+        try {
+          if (id.includes('://')) id = new URL(id).pathname.split('/').filter(Boolean).pop();
+        } catch { /* treat input as an ID */ }
+        if (!/^[0-9]{6,12}$/.test(id)) return setStatus('ID ou URL do Vimeo inválido.', 'error');
+        replacement = '{{< vimeo id="' + id + '" >}}';
+      }
+      if (type === 'video') {
+        const url = prompt('URL do vídeo MP4/WebM hospedado (ex.: /blog/uploads/video.mp4):');
+        if (!url) return;
+        if (!/^https:\/\//i.test(url) && !/^\/blog\/uploads\/[a-zA-Z0-9._-]+$/.test(url)) {
+          return setStatus('Use um endereço HTTPS ou um arquivo em /blog/uploads/.', 'error');
+        }
+        replacement = '{{< video src="' + url.trim() + '" >}}';
+      }
+
+      el.setRangeText(before + replacement + after, start, end, 'end');
+      renderPreview();
+      persistDraft();
+      el.focus();
+    }
+
+    async function uploadImage(file) {
+      if (!file) return;
+      const allowed = ['image/jpeg','image/png','image/webp','image/gif','image/avif'];
+      if (!allowed.includes(file.type)) return setStatus('Formato não suportado. Use JPG, PNG, WebP, GIF ou AVIF.', 'error');
+      if (file.size > 2.5 * 1024 * 1024) return setStatus('A imagem precisa ter até 2,5 MB.', 'error');
+
+      setStatus('Enviando imagem para o repositório…');
+      try {
+        const dataUrl = await new Promise((resolve,reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error('Não foi possível ler o arquivo.'));
+          reader.onload = () => resolve(reader.result);
+          reader.readAsDataURL(file);
+        });
+        const result = await api('/api/media', {
+          method:'POST',
+          body:JSON.stringify({filename:file.name,mimeType:file.type,data:dataUrl})
+        });
+        const el = $('content');
+        const insertion = '![' + file.name.replace(/[\[\]]/g,'') + '](' + result.url + ')';
+        el.setRangeText(insertion,el.selectionStart,el.selectionEnd,'end');
+        renderPreview();
+        persistDraft();
+        setStatus('Imagem enviada e inserida no Markdown.','ok');
+      } catch(error) {
+        setStatus(error.message || 'Falha ao enviar imagem.','error');
+      } finally {
+        $('imageUpload').value = '';
+      }
     }
 
     async function boot(){
@@ -234,6 +488,8 @@
     }
 
     $('newPost').addEventListener('click',()=>setEditor(null));
+    $('refreshPosts').addEventListener('click',()=>loadPosts(state.currentSlug));
+    $('imageUpload').addEventListener('change',event=>uploadImage(event.target.files?.[0]));
     $('saveBtn').addEventListener('click',save);
     $('deleteBtn').addEventListener('click',removePost);
     $('logout').addEventListener('click',async()=>{await api('/api/auth/logout',{method:'POST'}).catch(()=>{});location.reload()});
@@ -242,7 +498,27 @@
     $('title').addEventListener('input',()=>{if(!state.currentSlug || !$('slug').value) $('slug').value=slugify($('title').value);persistDraft()});
     document.querySelectorAll('[data-md]').forEach(btn=>btn.addEventListener('click',()=>insertMarkdown(btn.dataset.md)));
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();save()}});
-    window.addEventListener('beforeunload',e=>{ if(state.loading)return; if($('title').value || $('content').value){ e.preventDefault(); e.returnValue=''; } });
+    let lastSavedSnapshot = '';
+    function currentSnapshot() {
+      return JSON.stringify({
+        title:$('title').value,slug:$('slug').value,date:$('date').value,draft:$('draft').checked,
+        description:$('description').value,tags:$('tags').value,categories:$('categories').value,
+        cover:$('cover').value,body:$('content').value
+      });
+    }
+    document.addEventListener('input',()=>{ if(!state.loading) state.isDirty = currentSnapshot() !== lastSavedSnapshot; });
+    document.addEventListener('change',()=>{ if(!state.loading) state.isDirty = currentSnapshot() !== lastSavedSnapshot; });
+    const originalSetEditor = setEditor;
+    setEditor = function(post=null) {
+      originalSetEditor(post);
+      lastSavedSnapshot = currentSnapshot();
+      state.isDirty = false;
+    };
+    window.addEventListener('beforeunload',e=>{
+      if(state.loading || !state.isDirty) return;
+      e.preventDefault();
+      e.returnValue='';
+    });
     boot();
   </script>
 </body>
