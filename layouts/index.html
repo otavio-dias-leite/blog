@@ -10,12 +10,6 @@
 <body><div class="lock-watermark" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="11" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14.2v2.7"/></svg></div>
 <header><div class="wrap"><a class="brand" href="{{ "/blog" | relURL }}"><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="10" width="15" height="11" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14.2v2.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Otávio Leite</span></a><nav class="language-switch"><button type="button" onclick="blogLanguage('en')">EN</button><button type="button" onclick="blogLanguage('pt-BR')">PT-BR</button></nav></div></header>
 <main class="wrap posts">
-<section class="blog-intro" aria-labelledby="blog-title">
-  <p class="eyebrow">ENGENHARIA · COMPUTAÇÃO · SEGURANÇA DA INFORMAÇÃO</p>
-  <h1 id="blog-title" class="glitch" data-text="Otávio Leite">Otávio Leite</h1>
-  <p class="description">Anotações sobre estudos, projetos e ideias que conectam engenharia elétrica, programação e segurança da informação.</p>
-  <p class="availability">Disponível para trabalhos freelancer, estágios, projetos técnicos e oportunidades de colaboração. <a href="mailto:o.otavio.dias.leite@gmail.com">Entre em contato.</a></p>
-</section>
 {{ range .Site.RegularPages.ByDate.Reverse }}
 <article><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2>{{ .Title }}</h2></a><span>↗</span></article>
 {{ end }}
