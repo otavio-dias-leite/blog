@@ -17,7 +17,7 @@
       <h1>Admin do blog</h1>
       <p>Entre com a conta GitHub autorizada para editar os posts. O painel não expõe os posts nem a API sem uma sessão válida.</p>
       <a class="btn primary" href="/api/auth/login" style="display:inline-block;text-decoration:none">Entrar com GitHub</a>
-      <div class="notice">Conta autorizada: <strong>@1337misterzero</strong> · acesso restrito ao proprietário do blog.</div>
+      <div class="notice">Conta autorizada: <strong>@otavio-dias-leite</strong> · acesso restrito ao proprietário do blog.</div>
     </main>
   </div>
 
@@ -52,7 +52,7 @@
         </div>
 
         <div class="editor-body">
-          <div class="body-pane"><div class="label">Conteúdo · Markdown <span class="muted">(Ctrl/⌘ + S para salvar)</span></div><div id="toolbar" class="body-toolbar"><button class="btn" data-md="bold">B</button><button class="btn" data-md="italic"><em>I</em></button><button class="btn" data-md="h2">H2</button><button class="btn" data-md="quote">❯</button><button class="btn" data-md="ul">• Lista</button><button class="btn" data-md="ol">1. Lista</button><button class="btn" data-md="code">`code`</button><button class="btn" data-md="link">Link</button></div><textarea id="content" class="textarea" spellcheck="true" placeholder="Escreva seu post em Markdown…"></textarea></div>
+          <div class="body-pane"><div class="label">Conteúdo · Markdown <span class="muted">(Ctrl/⌘ + S para salvar)</span></div><div id="toolbar" class="body-toolbar"><button class="btn" data-md="bold">B</button><button class="btn" data-md="italic"><em>I</em></button><button class="btn" data-md="h2">H2</button><button class="btn" data-md="h3">H3</button><button class="btn" data-md="strike">S</button><button class="btn" data-md="image">Imagem</button><button class="btn" data-md="table">Tabela</button><button class="btn" data-md="hr">—</button><button class="btn" data-md="quote">❯</button><button class="btn" data-md="ul">• Lista</button><button class="btn" data-md="ol">1. Lista</button><button class="btn" data-md="code">`code`</button><button class="btn" data-md="link">Link</button></div><textarea id="content" class="textarea" spellcheck="true" placeholder="Escreva seu post em Markdown…"></textarea></div>
           <div class="body-pane"><div class="label">Pré-visualização</div><div id="preview" class="preview"></div></div>
         </div>
         <div id="status" class="status" role="status" aria-live="polite"></div>
@@ -205,6 +205,11 @@
       if(type==='bold'){before='**';after='**';replacement=selected||'texto'}
       if(type==='italic'){before='*';after='*';replacement=selected||'texto'}
       if(type==='h2'){before='## ';after='';replacement=selected||'Título'}
+      if(type==='h3'){before='### ';after='';replacement=selected||'Subtítulo'}
+      if(type==='strike'){before='~~';after='~~';replacement=selected||'texto'}
+      if(type==='image'){before='![';after='](https://url-da-imagem)';replacement=selected||'descrição'}
+      if(type==='table'){before='| Coluna 1 | Coluna 2 |\n| --- | --- |\n| ';after=' |';replacement=selected||'Valor 1 | Valor 2'}
+      if(type==='hr'){before='\n---\n';after='';replacement=''}
       if(type==='quote'){before='> ';after='';replacement=selected||'Citação'}
       if(type==='ul'){before='- ';after='';replacement=selected||'item'}
       if(type==='ol'){before='1. ';after='';replacement=selected||'item'}
