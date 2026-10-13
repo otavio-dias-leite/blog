@@ -101,6 +101,7 @@
   async function translateNodes(nodes, source, target) {
     const queue = nodes.map(node => ({ node, text: remember(node) }));
     let cursor = 0;
+    let failed = false;
     const workers = Array.from({ length: Math.min(3, queue.length) }, async () => {
       while (cursor < queue.length) {
         const item = queue[cursor++];
@@ -108,12 +109,14 @@
         try {
           item.node.nodeValue = await translateText(item.text, source, target);
         } catch (error) {
+          failed = true;
           console.warn("Could not translate a blog text segment:", error);
           item.node.nodeValue = item.text;
         }
       }
     });
     await Promise.all(workers);
+    return failed;
   }
 
   function updateButtons(language) {
@@ -172,9 +175,12 @@
     }
 
     try {
-      await Promise.all(tasks);
+      const results = await Promise.all(tasks);
       const heading = article?.querySelector("[data-post-title]");
       if (heading) document.title = heading.textContent.trim() + " — Otávio Leite";
+      if (results.some(Boolean)) {
+        showStatus("Some text could not be translated. The original wording is shown for those sections.");
+      }
     } catch (error) {
       console.error("Blog translation failed:", error);
       showStatus("Automatic translation is temporarily unavailable. Showing the original post.");
