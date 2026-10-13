@@ -1,23 +1,19 @@
 (() => {
   "use strict";
-  const STORAGE_KEY = "otavio-blog-language-v6";
-  const CACHE_KEY = "otavio-blog-translation-cache-v3";
+
+  const STORAGE_KEY = "otavio-blog-language-v7";
+  const CACHE_KEY = "otavio-blog-translation-cache-v4";
   const LANGUAGES = { "en-US": "en", "pt-BR": "pt", "zh-CN": "zh" };
   const API_URL = "https://translate.argosopentech.com";
-  const originals = new WeakMap();
-  const memoryCache = new Map();
-  let persistentCache = {};
-  let activeRun = 0;
+  const originalHTML = new WeakMap();
+  const cache = new Map();
+  let savedCache = {};
+  let runId = 0;
 
-  try { persistentCache = JSON.parse(localStorage.getItem(CACHE_KEY) || "{}"); }
-  catch { persistentCache = {}; }
+  try { savedCache = JSON.parse(localStorage.getItem(CACHE_KEY) || "{}"); }
+  catch { savedCache = {}; }
 
-  function readLanguage() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return Object.hasOwn(LANGUAGES, saved) ? saved : "en-US";
-    } catch { return "en-US"; }
-  }
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   function sourceCode(value) {
     if (!value || value === "auto") return "auto";
@@ -25,32 +21,36 @@
     return code === "zh" ? "zh" : code;
   }
 
-  function original(node) {
-    if (!originals.has(node)) originals.set(node, node.nodeValue);
-    return originals.get(node);
+  function getOriginal(element) {
+    if (!originalHTML.has(element)) originalHTML.set(element, element.innerHTML);
+    return originalHTML.get(element);
   }
 
-  function cacheKey(text, source, target) {
-    return source + "|" + target + "|" + text;
+  function cacheKey(html, source, target) {
+    return source + "|" + target + "|" + html;
   }
 
-  async function request(path, payload) {
+  async function api(path, payload) {
     let lastError;
-    for (let attempt = 0; attempt < 3; attempt++) {
+    for (let attempt = 0; attempt < 4; attempt++) {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 18000);
+      const timeout = setTimeout(() => controller.abort(), 25000);
       try {
         const response = await fetch(API_URL + path, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
           body: JSON.stringify(payload),
-          signal: controller.signal
+          signal: controller.signal,
+          mode: "cors"
         });
-        if (!response.ok) throw new Error("Translation service returned " + response.status);
+        if (!response.ok) {
+          const detail = await response.text().catch(() => "");
+          throw new Error("Translation API " + response.status + (detail ? ": " + detail.slice(0, 180) : ""));
+        }
         return await response.json();
       } catch (error) {
         lastError = error;
-        if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 600 * (attempt + 1)));
+        if (attempt < 3) await wait(700 * (attempt + 1));
       } finally { clearTimeout(timeout); }
     }
     throw lastError || new Error("Translation service unavailable");
@@ -59,54 +59,48 @@
   async function detectLanguage(text) {
     const sample = String(text || "").replace(/\s+/g, " ").trim().slice(0, 4500);
     if (!sample) return "auto";
-    try {
-      const result = await request("/detect", { q: sample });
-      if (!Array.isArray(result) || !result.length) return "auto";
-      const detected = [...result].sort((a, b) => (b.confidence || 0) - (a.confidence || 0))[0];
-      return sourceCode(detected.language || "auto");
-    } catch (error) {
-      console.warn("Language detection unavailable; using translator auto-detection.", error);
-      return "auto";
-    }
+    const result = await api("/detect", { q: sample });
+    if (!Array.isArray(result) || !result.length) throw new Error("Could not detect source language");
+    const detected = [...result].sort((a, b) => (b.confidence || 0) - (a.confidence || 0))[0];
+    return sourceCode(detected.language || "auto");
   }
 
-  async function translateText(text, source, target) {
-    const key = cacheKey(text, source, target);
-    if (memoryCache.has(key)) return memoryCache.get(key);
-    if (persistentCache[key]) {
-      memoryCache.set(key, persistentCache[key]);
-      return persistentCache[key];
+  async function translateHTML(html, source, target) {
+    const key = cacheKey(html, source, target);
+    if (cache.has(key)) return cache.get(key);
+    if (savedCache[key]) {
+      cache.set(key, savedCache[key]);
+      return savedCache[key];
     }
-    const result = await request("/translate", { q: text, source, target, format: "text" });
-    if (!result.translatedText) throw new Error("Empty translation result");
+    const result = await api("/translate", { q: html, source, target, format: "html" });
+    if (!result || typeof result.translatedText !== "string" || !result.translatedText.trim()) {
+      throw new Error("The translation service returned an empty result");
+    }
     const translated = result.translatedText;
-    memoryCache.set(key, translated);
-    persistentCache[key] = translated;
-    const keys = Object.keys(persistentCache);
-    if (keys.length > 400) {
-      for (const oldKey of keys.slice(0, keys.length - 400)) delete persistentCache[oldKey];
+    cache.set(key, translated);
+    savedCache[key] = translated;
+    const keys = Object.keys(savedCache);
+    if (keys.length > 250) {
+      for (const oldKey of keys.slice(0, keys.length - 250)) delete savedCache[oldKey];
     }
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify(persistentCache)); } catch {}
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(savedCache)); } catch {}
     return translated;
   }
 
-  function textNodes(root) {
-    const nodes = [];
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode(node) {
-        if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        const parent = node.parentElement;
-        if (!parent || parent.closest("script,style,code,pre,textarea,button,svg,.comments,[aria-hidden='true'],.translation-status")) {
-          return NodeFilter.FILTER_REJECT;
-        }
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    });
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    return nodes;
+  function status(message, isError = false) {
+    let element = document.querySelector(".translation-status");
+    if (!element) {
+      element = document.createElement("p");
+      element.className = "translation-status";
+      element.setAttribute("role", "status");
+      document.querySelector("header")?.insertAdjacentElement("afterend", element);
+    }
+    element.textContent = message || "";
+    element.hidden = !message;
+    element.dataset.state = isError ? "error" : "info";
   }
 
-  function updateButtons(language) {
+  function setButtons(language) {
     document.querySelectorAll("[data-blog-language]").forEach(button => {
       const active = button.dataset.blogLanguage === language;
       button.classList.toggle("active", active);
@@ -114,32 +108,35 @@
     });
   }
 
-  function showStatus(message) {
-    let status = document.querySelector(".translation-status");
-    if (!status) {
-      status = document.createElement("p");
-      status.className = "translation-status";
-      status.setAttribute("role", "status");
-      document.querySelector("header")?.insertAdjacentElement("afterend", status);
+  function getArticleBlocks(article) {
+    const content = article.querySelector("[data-post-content]") || article.querySelector(".content");
+    const title = article.querySelector("[data-post-title]");
+    const blocks = [];
+    if (title) blocks.push(title);
+    if (content) {
+      const selectors = "p,h2,h3,h4,h5,h6,li,th,td,figcaption,dt,dd";
+      content.querySelectorAll(selectors).forEach(element => {
+        if (!element.querySelector(selectors)) blocks.push(element);
+      });
+      if (!blocks.length && content.textContent.trim()) blocks.push(content);
     }
-    status.textContent = message || "";
-    status.hidden = !message;
+    return blocks;
   }
 
-  async function translateGroup(nodes, source, target, run) {
-    const queue = nodes.map(node => ({ node, text: original(node) }));
+  async function translateElements(elements, source, target, currentRun) {
+    const originals = elements.map(element => ({ element, html: getOriginal(element) }));
     let cursor = 0;
     let failed = false;
-    const workers = Array.from({ length: Math.min(3, queue.length) }, async () => {
-      while (cursor < queue.length && run === activeRun) {
-        const item = queue[cursor++];
+    const workers = Array.from({ length: Math.min(3, originals.length) }, async () => {
+      while (cursor < originals.length && currentRun === runId) {
+        const item = originals[cursor++];
         try {
-          const translated = await translateText(item.text, source, target);
-          if (run === activeRun) item.node.nodeValue = translated;
+          const translated = await translateHTML(item.html, source, target);
+          if (currentRun === runId) item.element.innerHTML = translated;
         } catch (error) {
           failed = true;
-          console.warn("Could not translate a blog text segment:", error);
-          if (run === activeRun) item.node.nodeValue = item.text;
+          console.error("Blog translation failed for a content block:", error);
+          if (currentRun === runId) item.element.innerHTML = item.html;
         }
       }
     });
@@ -147,52 +144,60 @@
     return failed;
   }
 
-  async function applyLanguage(language) {
-    const selected = Object.hasOwn(LANGUAGES, language) ? language : "en-US";
-    const target = LANGUAGES[selected];
-    const run = ++activeRun;
-    document.documentElement.lang = selected;
-    updateButtons(selected);
-    showStatus("Translating…");
+  async function applyLanguage(requestedLanguage) {
+    const language = Object.hasOwn(LANGUAGES, requestedLanguage) ? requestedLanguage : "en-US";
+    const target = LANGUAGES[language];
+    const currentRun = ++runId;
+    document.documentElement.lang = language;
+    setButtons(language);
+    status("Translating page…");
 
-    const jobs = [];
-    document.querySelectorAll("[data-post-title]").forEach(title => {
-      const container = title.closest("[data-post-slug]") || title;
-      const node = title.firstChild;
-      if (!node || node.nodeType !== Node.TEXT_NODE) return;
-      const source = sourceCode(container.dataset.postLanguage || "auto");
-      const text = original(node);
-      if (source === target) node.nodeValue = text;
-      else jobs.push((async () => {
-        const detected = source === "auto" ? await detectLanguage(text) : source;
-        if (run !== activeRun) return false;
-        if (detected === target) { node.nodeValue = text; return false; }
-        return translateGroup([node], detected, target, run);
-      })());
-    });
-
+    let failed = false;
     const article = document.querySelector("main.article");
     if (article) {
-      const nodes = textNodes(article);
-      nodes.forEach(node => { node.nodeValue = original(node); });
+      const blocks = getArticleBlocks(article);
+      blocks.forEach(element => { element.innerHTML = getOriginal(element); });
       const declared = sourceCode(article.dataset.postLanguage || "auto");
-      const sample = nodes.map(original).join(" ").slice(0, 4500);
-      jobs.push((async () => {
+      try {
+        const sample = blocks.map(element => element.textContent).join(" ").slice(0, 4500);
         const source = declared === "auto" ? await detectLanguage(sample) : declared;
-        if (run !== activeRun) return false;
-        if (source === target) return false;
-        return translateGroup(nodes, source, target, run);
-      })());
+        if (currentRun !== runId) return;
+        if (source !== target) failed = await translateElements(blocks, source, target, currentRun);
+      } catch (error) {
+        console.error("Could not determine or translate the article language:", error);
+        failed = true;
+      }
+      if (currentRun !== runId) return;
+      const heading = article.querySelector("[data-post-title]");
+      if (heading) document.title = heading.textContent.trim() + " — Otávio Leite";
+    } else {
+      const titles = [...document.querySelectorAll("[data-post-title]")];
+      titles.forEach(element => { element.innerHTML = getOriginal(element); });
+      const declaredLanguages = [...new Set(titles.map(element => sourceCode(
+        element.closest("[data-post-slug]")?.dataset.postLanguage || "auto"
+      )))];
+      for (const sourceDeclared of declaredLanguages) {
+        const group = titles.filter(element => sourceCode(
+          element.closest("[data-post-slug]")?.dataset.postLanguage || "auto"
+        ) === sourceDeclared);
+        if (!group.length || currentRun !== runId) continue;
+        try {
+          const sample = group.map(element => element.textContent).join(" ").slice(0, 4500);
+          const source = sourceDeclared === "auto" ? await detectLanguage(sample) : sourceDeclared;
+          if (currentRun !== runId) return;
+          if (source !== target) failed = (await translateElements(group, source, target, currentRun)) || failed;
+        } catch (error) {
+          console.error("Could not translate post titles:", error);
+          failed = true;
+        }
+      }
     }
 
-    const failures = await Promise.all(jobs);
-    if (run !== activeRun) return;
-    const heading = article?.querySelector("[data-post-title]");
-    if (heading) document.title = heading.textContent.trim() + " — Otávio Leite";
-    showStatus(failures.some(Boolean)
-      ? "Some text could not be translated. The original wording remains visible."
+    if (currentRun !== runId) return;
+    try { localStorage.setItem(STORAGE_KEY, language); } catch {}
+    status(failed
+      ? "Translation could not be completed for every block. Check your connection and try again."
       : "");
-    try { localStorage.setItem(STORAGE_KEY, selected); } catch {}
   }
 
   document.addEventListener("click", event => {
@@ -202,5 +207,12 @@
     applyLanguage(button.dataset.blogLanguage);
   });
 
-  document.addEventListener("DOMContentLoaded", () => applyLanguage(readLanguage()));
+  document.addEventListener("DOMContentLoaded", () => {
+    let language = "en-US";
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (Object.hasOwn(LANGUAGES, saved)) language = saved;
+    } catch {}
+    applyLanguage(language);
+  });
 })();
