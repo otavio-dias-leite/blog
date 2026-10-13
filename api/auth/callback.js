@@ -18,8 +18,8 @@ module.exports = async function handler(req, res) {
     requireEnv();
     if (req.method !== 'GET') return res.status(405).send('Método não permitido.');
 
-    const { code, state, error: oauthError } = req.query || {};
-    if (oauthError) return res.status(403).send('O login com GitHub foi cancelado.');
+    const { code, state, error: oauthError, error_description: oauthDescription } = req.query || {};
+    if (oauthError) return res.status(403).send(`GitHub OAuth: ${String(oauthDescription || oauthError).slice(0, 300)}`);
 
     const cookies = parseCookies(req);
     if (!code || !state || state !== cookies[COOKIE_STATE] || !cookies[COOKIE_VERIFIER]) {
@@ -45,7 +45,8 @@ module.exports = async function handler(req, res) {
     });
     const tokenData = await tokenResponse.json();
     if (!tokenResponse.ok || !tokenData.access_token) {
-      return res.status(502).send('O GitHub não autorizou esta sessão.');
+      const detail = tokenData.error_description || tokenData.error || 'resposta inválida';
+      return res.status(502).send(`O GitHub recusou o login: ${String(detail).slice(0, 300)}. Confira o callback URL cadastrado na OAuth App.`);
     }
 
     const user = await githubRequest('/user', {}, tokenData.access_token);
