@@ -45,3 +45,9 @@
   background: #d8b8ff;
   border-color: #d8b8ff;
 }
+
+
+.admin-link{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:8px;color:var(--muted);text-decoration:none;transition:.2s;flex:0 0 auto}
+.admin-link svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.admin-link:hover,.admin-link:focus-visible{color:var(--purple);border-color:var(--purple);box-shadow:0 0 16px rgba(186,126,255,.18)}
+.language-switch{margin-left:auto}
