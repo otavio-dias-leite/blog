@@ -1,4 +1,4 @@
-{{- $src := .Get "src" -}}
+{{- $src := .Get "src" | default "" -}}
 {{- if or (hasPrefix $src "https://") (hasPrefix $src "/blog/uploads/") -}}
 <div class="video-embed">
   <video controls playsinline preload="metadata">
