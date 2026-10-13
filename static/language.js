@@ -4,6 +4,7 @@
   const STORAGE_KEY = "blog-language";
   const COOKIE_NAME = "googtrans";
   const LANGUAGES = ["en", "pt-BR"];
+  const COOKIE_PATHS = ["/", "/blog"];
 
   function getSavedLanguage() {
     try {
@@ -16,25 +17,27 @@
 
   let activeLanguage = getSavedLanguage();
 
-  function writeCookie(name, value, path, days) {
-    const expires = days
-      ? "; expires=" + new Date(Date.now() + days * 864e5).toUTCString()
-      : "";
+  function setCookie(name, value, path, expires) {
     document.cookie =
-      name + "=" + value + expires +
+      name + "=" + value +
+      (expires ? "; expires=" + expires.toUTCString() : "") +
       "; path=" + path + "; SameSite=Lax";
   }
 
   function syncTranslationCookie(language) {
-    // Let the translation engine detect each page's source language automatically.
-    // Google uses "pt" as the language code for Brazilian Portuguese.
-    const target = language === "pt-BR" ? "pt" : "en";
-    const value = "/auto/" + target;
-    writeCookie(COOKIE_NAME, value, "/", 365);
-    writeCookie(COOKIE_NAME, value, "/blog", 365);
+    if (language === "pt-BR") {
+      // GTranslate's free widget stores the source and destination as /en/pt.
+      const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+      COOKIE_PATHS.forEach((path) => setCookie(COOKIE_NAME, "/en/pt", path, expires));
+      return;
+    }
+
+    // English is the original language. Remove translations from earlier visits.
+    const expired = new Date(0);
+    COOKIE_PATHS.forEach((path) => setCookie(COOKIE_NAME, "", path, expired));
   }
 
-  function renderLanguageButtons() {
+  function renderButtons() {
     document.querySelectorAll("[data-blog-language]").forEach((button) => {
       const selected = button.dataset.blogLanguage === activeLanguage;
       button.classList.toggle("active", selected);
@@ -49,37 +52,29 @@
     try {
       localStorage.setItem(STORAGE_KEY, language);
     } catch {
-      // The cookie still preserves the language for Google Translate.
+      // Cookie-based selection still works when localStorage is unavailable.
     }
 
     syncTranslationCookie(language);
-    renderLanguageButtons();
+    renderButtons();
     window.location.reload();
   }
 
-  window.googleTranslateElementInit = function googleTranslateElementInit() {
-    if (!window.google || !google.translate || !google.translate.TranslateElement) return;
-
-    new google.translate.TranslateElement(
-      {
-        includedLanguages: "en,pt",
-        autoDisplay: false,
-        multilanguagePage: false
-      },
-      "google_translate_element"
-    );
+  // Configure the replacement widget before its deferred script executes.
+  window.gtranslateSettings = {
+    default_language: "en",
+    languages: ["en", "pt"],
+    wrapper_selector: "#gtranslate_engine"
   };
 
-  // Set the default before loading Google's translation engine.
+  // Restore the saved destination on every page, including article pages.
   syncTranslationCookie(activeLanguage);
+  document.documentElement.lang = activeLanguage === "pt-BR" ? "pt-BR" : "en";
 
   document.addEventListener("DOMContentLoaded", () => {
-    renderLanguageButtons();
-
+    renderButtons();
     document.querySelectorAll("[data-blog-language]").forEach((button) => {
-      button.addEventListener("click", () => {
-        selectLanguage(button.dataset.blogLanguage);
-      });
+      button.addEventListener("click", () => selectLanguage(button.dataset.blogLanguage));
     });
   });
 })();
