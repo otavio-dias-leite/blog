@@ -125,7 +125,7 @@
       }
     });
     await Promise.all(workers);
-    return failed;
+    return;
   }
 
   async function applyLanguage(requestedLanguage) {
@@ -135,7 +135,6 @@
     document.documentElement.lang = language;
     setButtons(language);
 
-    let failed = false;
     const article = document.querySelector("main.article");
     if (article) {
       const blocks = getArticleBlocks(article);
@@ -147,7 +146,6 @@
         if (currentRun !== runId) return;
         if (source !== target) await translateElements(blocks, source, target, currentRun);
       } catch (error) {
-        failed = true;
       }
       if (currentRun !== runId) return;
       const heading = article.querySelector("[data-post-title]");
@@ -167,7 +165,7 @@
           const sample = group.map(element => element.textContent).join(" ").slice(0, 4500);
           const source = sourceDeclared === "auto" ? await detectLanguage(sample) : sourceDeclared;
           if (currentRun !== runId) return;
-          if (source !== target) failed = (await translateElements(group, source, target, currentRun)) || failed;
+          if (source !== target) await translateElements(group, source, target, currentRun);
         } catch (error) {
           failed = true;
         }
