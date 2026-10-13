@@ -51,3 +51,7 @@
 .admin-link svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .admin-link:hover,.admin-link:focus-visible{color:var(--purple);border-color:var(--purple);box-shadow:0 0 16px rgba(186,126,255,.18)}
 .language-switch{margin-left:auto}
+
+.video-embed{position:relative;width:100%;aspect-ratio:16/9;margin:24px 0;background:#05030a;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.video-embed iframe,.video-embed video{width:100%;height:100%;display:block;border:0}
+.video-error{color:#ff9ba6;border-left:3px solid #ff6b7a;padding:8px 12px}
