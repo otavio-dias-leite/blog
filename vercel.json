@@ -11,17 +11,19 @@
       "source": "/blog",
       "destination": "/blog/",
       "permanent": false
-    }
-  ],
-  "rewrites": [
+    },
     {
       "source": "/admin",
-      "destination": "/api/admin"
+      "destination": "/blog/admin/",
+      "permanent": false
     },
     {
       "source": "/admin/",
-      "destination": "/api/admin"
-    },
+      "destination": "/blog/admin/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     {
       "source": "/blog/admin",
       "destination": "/api/admin"
