@@ -61,7 +61,7 @@ async function listPosts(accessToken) {
 
 function quote(value) { return JSON.stringify(String(value ?? '').trim()); }
 function normalizeInput(input) {
-  const lang = String(input.lang || 'auto').trim();
+  const lang = String(input.lang || 'en').trim();
   if (!/^(auto|[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*)$/.test(lang)) {
     const error = new Error('Idioma de origem inválido.'); error.status = 400; throw error;
   }
