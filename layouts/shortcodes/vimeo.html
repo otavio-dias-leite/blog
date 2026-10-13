@@ -1,0 +1,9 @@
+{{- $id := .Get "id" | default (.Get 0) -}}
+{{- $title := .Get "title" | default "Vimeo video" -}}
+{{- if eq (len (findRE "^[0-9]{6,12}$" $id)) 1 -}}
+<div class="video-embed">
+  <iframe src="https://player.vimeo.com/video/{{ $id }}" title="{{ $title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
+{{- else -}}
+<p class="video-error">Invalid Vimeo video ID.</p>
+{{- end -}}
