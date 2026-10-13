@@ -2,7 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "otavio-blog-language-v7";
-  const CACHE_KEY = "otavio-blog-translation-cache-v5";
+  const CACHE_KEY = "otavio-blog-translation-cache-v6";
   const LANGUAGES = { "en-US": "en", "pt-BR": "pt", "zh-CN": "zh" };
   const TRANSLATORS = [
     async (text, source, target) => {
@@ -139,21 +139,18 @@
   }
 
   async function translateElements(elements, source, target, currentRun) {
-    const originals = elements.map(element => ({ element, html: getOriginal(element) }));
-    let cursor = 0;
-    const workers = Array.from({ length: Math.min(3, originals.length) }, async () => {
-      while (cursor < originals.length && currentRun === runId) {
-        const item = originals[cursor++];
-        try {
-          const translated = await translateHTML(item.html, source, target);
-          if (currentRun === runId) item.element.innerHTML = translated;
-        } catch (error) {
-          if (currentRun === runId) item.element.innerHTML = item.html;
-        }
+    // Translate serially: parallel requests frequently trigger provider throttling.
+    for (const element of elements) {
+      if (currentRun !== runId) return;
+      const original = getOriginal(element);
+      try {
+        const translated = await translateHTML(original, source, target);
+        if (currentRun === runId && translated) element.innerHTML = translated;
+      } catch {
+        if (currentRun === runId) element.innerHTML = original;
       }
-    });
-    await Promise.all(workers);
-    return;
+      await wait(180);
+    }
   }
 
   async function applyLanguage(requestedLanguage) {
