@@ -1,13 +1,14 @@
 ---
 title: "Vibe Codding"
 date: 2026-10-13T14:00:00-03:00
+lang: "en"
 draft: false
 ---
 
-Estou no segundo período de Ciências da Computação e também curso Engenharia Elétrica. Programar sempre foi um hobby: gosto de criar projetos, experimentar tecnologias e automatizar tarefas.
+I’m in my second semester of Computer Science, and I’m also studying Electrical Engineering. Programming has always been a hobby of mine: I enjoy building projects, experimenting with technologies, and automating tasks.
 
-Hoje, boa parte desse processo acontece com **vibe coding**. Tenho uma ideia, descrevo o que quero em um prompt e uso IA para transformar pensamentos soltos em código, aplicações ou até textos. Este blog é um exemplo: escrevo algumas ideias e a IA ajuda a estruturar e criar os posts.
+These days, a lot of that process involves **vibe coding**. I start with an idea, describe what I want in a prompt, and use AI to turn loose thoughts into code, applications, or even written content. This blog is one example: I provide a few rough ideas, and AI helps structure them and turn them into posts.
 
-Isso não significa deixar de aprender. Nos exercícios da faculdade, prefiro fazer na raça, desenvolver o raciocínio e entender cada etapa. Uso IA para acelerar a construção; uso a prática para fortalecer a base.
+That doesn’t mean I stop learning the fundamentals. For university assignments, I prefer to work things out myself, build my own reasoning, and understand every step. I use AI to speed up creation; I rely on practice to strengthen my foundations.
 
-No fim, gosto de construir coisas — seja programando, automatizando ou explorando novas ideias.
+At the end of the day, I enjoy building things — whether that means programming, automating tasks, or exploring new ideas.
