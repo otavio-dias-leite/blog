@@ -78,6 +78,15 @@
           <label class="field"><span class="label">Título</span><input id="title" class="input" maxlength="180" placeholder="Ex.: Como comecei com ESP32"></label>
           <label class="field"><span class="label">Slug</span><input id="slug" class="input" maxlength="90" placeholder="como-comecei-com-esp32"></label>
           <label class="field"><span class="label">Data de publicação</span><input id="date" class="input" type="datetime-local"></label>
+          <label class="field"><span class="label">Idioma original</span><select id="lang" class="select">
+            <option value="auto">Detectar automaticamente</option>
+            <option value="en">English</option>
+            <option value="pt-BR">Português (Brasil)</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+          </select></label>
           <div class="field"><span class="label">Status</span><label class="switch-row"><input id="draft" class="switch" type="checkbox"><span>Salvar como rascunho</span></label></div>
           <label class="field full"><span class="label">Descrição / resumo</span><input id="description" class="input" maxlength="220" placeholder="Uma frase curta que descreve o post"></label>
           <label class="field"><span class="label">Tags</span><input id="tags" class="input" placeholder="embedded, esp32, carreira"></label>
@@ -285,6 +294,7 @@
       $('title').value = post?.title || '';
       $('slug').value = post?.slug || '';
       $('date').value = post?.date ? localDateValue(new Date(post.date)) : localDateValue();
+      $('lang').value = post?.lang || 'auto';
       $('draft').checked = Boolean(post?.draft);
       $('description').value = post?.description || '';
       $('tags').value = (post?.tags || []).join(', ');
@@ -297,7 +307,7 @@
     }
 
     function postPayload() {
-      return { title:$('title').value.trim(), slug:slugify($('slug').value), date:isoFromInput($('date').value), draft:$('draft').checked, description:$('description').value.trim(), tags:csv($('tags').value), categories:csv($('categories').value), cover:$('cover').value.trim(), body:$('content').value };
+      return { title:$('title').value.trim(), slug:slugify($('slug').value), date:isoFromInput($('date').value), draft:$('draft').checked, lang:$('lang').value, description:$('description').value.trim(), tags:csv($('tags').value), categories:csv($('categories').value), cover:$('cover').value.trim(), body:$('content').value };
     }
 
     async function api(url, options={}) {
@@ -311,7 +321,7 @@
     function renderList() {
       const query = $('search').value.trim().toLowerCase();
       const posts = state.posts.filter(p => `${p.title} ${p.slug} ${p.description}`.toLowerCase().includes(query));
-      $('postList').innerHTML = posts.length ? posts.map(p => `<button class="post-item ${p.slug===state.currentSlug?'active':''}" data-slug="${escapeHtml(p.slug)}"><strong>${escapeHtml(p.title)}</strong><div class="post-meta"><span>${p.date ? new Date(p.date).toLocaleDateString('pt-BR') : 'sem data'}</span><span class="badge ${p.draft?'':'published'}">${p.draft?'Rascunho':'Publicado'}</span></div></button>`).join('') : '<div class="empty">Nenhum post encontrado.</div>';
+      $('postList').innerHTML = posts.length ? posts.map(p => `<button class="post-item ${p.slug===state.currentSlug?'active':''}" data-slug="${escapeHtml(p.slug)}"><strong>${escapeHtml(p.title)}</strong><div class="post-meta"><span>${p.date ? new Date(p.date).toLocaleDateString('pt-BR') : 'sem data'}</span><span class="badge ${p.draft?'':'published'}">${p.draft?'Rascunho':'Publicado'}</span><span class="badge">${escapeHtml(p.lang || 'auto')}</span></div></button>`).join('') : '<div class="empty">Nenhum post encontrado.</div>';
       $('postList').querySelectorAll('.post-item').forEach(el=>el.addEventListener('click',()=>openPost(el.dataset.slug)));
     }
 
@@ -336,7 +346,7 @@
           body = lines.slice(fmEnd+1).join('\n').replace(/^\n/,'');
         }
         const parseVal=(v)=>{ if(v===undefined)return ''; const x=v.trim(); if(x==='true')return true;if(x==='false')return false;try{return JSON.parse(x)}catch{return x.replace(/^"|"$/g,'')}};
-        setEditor({slug,title:parseVal(meta.title),date:parseVal(meta.date),draft:parseVal(meta.draft),description:parseVal(meta.description),tags:parseVal(meta.tags)||[],categories:parseVal(meta.categories)||[],cover:parseVal(meta.cover),body});
+        setEditor({slug,title:parseVal(meta.title),date:parseVal(meta.date),draft:parseVal(meta.draft),lang:parseVal(meta.lang)||'auto',description:parseVal(meta.description),tags:parseVal(meta.tags)||[],categories:parseVal(meta.categories)||[],cover:parseVal(meta.cover),body});
       } catch (e) { setStatus(e.message,'error'); }
     }
 
@@ -501,7 +511,7 @@
     let lastSavedSnapshot = '';
     function currentSnapshot() {
       return JSON.stringify({
-        title:$('title').value,slug:$('slug').value,date:$('date').value,draft:$('draft').checked,
+        title:$('title').value,slug:$('slug').value,date:$('date').value,draft:$('draft').checked,lang:$('lang').value,
         description:$('description').value,tags:$('tags').value,categories:$('categories').value,
         cover:$('cover').value,body:$('content').value
       });
