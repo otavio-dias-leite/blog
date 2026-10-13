@@ -1,101 +1,189 @@
 (() => {
   "use strict";
 
-  /*
-   * Local bilingual content for the posts currently published on the blog.
-   * This intentionally avoids third-party translation widgets and cookies.
-   * English is the source language; the PT-BR versions are stored here.
-   */
-  const STORAGE_KEY = "otavio-blog-language-v3";
-  const LANGUAGES = ["en-US", "pt-BR"];
-
-  const translations = {
-    "about-me": {
-      title: "Sobre mim",
-      html: [
-        "<p>Sou Otávio.</p>",
-        "<p>Estudo Engenharia Elétrica e Ciência da Computação. Gosto de entender como as coisas funcionam, desde hardware e eletrônica até software e Linux.</p>",
-        "<p>Este blog é simplesmente um espaço para anotações, experimentos e coisas que aprendo ao longo do caminho.</p>"
-      ].join("")
-    },
-    "career": {
-      title: "Carreira",
-      html: [
-        "<p>Decidi direcionar meus estudos e minha carreira para <strong>Segurança da Informação</strong>. Atualmente, estou fazendo cursos na área e construindo uma base mais sólida em redes, Linux, sistemas operacionais, programação e práticas de segurança.</p>",
-        "<p>Meu planejamento de certificações inclui a <strong>Cisco CCNA</strong>, a <strong>Certified Ethical Hacker (CEH)</strong> e a <strong>Offensive Security Certified Professional (OSCP)</strong>. Essas são metas que pretendo alcançar, não certificações que já possuo. Quero combinar conhecimentos sólidos de redes com habilidades práticas em análise de segurança e testes ofensivos éticos.</p>",
-        "<p>Até <strong>2030</strong>, meu objetivo é concluir uma pós-graduação em Segurança da Informação. Depois disso, pretendo seguir para um mestrado e, posteriormente, um doutorado com ênfase em pesquisa na área de segurança.</p>",
-        "<p>A linha de pesquisa que mais me interessa é <strong>hardware hacking</strong>: entender como hardware, firmware, dispositivos embarcados, interfaces de comunicação e sistemas conectados podem ser analisados, testados e protegidos. Quero estudar segurança além da camada de aplicação, alcançando os dispositivos físicos e os componentes de baixo nível que fazem os sistemas funcionar.</p>",
-        "<p>Esse caminho reúne minha formação técnica em Eletrotécnica, meus estudos em Engenharia Elétrica e Ciência da Computação e meu interesse de longa data por programação e sistemas embarcados. É nessa interseção que quero construir minha carreira profissional e acadêmica.</p>",
-        "<p><strong>Atualmente, estou buscando oportunidades em Segurança da Informação.</strong> Aceito participar de projetos colaborativos, estágios, trabalhos freelancer e outras oportunidades técnicas na área. Tenho especial interesse em atividades éticas e autorizadas, como pesquisa em segurança, análise de redes e sistemas, avaliação de vulnerabilidades e testes de hardware ou firmware.</p>"
-      ].join("")
-    }
+  // Posts may declare a source language in front matter (lang: "pt-BR").
+  // If omitted, LibreTranslate detects it automatically.
+  const STORAGE_KEY = "otavio-blog-language-v4";
+  const LANGUAGES = {
+    "en-US": "en",
+    "pt-BR": "pt"
   };
+  const API_URL = "https://translate.argosopentech.com/translate";
+  const originalNodes = new Map();
+  const memoryCache = new Map();
+  let persistentCache = {};
+
+  try {
+    persistentCache = JSON.parse(localStorage.getItem("otavio-blog-translation-cache-v1") || "{}");
+  } catch {
+    persistentCache = {};
+  }
 
   function readLanguage() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return LANGUAGES.includes(saved) ? saved : "en-US";
+      return Object.hasOwn(LANGUAGES, saved) ? saved : "en-US";
     } catch {
       return "en-US";
     }
   }
 
-  function originalSnapshot(element, key) {
-    if (!element.dataset[key]) {
-      element.dataset[key] = element.innerHTML;
-    }
-    return element.dataset[key];
+  function sourceCode(value) {
+    if (!value || value === "auto") return "auto";
+    return value.toLowerCase().split("-")[0];
   }
 
-  function applyLanguage(language) {
-    const selected = LANGUAGES.includes(language) ? language : "en-US";
-    const isPortuguese = selected === "pt-BR";
-    const slugContainer = document.querySelector("[data-post-slug]");
-    const slug = slugContainer?.dataset.postSlug || "";
+  function remember(node) {
+    if (!originalNodes.has(node)) originalNodes.set(node, node.nodeValue);
+    return originalNodes.get(node);
+  }
 
-    document.documentElement.lang = selected;
+  function cacheKey(text, source, target) {
+    return source + "|" + target + "|" + text;
+  }
 
+  async function translateText(text, source, target) {
+    const key = cacheKey(text, source, target);
+    if (memoryCache.has(key)) return memoryCache.get(key);
+    if (persistentCache[key]) {
+      memoryCache.set(key, persistentCache[key]);
+      return persistentCache[key];
+    }
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        q: text,
+        source,
+        target,
+        format: "text"
+      })
+    });
+
+    if (!response.ok) throw new Error("Translation service returned " + response.status);
+    const data = await response.json();
+    if (!data.translatedText) throw new Error("Translation service returned an empty result");
+
+    const translated = data.translatedText;
+    memoryCache.set(key, translated);
+    persistentCache[key] = translated;
+
+    // Keep the browser cache bounded.
+    const keys = Object.keys(persistentCache);
+    if (keys.length > 180) {
+      for (const oldKey of keys.slice(0, keys.length - 180)) delete persistentCache[oldKey];
+    }
+    try {
+      localStorage.setItem("otavio-blog-translation-cache-v1", JSON.stringify(persistentCache));
+    } catch {
+      // Translation still works for the current page if storage is unavailable.
+    }
+    return translated;
+  }
+
+  function collectTextNodes(root) {
+    const nodes = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        const parent = node.parentElement;
+        if (!parent || parent.closest("script,style,code,pre,textarea,button,svg,.comments,[aria-hidden='true']")) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    return nodes;
+  }
+
+  async function translateNodes(nodes, source, target) {
+    const queue = nodes.map(node => ({ node, text: remember(node) }));
+    let cursor = 0;
+    const workers = Array.from({ length: Math.min(3, queue.length) }, async () => {
+      while (cursor < queue.length) {
+        const item = queue[cursor++];
+        if (!item.text.trim()) continue;
+        try {
+          item.node.nodeValue = await translateText(item.text, source, target);
+        } catch (error) {
+          console.warn("Could not translate a blog text segment:", error);
+          item.node.nodeValue = item.text;
+        }
+      }
+    });
+    await Promise.all(workers);
+  }
+
+  function updateButtons(language) {
     document.querySelectorAll("[data-blog-language]").forEach(button => {
-      const active = button.dataset.blogLanguage === selected;
+      const active = button.dataset.blogLanguage === language;
       button.classList.toggle("active", active);
       button.setAttribute("aria-pressed", String(active));
     });
+  }
 
-    // Translate the visible post list without changing URLs or post order.
-    document.querySelectorAll("[data-post-title]").forEach(title => {
-      const card = title.closest("[data-post-slug]");
-      const postSlug = card?.dataset.postSlug || "";
-      const translated = translations[postSlug]?.title;
-      const original = originalSnapshot(title, "originalTitle");
+  function showStatus(message) {
+    let status = document.querySelector(".translation-status");
+    if (!status) {
+      status = document.createElement("p");
+      status.className = "translation-status";
+      status.setAttribute("role", "status");
+      const header = document.querySelector("header");
+      header?.insertAdjacentElement("afterend", status);
+    }
+    status.textContent = message || "";
+    status.hidden = !message;
+  }
 
-      title.textContent = isPortuguese && translated ? translated : original;
-    });
+  async function applyLanguage(language) {
+    const selected = Object.hasOwn(LANGUAGES, language) ? language : "en-US";
+    const target = LANGUAGES[selected];
+    document.documentElement.lang = selected;
+    updateButtons(selected);
+    showStatus("");
 
-    // Translate article heading and body from local text, not an external widget.
-    const articleTitle = document.querySelector("main.article [data-post-title]");
-    const articleContent = document.querySelector("main.article [data-post-content]");
-    const translation = translations[slug];
+    const cards = [...document.querySelectorAll("[data-post-title]")];
+    const article = document.querySelector("main.article");
+    const tasks = [];
 
-    if (articleTitle) {
-      const original = originalSnapshot(articleTitle, "originalTitle");
-      articleTitle.textContent = isPortuguese && translation ? translation.title : original;
-      if (!document.documentElement.dataset.originalDocumentTitle) {
-        document.documentElement.dataset.originalDocumentTitle = document.title;
+    for (const title of cards) {
+      const container = title.closest("[data-post-slug]") || title;
+      const source = sourceCode(container.dataset.postLanguage || "auto");
+      const node = title.firstChild;
+      if (!node || node.nodeType !== Node.TEXT_NODE) continue;
+      const original = remember(node);
+      if (source === target) {
+        node.nodeValue = original;
+      } else {
+        tasks.push(translateNodes([node], source, target));
       }
-      document.title = isPortuguese && translation
-        ? translation.title + " — Otávio Leite"
-        : document.documentElement.dataset.originalDocumentTitle;
     }
 
-    if (articleContent) {
-      const original = originalSnapshot(articleContent, "originalContent");
-      articleContent.innerHTML = isPortuguese && translation ? translation.html : original;
+    if (article) {
+      const source = sourceCode(article.dataset.postLanguage || "auto");
+      const nodes = collectTextNodes(article);
+      if (source === target) {
+        nodes.forEach(node => { node.nodeValue = remember(node); });
+      } else {
+        tasks.push(translateNodes(nodes, source, target));
+      }
+    }
+
+    try {
+      await Promise.all(tasks);
+      const heading = article?.querySelector("[data-post-title]");
+      if (heading) document.title = heading.textContent.trim() + " — Otávio Leite";
+    } catch (error) {
+      console.error("Blog translation failed:", error);
+      showStatus("Automatic translation is temporarily unavailable. Showing the original post.");
     }
 
     try {
       localStorage.setItem(STORAGE_KEY, selected);
     } catch {
-      // Page still switches language for the current visit if storage is blocked.
+      // The selected language remains active for this visit.
     }
   }
 
