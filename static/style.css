@@ -55,3 +55,5 @@
 .video-embed{position:relative;width:100%;aspect-ratio:16/9;margin:24px 0;background:#05030a;border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .video-embed iframe,.video-embed video{width:100%;height:100%;display:block;border:0}
 .video-error{color:#ff9ba6;border-left:3px solid #ff6b7a;padding:8px 12px}
+
+.translation-status{max-width:1160px;margin:10px auto;padding:8px 12px;color:var(--muted);font:500 .78rem var(--mono);border-left:2px solid var(--purple);background:rgba(23,16,37,.72)}.translation-status[data-state='error']{color:#ff9ba6;border-left-color:#ff6b7a}
