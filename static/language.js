@@ -79,6 +79,12 @@
     if (articleTitle) {
       const original = originalSnapshot(articleTitle, "originalTitle");
       articleTitle.textContent = isPortuguese && translation ? translation.title : original;
+      if (!document.documentElement.dataset.originalDocumentTitle) {
+        document.documentElement.dataset.originalDocumentTitle = document.title;
+      }
+      document.title = isPortuguese && translation
+        ? translation.title + " — Otávio Leite"
+        : document.documentElement.dataset.originalDocumentTitle;
     }
 
     if (articleContent) {
