@@ -4,77 +4,83 @@
   const STORAGE_KEY = "blog-language";
   const COOKIE_NAME = "googtrans";
   const LANGUAGES = ["en", "pt-BR"];
-  const COOKIE_PATHS = ["/", "/blog"];
+  let activeLanguage = "en";
 
-  function getSavedLanguage() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return LANGUAGES.includes(saved) ? saved : "en";
-    } catch {
-      return "en";
-    }
+  function readCookie(name) {
+    const prefix = name + "=";
+    const item = document.cookie.split(";").map(value => value.trim()).find(value => value.startsWith(prefix));
+    return item ? decodeURIComponent(item.slice(prefix.length)) : "";
   }
 
-  let activeLanguage = getSavedLanguage();
-
-  function setCookie(name, value, path, expires) {
-    document.cookie =
-      name + "=" + value +
-      (expires ? "; expires=" + expires.toUTCString() : "") +
-      "; path=" + path + "; SameSite=Lax";
-  }
-
-  function syncTranslationCookie(language) {
-    if (language === "pt-BR") {
-      // GTranslate's free widget stores the source and destination as /en/pt.
-      const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
-      COOKIE_PATHS.forEach((path) => setCookie(COOKIE_NAME, "/en/pt", path, expires));
-      return;
-    }
-
-    // English is the original language. Remove translations from earlier visits.
-    const expired = new Date(0);
-    COOKIE_PATHS.forEach((path) => setCookie(COOKIE_NAME, "", path, expired));
-  }
-
-  function renderButtons() {
-    document.querySelectorAll("[data-blog-language]").forEach((button) => {
-      const selected = button.dataset.blogLanguage === activeLanguage;
-      button.classList.toggle("active", selected);
-      button.setAttribute("aria-pressed", String(selected));
+  function writeCookie(value, expires) {
+    ["/", "/blog"].forEach(path => {
+      document.cookie = COOKIE_NAME + "=" + value +
+        (expires ? "; expires=" + expires.toUTCString() : "") +
+        "; path=" + path + "; SameSite=Lax";
     });
   }
 
-  function selectLanguage(language) {
-    if (!LANGUAGES.includes(language) || language === activeLanguage) return;
+  function detectActiveLanguage() {
+    const cookie = readCookie(COOKIE_NAME);
+    if (cookie.split("/").pop() === "pt") return "pt-BR";
 
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === "pt-BR" && !cookie) {
+        const expires = new Date(Date.now() + 365 * 864e5);
+        writeCookie("/en/pt", expires);
+        return "pt-BR";
+      }
+    } catch {
+      // English remains the default if browser storage is unavailable.
+    }
+    return "en";
+  }
+
+  function renderButtons() {
+    document.querySelectorAll("[data-blog-language]").forEach(link => {
+      const selected = link.dataset.blogLanguage === activeLanguage;
+      link.classList.toggle("active", selected);
+      link.setAttribute("aria-pressed", String(selected));
+    });
+  }
+
+  function rememberLanguage(language) {
+    if (!LANGUAGES.includes(language)) return;
     activeLanguage = language;
     try {
       localStorage.setItem(STORAGE_KEY, language);
     } catch {
-      // Cookie-based selection still works when localStorage is unavailable.
+      // GTranslate's own cookie continues to preserve the selected language.
     }
 
-    syncTranslationCookie(language);
+    if (language === "pt-BR") {
+      writeCookie("/en/pt", new Date(Date.now() + 365 * 864e5));
+    } else {
+      writeCookie("", new Date(0));
+    }
     renderButtons();
-    window.location.reload();
   }
 
-  // Configure the replacement widget before its deferred script executes.
+  // GTranslate reads this configuration and attaches behavior to data-gt-lang links.
   window.gtranslateSettings = {
     default_language: "en",
     languages: ["en", "pt"],
+    detect_browser_language: false,
     wrapper_selector: "#gtranslate_engine"
   };
 
-  // Restore the saved destination on every page, including article pages.
-  syncTranslationCookie(activeLanguage);
-  document.documentElement.lang = activeLanguage === "pt-BR" ? "pt-BR" : "en";
+  activeLanguage = detectActiveLanguage();
+  document.documentElement.lang = activeLanguage === "pt-BR" ? "pt-BR" : "en-US";
 
-  document.addEventListener("DOMContentLoaded", () => {
-    renderButtons();
-    document.querySelectorAll("[data-blog-language]").forEach((button) => {
-      button.addEventListener("click", () => selectLanguage(button.dataset.blogLanguage));
-    });
+  document.addEventListener("click", event => {
+    const link = event.target.closest("a[data-blog-language][data-gt-lang]");
+    if (!link) return;
+    rememberLanguage(link.dataset.blogLanguage);
+
+    // The same anchor carries data-gt-lang, so the GTranslate widget handles
+    // the actual translation; this listener only keeps the site's own UI in sync.
   });
+
+  document.addEventListener("DOMContentLoaded", renderButtons);
 })();
