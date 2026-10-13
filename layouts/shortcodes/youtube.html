@@ -1,0 +1,9 @@
+{{- $id := .Get "id" | default (.Get 0) -}}
+{{- $title := .Get "title" | default "YouTube video" -}}
+{{- if eq (len (findRE "^[A-Za-z0-9_-]{11}$" $id)) 1 -}}
+<div class="video-embed">
+  <iframe src="https://www.youtube-nocookie.com/embed/{{ $id }}" title="{{ $title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+{{- else -}}
+<p class="video-error">Invalid YouTube video ID.</p>
+{{- end -}}
