@@ -57,7 +57,7 @@
   }
 
   async function detectLanguage(text) {
-    const sample = String(text || "").replace(/\\s+/g, " ").trim().slice(0, 4500);
+    const sample = String(text || "").replace(/\s+/g, " ").trim().slice(0, 4500);
     if (!sample) return "auto";
     try {
       const result = await request("/detect", { q: sample });
