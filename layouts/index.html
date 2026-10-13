@@ -12,7 +12,7 @@
 <nav class="language-switch" aria-label="Language"><button type="button" data-blog-language="en-US" aria-pressed="true" class="active">EN-US</button><button type="button" data-blog-language="pt-BR" aria-pressed="false">PT-BR</button></nav></div></header>
 <main class="wrap posts">
 {{ range .Site.RegularPages.ByDate.Reverse }}
-<article data-post-slug="{{ .File.ContentBaseName }}"><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2 data-post-title>{{ .Title }}</h2></a><span>↗</span></article>
+<article data-post-slug="{{ .File.ContentBaseName }}" data-post-language="{{ .Params.lang | default "auto" }}"><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2 data-post-title>{{ .Title }}</h2></a><span>↗</span></article>
 {{ end }}
 </main>
 <script src="{{ "language.js" | relURL }}" defer></script></body></html>
