@@ -8,10 +8,10 @@
 <link rel="stylesheet" href="{{ "style.css" | relURL }}">
 </head>
 <body><div class="lock-watermark" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="11" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14.2v2.7"/></svg></div>
-<header><div class="wrap"><a class="brand" href="{{ "/blog" | relURL }}"><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="10" width="15" height="11" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14.2v2.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Otávio Leite</span></a><nav class="language-switch" aria-label="Language"><a href="#" data-blog-language="en" data-gt-lang="en" aria-pressed="true" class="active">EN-US</a><a href="#" data-blog-language="pt-BR" data-gt-lang="pt" aria-pressed="false">PT-BR</a></nav></div></header>
+<header><div class="wrap"><a class="brand" href="{{ "/blog" | relURL }}"><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="10" width="15" height="11" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14.2v2.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Otávio Leite</span></a><nav class="language-switch" aria-label="Language"><button type="button" data-blog-language="en-US" aria-pressed="true" class="active">EN-US</button><button type="button" data-blog-language="pt-BR" aria-pressed="false">PT-BR</button></nav></div></header>
 <main class="wrap posts">
 {{ range .Site.RegularPages.ByDate.Reverse }}
-<article><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2>{{ .Title }}</h2></a><span>↗</span></article>
+<article data-post-slug="{{ .File.ContentBaseName }}"><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2 data-post-title>{{ .Title }}</h2></a><span>↗</span></article>
 {{ end }}
 </main>
-<script src="{{ "language.js" | relURL }}" defer></script><script src="https://cdn.gtranslate.net/widgets/latest/base.js" defer></script></body></html>
+<script src="{{ "language.js" | relURL }}" defer></script></body></html>
