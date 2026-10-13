@@ -139,7 +139,7 @@
     let articleSource=sourceCode(article?.dataset.postLanguage||"auto");
     if(article && articleSource==="auto") articleSource=await detectLanguage(allArticleText);
     if(run!==activeRun) return;
-    const jobs=cardJobs.map(job=>translateNodes(job.nodes,job.source==="auto"?(await detectLanguage(remember(job.nodes[0]))):job.source,target,run));
+    const jobs=cardJobs.map(async job=>translateNodes(job.nodes,job.source==="auto"?(await detectLanguage(remember(job.nodes[0]))):job.source,target,run));
     if(article && articleSource!==target) jobs.push(translateNodes(articleNodes,articleSource,target,run));
     else if(article) articleNodes.forEach(node=>{node.nodeValue=remember(node);});
     const results=await Promise.all(jobs);
