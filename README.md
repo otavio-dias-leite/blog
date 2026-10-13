@@ -15,6 +15,25 @@ Blog em Hugo com painel administrativo próprio em `/admin/` (compatível també
 - Cada alteração gera commit no branch `main`; o GitHub Actions recompila o site público.
 - Sessão em cookie HttpOnly, Secure e criptografado no backend.
 
+
+## Editor, Markdown e mídia
+
+Acesse `/admin/` e entre com a conta GitHub `@otavio-dias-leite`. O painel permite criar posts, editar, renomear, salvar como rascunho, publicar, buscar e excluir. O conteúdo é salvo como Markdown em `content/posts/`; cada ação cria um commit no GitHub.
+
+O editor inclui pré-visualização, títulos, negrito, itálico, listas, listas de tarefas, citações, código, tabelas, links e imagens. Imagens podem ser enviadas pelo painel (JPG, PNG, WebP, GIF ou AVIF, até 2,5 MB); elas são guardadas em `static/uploads/` e inseridas automaticamente no post.
+
+Para vídeos, use os botões YouTube ou Vimeo no editor, ou insira os shortcodes manualmente:
+
+```md
+{{< youtube id="dQw4w9WgXcQ" >}}
+
+{{< vimeo id="76979871" >}}
+
+{{< video src="https://example.com/video.mp4" >}}
+```
+
+Os vídeos incorporados são renderizados em players responsivos. Para uploads de imagem, a rota `/api/media` exige uma sessão GitHub válida.
+
 ## Autenticação
 
 O login usa o fluxo OAuth web do GitHub com `state` e PKCE. O segredo do cliente fica apenas no backend (Vercel), nunca no navegador. A API também valida o login do GitHub antes de permitir leitura ou escrita dos posts.
