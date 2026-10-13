@@ -42,7 +42,7 @@ Não faça commit do segredo do GitHub ou do `SESSION_SECRET`.
 
 O projeto é estruturado para Vercel: Hugo gera o site público e as funções em `api/` fazem a autenticação e o CRUD no GitHub.
 
-O endereço público fica em `/blog/` e o editor autenticado em `/blog/admin/`.
+O endereço público fica em `/blog/` e o editor autenticado em `/admin/` (o endereço legado `/blog/admin/` também é aceito).
 
 > O site público continua sendo derivado dos arquivos Markdown do repositório. O painel administrativo não transforma o Hugo em uma aplicação JavaScript pesada; ele apenas grava os arquivos do conteúdo no GitHub.
 
