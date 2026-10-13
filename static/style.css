@@ -85,17 +85,7 @@ body { top: 0 !important; }
   background: #d8b8ff;
   border-color: #d8b8ff;
 }
-.translate-engine,
-#gtranslate_engine {
-  position: fixed !important;
-  left: -10000px !important;
-  top: -10000px !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
+
 .goog-te-banner-frame,
 .goog-te-menu-frame,
 .goog-te-balloon-frame,
