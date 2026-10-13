@@ -15,6 +15,14 @@
   ],
   "rewrites": [
     {
+      "source": "/admin",
+      "destination": "/api/admin"
+    },
+    {
+      "source": "/admin/",
+      "destination": "/api/admin"
+    },
+    {
       "source": "/blog/admin",
       "destination": "/api/admin"
     },
@@ -36,7 +44,7 @@
   },
   "headers": [
     {
-      "source": "/blog/admin/:path*",
+      "source": "/admin/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -54,6 +62,19 @@
         {
           "key": "Cache-Control",
           "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/blog/admin/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
         }
       ]
     }
