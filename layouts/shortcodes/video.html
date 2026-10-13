@@ -1,0 +1,11 @@
+{{- $src := .Get "src" -}}
+{{- if or (hasPrefix $src "https://") (hasPrefix $src "/blog/uploads/") -}}
+<div class="video-embed">
+  <video controls playsinline preload="metadata">
+    <source src="{{ $src }}">
+    Your browser does not support HTML video.
+  </video>
+</div>
+{{- else -}}
+<p class="video-error">Use an HTTPS video URL or a file under /blog/uploads/.</p>
+{{- end -}}
