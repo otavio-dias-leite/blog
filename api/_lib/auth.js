@@ -16,7 +16,11 @@ function originFromRequest(req) {
 }
 
 function callbackUrl(req) {
-  return process.env.GITHUB_CALLBACK_URL || `${originFromRequest(req)}/api/auth/callback`;
+  if (process.env.GITHUB_CALLBACK_URL) return process.env.GITHUB_CALLBACK_URL;
+  if (process.env.VERCEL_ENV === 'production' && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/api/auth/callback`;
+  }
+  return `${originFromRequest(req)}/api/auth/callback`;
 }
 
 function requireEnv() {
