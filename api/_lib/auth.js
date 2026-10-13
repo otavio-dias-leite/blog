@@ -10,9 +10,10 @@ const BRANCH = process.env.GITHUB_BRANCH || 'main';
 const ALLOWED_LOGIN = process.env.GITHUB_ALLOWED_LOGIN || 'otavio-dias-leite';
 
 function originFromRequest(req) {
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const host = req.headers.host;
-  return `${proto}://${host}`;
+  const proto = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  if (!host) throw new Error('Não foi possível identificar o domínio do site para iniciar o login.');
+  return `${proto}://${String(host).split(',')[0].trim()}`;
 }
 
 function callbackUrl(req) {
