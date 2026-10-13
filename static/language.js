@@ -21,21 +21,17 @@
       ? "; expires=" + new Date(Date.now() + days * 864e5).toUTCString()
       : "";
     document.cookie =
-      name + "=" + encodeURIComponent(value) + expires +
+      name + "=" + value + expires +
       "; path=" + path + "; SameSite=Lax";
   }
 
   function syncTranslationCookie(language) {
-    if (language === "en") {
-      // "auto" lets Google detect the source language and translate it to English.
-      writeCookie(COOKIE_NAME, "/auto/en", "/", 365);
-      writeCookie(COOKIE_NAME, "/auto/en", "/blog", 365);
-      return;
-    }
-
-    // Portuguese is the source language of the blog, so remove the translation.
-    writeCookie(COOKIE_NAME, "", "/", -1);
-    writeCookie(COOKIE_NAME, "", "/blog", -1);
+    // Let the translation engine detect each page's source language automatically.
+    // Google uses "pt" as the language code for Brazilian Portuguese.
+    const target = language === "pt-BR" ? "pt" : "en";
+    const value = "/auto/" + target;
+    writeCookie(COOKIE_NAME, value, "/", 365);
+    writeCookie(COOKIE_NAME, value, "/blog", 365);
   }
 
   function renderLanguageButtons() {
