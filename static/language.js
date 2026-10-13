@@ -167,7 +167,6 @@
           if (currentRun !== runId) return;
           if (source !== target) await translateElements(group, source, target, currentRun);
         } catch (error) {
-          failed = true;
         }
       }
     }
