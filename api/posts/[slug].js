@@ -1,22 +1,23 @@
 const {
-  allowedSlug,
-  githubRequest,
-  httpErrorStatus,
-  postFilePath,
-  requireSession,
-  BRANCH,
+  allowedSlug, githubRequest, httpErrorStatus, postFilePath, requireSession,
+  OWNER, REPO, BRANCH,
 } = require('../_lib/auth');
 
-function decodeContent(encoded) {
-  return Buffer.from(String(encoded).replace(/\s/g, ''), 'base64').toString('utf8');
+function decodeContent(encoded) { return Buffer.from(String(encoded).replace(/\s/g, ''), 'base64').toString('utf8'); }
+function quote(value) { return JSON.stringify(String(value ?? '').trim()); }
+function normalizeInput(input) {
+  const lang = String(input.lang || 'auto').trim();
+  if (!/^(auto|[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*)$/.test(lang)) {
+    const error = new Error('Idioma de origem inválido.'); error.status = 400; throw error;
+  }
+  if (String(input.body || '').length > 500000) {
+    const error = new Error('O conteúdo excede o limite de 500 KB.'); error.status = 413; throw error;
+  }
+  return { ...input, lang };
 }
-
-function quote(value) {
-  return JSON.stringify(String(value ?? '').trim());
-}
-
 function makeMarkdown(input) {
   const lines = ['---', `title: ${quote(input.title)}`, `date: ${quote(input.date)}`, `draft: ${Boolean(input.draft)}`];
+  if (input.lang && input.lang !== 'auto') lines.push(`lang: ${quote(input.lang)}`);
   if (input.description) lines.push(`description: ${quote(input.description)}`);
   if (input.tags?.length) lines.push(`tags: ${JSON.stringify(input.tags)}`);
   if (input.categories?.length) lines.push(`categories: ${JSON.stringify(input.categories)}`);
@@ -24,71 +25,63 @@ function makeMarkdown(input) {
   lines.push('---', '', String(input.body || '').trimEnd(), '');
   return lines.join('\n');
 }
-
 async function getFile(accessToken, slug) {
-  if (!allowedSlug(slug)) {
-    const error = new Error('Slug inválido.');
-    error.status = 400;
-    throw error;
-  }
+  if (!allowedSlug(slug)) { const error = new Error('Slug inválido.'); error.status = 400; throw error; }
   return githubRequest(postFilePath(slug), {}, accessToken);
+}
+async function assertTargetAvailable(accessToken, slug) {
+  try {
+    await getFile(accessToken, slug);
+    const error = new Error('Já existe uma postagem com esse slug.'); error.status = 409; throw error;
+  } catch (error) {
+    if (error.status === 409) throw error;
+    if (error.status !== 404) throw error;
+  }
 }
 
 module.exports = async function handler(req, res) {
   const session = requireSession(req, res);
   if (!session) return;
-
   const slug = String(req.query?.slug || '').replace(/\.md$/, '');
   try {
     if (req.method === 'GET') {
       const file = await getFile(session.accessToken, slug);
       return res.status(200).json({ slug, sha: file.sha, content: decodeContent(file.content), htmlUrl: file.html_url });
     }
-
     if (req.method === 'PUT') {
-      const input = req.body || {};
+      const input = normalizeInput(req.body || {});
       if (!input.slug || !allowedSlug(input.slug)) return res.status(400).json({ error: 'Slug inválido.' });
       if (!input.title?.trim()) return res.status(400).json({ error: 'Título obrigatório.' });
       if (!input.date) return res.status(400).json({ error: 'Data obrigatória.' });
-
       const current = await getFile(session.accessToken, slug);
+      const targetPath = `/repos/${OWNER}/${REPO}/contents/content/posts/${encodeURIComponent(input.slug)}.md`;
       const content = Buffer.from(makeMarkdown(input), 'utf8').toString('base64');
-      const targetPath = `/repos/${process.env.GITHUB_OWNER || 'otavio-dias-leite'}/${process.env.GITHUB_REPO || 'blog'}/contents/content/posts/${encodeURIComponent(input.slug)}.md`;
-
       if (input.slug === slug) {
         const result = await githubRequest(targetPath, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: `post: update ${input.slug}`, content, sha: current.sha, branch: BRANCH }),
         }, session.accessToken);
         return res.status(200).json({ ok: true, commitSha: result.commit?.sha || null });
       }
-
+      await assertTargetAvailable(session.accessToken, input.slug);
       await githubRequest(targetPath, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: `post: rename ${slug} to ${input.slug}`, content, branch: BRANCH }),
       }, session.accessToken);
-      await githubRequest(`/repos/${process.env.GITHUB_OWNER || 'otavio-dias-leite'}/${process.env.GITHUB_REPO || 'blog'}/contents/content/posts/${encodeURIComponent(slug)}.md`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+      await githubRequest(`/repos/${OWNER}/${REPO}/contents/content/posts/${encodeURIComponent(slug)}.md`, {
+        method: 'DELETE', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: `post: remove old slug ${slug}`, sha: current.sha, branch: BRANCH }),
       }, session.accessToken);
       return res.status(200).json({ ok: true });
     }
-
     if (req.method === 'DELETE') {
       const current = await getFile(session.accessToken, slug);
-      const owner = process.env.GITHUB_OWNER || 'otavio-dias-leite';
-      const repo = process.env.GITHUB_REPO || 'blog';
-      const result = await githubRequest(`/repos/${owner}/${repo}/contents/content/posts/${encodeURIComponent(slug)}.md`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+      const result = await githubRequest(`/repos/${OWNER}/${REPO}/contents/content/posts/${encodeURIComponent(slug)}.md`, {
+        method: 'DELETE', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: `post: delete ${slug}`, sha: current.sha, branch: BRANCH }),
       }, session.accessToken);
       return res.status(200).json({ ok: true, commitSha: result.commit?.sha || null });
     }
-
     return res.status(405).json({ error: 'Método não permitido.' });
   } catch (error) {
     return res.status(httpErrorStatus(error)).json({ error: error.message || 'Falha ao editar o post.' });
