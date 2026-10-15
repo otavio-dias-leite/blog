@@ -2,7 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "otavio-blog-language-v7";
-  const CACHE_KEY = "otavio-blog-translation-cache-v6";
+  const CACHE_KEY = "otavio-blog-translation-cache-v7";
   const LANGUAGES = { "en-US": "en", "pt-BR": "pt", "zh-CN": "zh" };
   const TRANSLATORS = [
     async (text, source, target) => {
