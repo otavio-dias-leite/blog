@@ -29,7 +29,7 @@ export default async function handler(req,res){
       const files=await gh(req,"content/posts?ref="+encodeURIComponent(config.branch));
       const posts=(Array.isArray(files)?files:[]).filter(f=>f.type==="file"&&f.name.endsWith(".md")).map(f=>({name:f.name,slug:f.name.replace(/\.md$/,""),sha:f.sha,url:f.html_url}));
       const details=await Promise.all(posts.map(async p=>{
-        try{const file=await gh(req,"content/posts/"+encodeURIComponent(p.name)+"?ref="+encodeURIComponent(config.branch));const text=decode(file.content);const title=text.match(/^title:\s*(?:"([^"]*)"|'([^']*)'|(.+))$/m);const draft=/^draft:\s*true\s*$/m.test(text);return {...p,title:(title?.[1]||title?.[2]||title?.[3]||p.slug).trim(),draft};}catch{return p;}
+        try{const file=await gh(req,"content/posts/"+encodeURIComponent(p.name)+"?ref="+encodeURIComponent(config.branch));const text=decode(file.content);const title=text.match(/^title:\s*(?:"([^"]*)"|'([^']*)'|(.+))$/m);const draft=/^draft:\s*true\s*$/m.test(text);return {...p,title:(title?.[1]||title?.[2]||title?.[3]||p.slug).trim(),draft,raw:text};}catch{return p;}
       }));
       return send(res,200,{posts:details.sort((a,b)=>a.name.localeCompare(b.name))});
     }
