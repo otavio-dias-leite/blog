@@ -1,5 +1,5 @@
 ---
-title: "Johnny Firmware: uma plataforma musical no M5Stack Cardputer ADV"
+title: "Johnny"
 date: 2026-10-15T18:00:00-03:00
 draft: false
 description: "Um projeto experimental de firmware para explorar música, síntese sonora e ferramentas de áudio em um dispositivo ESP32."
@@ -15,7 +15,6 @@ categories:
 lang: "pt-BR"
 ---
 
-# Johnny Firmware: uma plataforma musical no M5Stack Cardputer ADV
 
 O **Johnny Firmware** é um projeto experimental para o M5Stack Cardputer ADV. A proposta é explorar o dispositivo como uma pequena plataforma musical portátil, reunindo ferramentas de áudio em um firmware próprio e adaptado às limitações do hardware.
 
