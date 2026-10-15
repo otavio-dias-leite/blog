@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import {config,send,cookie,setCookie,clearCookie,encrypt,getSession} from "../_lib.js";
 
-const callbackUrl=req=>process.env.GITHUB_CALLBACK_URL||((req.headers["x-forwarded-proto"]||"https")+"//"+req.headers.host+"/api/auth/callback");
+const callbackUrl=req=>process.env.GITHUB_CALLBACK_URL||((req.headers["x-forwarded-proto"]||"https")+"://"+req.headers.host+"/api/auth/callback");
 const b64=b=>b.toString("base64url");
 function cookieLine(name,value,maxAge){let s=name+"="+encodeURIComponent(value)+"; Path=/; SameSite=Lax; Max-Age="+maxAge+"; HttpOnly";if(process.env.NODE_ENV==="production")s+="; Secure";return s;}
 export default async function handler(req,res){
