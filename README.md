@@ -1,29 +1,47 @@
 # Otávio Leite — Blog
 
-Blog em Hugo com painel administrativo próprio em `/admin/` (compatível também com `/blog/admin/`).
+Blog estático em Hugo, com tema preto/vermelho e painel administrativo em `/blog/admin/`.
 
-## Recursos
+## Painel administrativo
 
-- Interface de administração própria, responsiva e no mesmo estilo do blog.
-- Login via GitHub OAuth, restrito ao usuário `otavio-dias-leite`.
-- Os posts são armazenados como Markdown em `content/posts/*.md`.
-- Criar, editar, excluir e renomear posts.
-- Data/hora local preenchida automaticamente com o momento atual.
-- Slug automático, tags, categorias, descrição, capa e rascunho/publicado.
-- Editor Markdown com pré-visualização, tabelas, listas, blocos de código, upload de imagens e incorporação de YouTube, Vimeo e vídeos hospedados.
-- Painel responsivo com criação, edição, publicação como rascunho, exclusão, renomeação, busca e restauração de rascunho local.
-- Cada alteração gera commit no branch `main`; o GitHub Actions recompila o site público.
-- Sessão em cookie HttpOnly, Secure e criptografado no backend.
-- Conteúdo multilíngue: posts podem ser escritos em qualquer idioma; o idioma de origem é detectado automaticamente e o visitante escolhe inglês ou português.
-- Inglês é o idioma padrão para novas visitas; a preferência escolhida fica salva no navegador.
+O painel permite entrar com GitHub, listar publicações, criar posts, editar Markdown, salvar como rascunho, publicar e excluir arquivos em `content/posts/*.md`. Cada alteração gera um commit diretamente no branch configurado.
 
-## Idiomas e tradução automática
+A autenticação usa GitHub OAuth com `state` e PKCE. O backend valida a identidade na API do GitHub e permite somente a conta `otavio-dias-leite`. O token OAuth fica criptografado em cookie HttpOnly, Secure em produção, e não é enviado ao JavaScript do painel.
 
-O seletor no cabeçalho oferece **EN-US**, **PT-BR** e **中文 (chinês simplificado)**. O inglês é o padrão. Ao abrir um post, o blog traduz seu conteúdo para o idioma selecionado, mesmo quando o texto original foi escrito em outro idioma.
+### Configuração necessária
 
-A detecção de idioma é feita uma vez por artigo, usando uma amostra maior do texto, antes de traduzir para o idioma escolhido. A tradução usa o serviço público LibreTranslate (instância Argos Open Tech), com tentativas automáticas em caso de falha, concorrência limitada e cache local no navegador. Se a detecção falhar, o serviço de tradução ainda pode tentar identificar a origem automaticamente. Se a tradução estiver indisponível, o post permanece acessível no idioma original.
+O GitHub Pages executa apenas arquivos estáticos e não consegue executar as rotas seguras de OAuth. O painel completo exige deploy do projeto em uma hospedagem que execute as funções Node.js, como Vercel. O arquivo `vercel.json` já configura o build do Hugo e as funções em `api/`.
 
-Para indicar explicitamente o idioma de um post, adicione `lang` ao front matter:
+1. Crie um OAuth App em GitHub → Settings → Developer settings → OAuth Apps.
+2. Ative o fluxo OAuth web e use como callback `https://SEU-DOMINIO/api/auth/callback`.
+3. Importe este repositório na Vercel e configure as variáveis de ambiente:
+
+| Variável | Valor |
+|---|---|
+| `GITHUB_CLIENT_ID` | Client ID do OAuth App |
+| `GITHUB_CLIENT_SECRET` | Client Secret do OAuth App |
+| `SESSION_SECRET` | Segredo aleatório com pelo menos 32 caracteres |
+| `GITHUB_OWNER` | `otavio-dias-leite` |
+| `GITHUB_REPO` | `blog` |
+| `GITHUB_BRANCH` | `main` |
+| `GITHUB_ALLOWED_LOGIN` | `otavio-dias-leite` |
+| `GITHUB_CALLBACK_URL` | URL pública `/api/auth/callback` do domínio implantado |
+
+Gere o segredo de sessão com:
+
+```bash
+openssl rand -hex 32
+```
+
+Conceda ao OAuth App o escopo `public_repo`. Não coloque Client Secret ou SESSION_SECRET no código ou em arquivos versionados. Configure os mesmos valores nos ambientes Production e Preview que forem usados.
+
+Após o deploy, abra `https://SEU-DOMINIO/blog/admin/`. A conta GitHub autorizada é exclusivamente `@otavio-dias-leite`; qualquer outra conta recebe acesso negado. O endereço antigo do GitHub Pages não executa as funções de autenticação, a menos que o domínio seja apontado para a implantação com backend.
+
+## Idiomas e tradução
+
+O seletor público oferece EN-US, PT-BR e chinês simplificado (中文). O inglês é o idioma intermediário: o blog detecta o idioma original do post, normaliza a tradução para inglês e, em seguida, traduz para o idioma selecionado. A preferência é salva no navegador e as traduções ficam em cache local. Se o serviço de tradução estiver indisponível, o conteúdo original continua acessível.
+
+Posts podem ser escritos em qualquer idioma. Se desejar declarar a origem manualmente, informe `lang` no front matter; se omitir, a detecção automática será usada:
 
 ```yaml
 ---
@@ -32,58 +50,24 @@ lang: "pt-BR"
 ---
 ```
 
-Idiomas aceitos como origem incluem códigos ISO 639-1, como `en`, `pt-BR`, `es`, `fr`, `de` e `zh` (chinês). Se `lang` for omitido, a API recebe a origem como `auto` e detecta o idioma. Não é necessário criar duas versões do mesmo post.
+## Editor Markdown e mídia
 
-## Editor, Markdown e mídia
+O editor oferece títulos, negrito, listas, código, links, pré-visualização e shortcode de YouTube. Os posts são salvos como Markdown e o Hugo os publica no build seguinte.
 
-Acesse `/admin/` e entre com a conta GitHub `@otavio-dias-leite`. O painel permite criar posts, editar, renomear, salvar como rascunho, publicar, buscar e excluir. O conteúdo é salvo como Markdown em `content/posts/`; cada ação cria um commit no GitHub.
-
-O editor inclui pré-visualização, títulos, negrito, itálico, listas, listas de tarefas, citações, código, tabelas, links e imagens. Imagens podem ser enviadas pelo painel (JPG, PNG, WebP, GIF ou AVIF, até 2,5 MB); elas são guardadas em `static/uploads/` e inseridas automaticamente no post.
-
-Para vídeos, use os botões YouTube ou Vimeo no editor, ou insira os shortcodes manualmente:
+Shortcodes de vídeo disponíveis:
 
 ```md
 {{< youtube id="dQw4w9WgXcQ" >}}
-
 {{< vimeo id="76979871" >}}
-
 {{< video src="https://example.com/video.mp4" >}}
 ```
 
-Os vídeos incorporados são renderizados em players responsivos. Para uploads de imagem, a rota `/api/media` exige uma sessão GitHub válida.
+## Desenvolvimento local
 
-## Autenticação
-
-O login usa o fluxo OAuth web do GitHub com `state` e PKCE. O segredo do cliente fica apenas no backend (Vercel), nunca no navegador. A API também valida o login do GitHub antes de permitir leitura ou escrita dos posts.
-
-### 1. Criar o OAuth App no GitHub
-
-Em **Settings → Developer settings → OAuth Apps**, crie um OAuth App.
-
-Use:
-
-- Homepage URL: `https://SEU-DOMINIO/blog/`
-- Authorization callback URL: `https://SEU-DOMINIO/api/auth/callback`
-- Scope usado pelo projeto: `public_repo`
-
-### 2. Configurar variáveis de ambiente na Vercel
-
-Adicione as variáveis de `.env.example` no ambiente de produção (e Preview, quando necessário). Gere `SESSION_SECRET` com um valor aleatório forte, por exemplo:
+Instale Hugo Extended e execute:
 
 ```bash
-openssl rand -hex 32
+hugo server
 ```
 
-Não faça commit do segredo do GitHub ou do `SESSION_SECRET`.
-
-### 3. Deploy
-
-O projeto é estruturado para Vercel: Hugo gera o site público e as funções em `api/` fazem a autenticação e o CRUD no GitHub.
-
-O endereço público fica em `/blog/` e o editor autenticado em `/admin/` (o endereço legado `/blog/admin/` também é aceito).
-
-> O site público continua sendo derivado dos arquivos Markdown do repositório. O painel administrativo não transforma o Hugo em uma aplicação JavaScript pesada; ele apenas grava os arquivos do conteúdo no GitHub.
-
-## GitHub Actions
-
-O workflow original de GitHub Pages foi mantido como referência para o deploy do Hugo. Para usar o editor autenticado, publique este projeto em Vercel (ou em uma plataforma equivalente que execute as funções HTTP de `api/`).
+As funções OAuth não funcionam no servidor local sem as variáveis de ambiente e um endpoint público de callback OAuth.
