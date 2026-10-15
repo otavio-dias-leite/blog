@@ -42,15 +42,17 @@ function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":
 function simpleMarkdown(s){let x=escapeHTML(s);x=x.replace(/^### (.*)$/gm,"<h3>$1</h3>").replace(/^## (.*)$/gm,"<h2>$1</h2>").replace(/^# (.*)$/gm,"<h1>$1</h1>").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>").replace(/`([^`]+)`/g,"<code>$1</code>").replace(/^&gt; (.*)$/gm,"<blockquote>$1</blockquote>").replace(/\n/g,"<br>");return x}
 function renderPosts(){const box=$("posts");box.innerHTML="";if(!posts.length){box.textContent="Nenhuma publicação encontrada.";return}for(const p of posts){const row=document.createElement("div");row.className="post";const info=document.createElement("div");const title=document.createElement("strong");title.textContent=p.title||p.slug;const meta=document.createElement("small");meta.textContent=p.name+(p.draft?" · Rascunho":" · Publicado");info.append(title,meta);const actions=document.createElement("div");actions.className="post-actions";const edit=document.createElement("button");edit.textContent="Editar";edit.onclick=()=>editPost(p);const del=document.createElement("button");del.className="danger";del.textContent="Excluir";del.onclick=()=>deletePost(p);actions.append(edit,del);row.append(info,actions);box.append(row)}}
 async function loadPosts(){const d=await api("/api/posts");posts=d.posts||[];renderPosts()}
-function resetForm(){editing=null;$("form").reset();$("slug").value="";$("lang").value="auto";$("editor-title").textContent="Nova publicação";$("save").textContent="Publicar";$("preview").classList.add("hidden");$("body").classList.remove("hidden");message("")}
+function resetForm(){editing=null;$("form").reset();$("slug").value="";$("slug").disabled=false;$("lang").value="auto";$("editor-title").textContent="Nova publicação";$("save").textContent="Publicar";$("preview").classList.add("hidden");$("body").classList.remove("hidden");message("")}
 function editPost(p){
  editing=p;
- const parts=String(p.raw||"").split(/^---\\s*$/m),fm=parts[1]||"",body=parts.slice(2).join("").trim();
- const field=k=>{const m=fm.match(new RegExp("^"+k+":\\\\s*(.*)$","m"));if(!m)return "";try{return JSON.parse(m[1])}catch{return m[1].trim()}};
- const list=k=>{const v=field(k);return Array.isArray(v)?v.join(", "):String(v||"").replace(/^\\[|\\]$/g,"").replace(/["']/g,"")};
+ const raw=String(p.raw||""),first=raw.indexOf("---"),second=raw.indexOf("---",first+3);
+ const fm=first>=0&&second>first?raw.slice(first+3,second):"",body=second>first?raw.slice(second+3).trim():raw;
+ const field=k=>{const m=fm.match(new RegExp("^"+k+":\\s*(.*)$","m"));if(!m)return "";try{return JSON.parse(m[1])}catch{return m[1].trim()}};
+ const list=k=>{const v=field(k);return Array.isArray(v)?v.join(", "):String(v||"").replace("[","").replace("]","").replace(/["']/g,"")};
  $("editor-title").textContent="Editar publicação";$("save").textContent="Salvar alterações";
- $("title").value=p.title||p.slug;$("slug").value=p.slug;$("description").value=field("description")||"";
- $("lang").value=field("lang")||"auto";$("tags").value=list("tags");$("categories").value=list("categories");
+ $("title").value=p.title||p.slug;$("slug").value=p.slug;$("slug").disabled=true;
+ $("description").value=field("description")||"";$("lang").value=field("lang")||"auto";
+ $("tags").value=list("tags");$("categories").value=list("categories");
  $("body").value=body;$("draft").checked=!!p.draft;message("");$("editor").scrollIntoView({behavior:"smooth"});
 }
 async function deletePost(p){if(!confirm('Excluir "'+(p.title||p.slug)+'"? Esta ação remove o arquivo do repositório.'))return;try{await api("/api/posts",{method:"DELETE",body:JSON.stringify({name:p.name,sha:p.sha})});message("Publicação excluída.");await loadPosts()}catch(e){message(e.message,true)}}
