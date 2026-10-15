@@ -104,8 +104,17 @@
       const leading=original.match(/^\s*/)?.[0]||"",trailing=original.match(/\s*$/)?.[0]||"";
       const text=original.trim();
       if(!text)continue;
-      const result=await api("/translate",{q:text,source,target});
-      if(result.translatedText)node.nodeValue=leading+result.translatedText+trailing;
+      let english=text;
+      if(source!=="en"){
+        const first=await api("/translate",{q:english,source,target:"en"});
+        english=first.translatedText||english;
+      }
+      let translated=english;
+      if(target!=="en"){
+        const second=await api("/translate",{q:english,source:"en",target});
+        translated=second.translatedText||english;
+      }
+      if(translated)node.nodeValue=leading+translated+trailing;
     }
     const translated=template.innerHTML;
     cache.set(key,translated);savedCache[key]=translated;
