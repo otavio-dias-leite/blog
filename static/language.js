@@ -124,14 +124,6 @@
     return translated;
   }
 
-  function setButtons(language) {
-    document.querySelectorAll("[data-blog-language]").forEach(button => {
-      const active = button.dataset.blogLanguage === language;
-      button.classList.toggle("active", active);
-      button.setAttribute("aria-pressed", String(active));
-    });
-  }
-
   function getArticleBlocks(article) {
     const content = article.querySelector("[data-post-content]") || article.querySelector(".content");
     const title = article.querySelector("[data-post-title]");
@@ -167,7 +159,6 @@
     const target = LANGUAGES[language];
     const currentRun = ++runId;
     document.documentElement.lang = language;
-    setButtons(language);
 
     const article = document.querySelector("main.article");
     if (article) {
@@ -209,19 +200,18 @@
     try { localStorage.setItem(STORAGE_KEY, language); } catch {}
   }
 
-  document.addEventListener("click", event => {
-    const button = event.target.closest("[data-blog-language]");
-    if (!button) return;
-    event.preventDefault();
-    applyLanguage(button.dataset.blogLanguage);
-  });
+  function detectVisitorLanguage() {
+    const locales = [...(navigator.languages || []), navigator.language || ""]
+      .map(value => String(value).toLowerCase());
+    const locale = locales.find(Boolean) || "";
+    if (locales.some(value => value.startsWith("pt-br")) ||
+        (Intl.DateTimeFormat().resolvedOptions().timeZone || "").startsWith("America/") &&
+        locale.startsWith("pt")) return "pt-BR";
+    if (locales.some(value => value.startsWith("zh"))) return "zh-CN";
+    return "en-US";
+  }
 
   document.addEventListener("DOMContentLoaded", () => {
-    let language = "en-US";
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (Object.hasOwn(LANGUAGES, saved)) language = saved;
-    } catch {}
-    applyLanguage(language);
+    applyLanguage(detectVisitorLanguage());
   });
 })();
