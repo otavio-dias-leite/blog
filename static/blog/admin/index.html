@@ -4,21 +4,21 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>Blog Admin — Otávio Leite</title>
 <style>
-:root{color-scheme:dark;--bg:#070707;--panel:#151011;--line:rgba(239,48,59,.25);--text:#f5f2f2;--muted:#aaa0a1;--red:#ff303b;--red2:#d51d2a}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,rgba(105,12,20,.3),transparent 65%),var(--bg);color:var(--text);font:15px/1.6 Inter,system-ui,sans-serif}
+:root{color-scheme:dark;--bg:#070b12;--panel:#0d1522;--line:rgba(86,160,255,.2);--text:#f2f6fc;--muted:#a4b2c5;--blue:#398cff;--yellow:#ffd84d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,rgba(25,92,173,.22),transparent 65%),var(--bg);color:var(--text);font:15px/1.6 Inter,system-ui,sans-serif}
 .wrap{width:min(1120px,calc(100% - 32px));margin:34px auto 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px}
-.brand{color:var(--red);text-decoration:none;font:700 1rem monospace;letter-spacing:.08em}.muted{color:var(--muted)}h1,h2{line-height:1.2}h1{font-size:clamp(1.8rem,4vw,2.5rem);margin:28px 0 8px}h2{font-size:1.2rem}
-.card{background:rgba(21,16,17,.92);border:1px solid var(--line);border-radius:13px;padding:22px;margin:20px 0;box-shadow:0 12px 40px #0005}
-button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#211416;color:var(--text);font:600 .9rem inherit;text-decoration:none;cursor:pointer}
-button:hover,.btn:hover{border-color:var(--red);background:#321518}.primary{background:var(--red2);border-color:var(--red);color:#fff}.danger{color:#ff858b;border-color:#85333a;background:#241114}
-input,textarea,select{width:100%;border:1px solid var(--line);border-radius:8px;background:#0c090a;color:var(--text);padding:11px 12px;font:inherit;outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 2px #ff303b22}
+.brand{color:var(--blue-bright,var(--blue));text-decoration:none;font:700 1rem monospace;letter-spacing:.08em}.muted{color:var(--muted)}h1,h2{line-height:1.2}h1{font-size:clamp(1.8rem,4vw,2.5rem);margin:28px 0 8px}h2{font-size:1.2rem}
+.card{background:rgba(13,21,34,.94);border:1px solid var(--line);border-radius:13px;padding:22px;margin:20px 0;box-shadow:0 12px 40px #0005}
+button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#111d2d;color:var(--text);font:600 .9rem inherit;text-decoration:none;cursor:pointer}
+button:hover,.btn:hover{border-color:var(--blue);background:#172b43}.primary{background:var(--blue);border-color:var(--blue);color:#fff}.danger{color:var(--yellow);border-color:#8a7130;background:#241f12}
+input,textarea,select{width:100%;border:1px solid var(--line);border-radius:8px;background:#080e17;color:var(--text);padding:11px 12px;font:inherit;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 2px #398cff22}
 label{display:block;font-size:.82rem;color:var(--muted);margin:13px 0 6px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 #body{min-height:360px;resize:vertical;font:14px/1.65 ui-monospace,monospace}.post{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:14px 0;border-top:1px solid #ffffff12}.post strong{display:block}.post small{color:var(--muted)}.post-actions{display:flex;gap:8px;flex-shrink:0}
-#preview{border:1px solid var(--line);border-radius:8px;padding:16px;min-height:100px;overflow-wrap:anywhere;background:#0b0808}#preview pre{white-space:pre-wrap}
-#status{min-height:24px;color:var(--muted)}.hidden{display:none!important}.pill{font:12px monospace;color:#ff9ba0;border:1px solid var(--line);border-radius:20px;padding:3px 8px}
+#preview{border:1px solid var(--line);border-radius:8px;padding:16px;min-height:100px;overflow-wrap:anywhere;background:#080e17}#preview pre{white-space:pre-wrap}
+#status{min-height:24px;color:var(--muted)}.hidden{display:none!important}.pill{font:12px monospace;color:var(--yellow);border:1px solid var(--line);border-radius:20px;padding:3px 8px}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.post{align-items:flex-start;flex-direction:column}.post-actions{width:100%}.post-actions button{flex:1}.card{padding:16px}}
-</style></head>
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #ffd84d;outline-offset:3px}\nbutton:disabled{opacity:.55;cursor:wait}\n.card{box-shadow:0 14px 38px #0005}\n</style></head>
 <body><main class="wrap">
 <header class="top"><a class="brand" href="/blog/">OTAVIO LEITE / BLOG ADMIN</a><div id="account" class="muted">Checking session…</div></header>
 <section id="login" class="card hidden"><h1>Administração do blog</h1><p class="muted">Entre com o GitHub. Somente <strong>@otavio-dias-leite</strong> pode criar, editar ou excluir publicações.</p><a class="btn primary" href="/api/auth/login">Entrar com GitHub</a><p id="login-error" class="muted"></p></section>
@@ -37,7 +37,7 @@ label{display:block;font-size:.82rem;color:var(--muted);margin:13px 0 6px}.grid{
 <script>
 const $=id=>document.getElementById(id);let posts=[],editing=null,sessionUser=null;
 const api=async(url,options={})=>{const r=await fetch(url,{credentials:"same-origin",...options,headers:{"Content-Type":"application/json",...(options.headers||{})}});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.error||"Erro HTTP "+r.status);return data};
-function message(text,error=false){$("status").textContent=text;$("status").style.color=error?"#ff858b":"#aaa0a1"}
+function message(text,error=false){$("status").textContent=text;$("status").style.color=error?"var(--yellow)":"#aaa0a1"}
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function simpleMarkdown(s){let x=escapeHTML(s);x=x.replace(/^### (.*)$/gm,"<h3>$1</h3>").replace(/^## (.*)$/gm,"<h2>$1</h2>").replace(/^# (.*)$/gm,"<h1>$1</h1>").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>").replace(/`([^`]+)`/g,"<code>$1</code>").replace(/^&gt; (.*)$/gm,"<blockquote>$1</blockquote>").replace(/\n/g,"<br>");return x}
 function renderPosts(){const box=$("posts");box.innerHTML="";if(!posts.length){box.textContent="Nenhuma publicação encontrada.";return}for(const p of posts){const row=document.createElement("div");row.className="post";const info=document.createElement("div");const title=document.createElement("strong");title.textContent=p.title||p.slug;const meta=document.createElement("small");meta.textContent=p.name+(p.draft?" · Rascunho":" · Publicado");info.append(title,meta);const actions=document.createElement("div");actions.className="post-actions";const edit=document.createElement("button");edit.textContent="Editar";edit.onclick=()=>editPost(p);const del=document.createElement("button");del.className="danger";del.textContent="Excluir";del.onclick=()=>deletePost(p);actions.append(edit,del);row.append(info,actions);box.append(row)}}
