@@ -169,27 +169,7 @@
     document.documentElement.lang = language;
     setButtons(language);
 
-    const status = document.querySelector(".translation-status");
-    const messages = {
-      "en-US": { loading: "Translating content…", done: "Language updated.", error: "Some content could not be translated. The original text is still available." },
-      "pt-BR": { loading: "Traduzindo conteúdo…", done: "Idioma atualizado.", error: "Parte do conteúdo não pôde ser traduzida. O texto original continua disponível." },
-      "zh-CN": { loading: "正在翻译内容…", done: "语言已更新。", error: "部分内容无法翻译，仍可查看原文。" }
-    };
-    let failed = false;
-    const announce = (state, message) => {
-      if (!status) return;
-      status.dataset.state = state;
-      status.textContent = message;
-    };
-    announce("loading", messages[language].loading);
-    const uiElements = [...document.querySelectorAll("[data-translate]")];
-    uiElements.forEach(element => { element.innerHTML = getOriginal(element); });
-    if (target !== "en") {
-      try { await translateElements(uiElements, "en", target, currentRun); }
-      catch { failed = true; }
-    }
-
-    const article = document.querySelector("article.article");
+    const article = document.querySelector("main.article");
     if (article) {
       const blocks = getArticleBlocks(article);
       blocks.forEach(element => { element.innerHTML = getOriginal(element); });
@@ -199,18 +179,19 @@
         const source = declared === "auto" ? await detectLanguage(sample) : declared;
         if (currentRun !== runId) return;
         if (source !== target) await translateElements(blocks, source, target, currentRun);
-      } catch { failed = true; }
+      } catch (error) {
+      }
       if (currentRun !== runId) return;
       const heading = article.querySelector("[data-post-title]");
       if (heading) document.title = heading.textContent.trim() + " — Otávio Leite";
     } else {
-      const entries = [...document.querySelectorAll("[data-post-title],[data-post-summary]")];
-      entries.forEach(element => { element.innerHTML = getOriginal(element); });
-      const declaredLanguages = [...new Set(entries.map(element => sourceCode(
+      const titles = [...document.querySelectorAll("[data-post-title]")];
+      titles.forEach(element => { element.innerHTML = getOriginal(element); });
+      const declaredLanguages = [...new Set(titles.map(element => sourceCode(
         element.closest("[data-post-slug]")?.dataset.postLanguage || "auto"
       )))];
       for (const sourceDeclared of declaredLanguages) {
-        const group = entries.filter(element => sourceCode(
+        const group = titles.filter(element => sourceCode(
           element.closest("[data-post-slug]")?.dataset.postLanguage || "auto"
         ) === sourceDeclared);
         if (!group.length || currentRun !== runId) continue;
@@ -219,16 +200,13 @@
           const source = sourceDeclared === "auto" ? await detectLanguage(sample) : sourceDeclared;
           if (currentRun !== runId) return;
           if (source !== target) await translateElements(group, source, target, currentRun);
-        } catch { failed = true; }
+        } catch (error) {
+        }
       }
     }
 
     if (currentRun !== runId) return;
     try { localStorage.setItem(STORAGE_KEY, language); } catch {}
-    announce(failed ? "error" : "success", failed ? messages[language].error : messages[language].done);
-    if (!failed) setTimeout(() => {
-      if (status?.dataset.state === "success") { status.textContent = ""; status.dataset.state = ""; }
-    }, 2600);
   }
 
   document.addEventListener("click", event => {
