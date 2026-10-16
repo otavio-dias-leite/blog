@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{ "style.css" | relURL }}">
 </head>
 <body><div class="lock-watermark" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z"/></svg></div>
-<header><div class="wrap"><a class="brand" href="{{ "/blog" | relURL }}"><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z" fill="currentColor"/></svg><span>Otávio Leite</span></a><a class="admin-link" href="/blog/admin/" aria-label="Administração" title="Administração"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"/><path d="m19.4 13.5 1.1.9-1.1 1.9-1.4-.4a7.8 7.8 0 0 1-1.3.8l-.3 1.5h-2.2l-.5-1.4a7.7 7.7 0 0 1-1.5 0l-.7 1.2-2-.9.2-1.5a7.7 7.7 0 0 1-1.1-1.1l-1.5.2-.8-2 1.2-.8a7.7 7.7 0 0 1 0-1.5l-1.2-.8.8-2 1.5.2a7.7 7.7 0 0 1 1.1-1.1l-.2-1.5 2-.9.7 1.2a7.7 7.7 0 0 1 1.5 0l.5-1.4h2.2l.3 1.5a7.8 7.8 0 0 1 1.3.8l1.4-.4 1.1 1.9-1.1.9a7.7 7.7 0 0 1 0 1.5Z"/></svg></a>
+<header><div class="wrap"><a class="brand" href="{{ "/blog" | relURL }}"><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z" fill="currentColor"/></svg><span>Otávio Leite</span></a>
 <nav class="language-switch" aria-label="Language"><button type="button" data-blog-language="en-US" aria-pressed="true" class="active">EN-US</button><button type="button" data-blog-language="pt-BR" aria-pressed="false">PT-BR</button><button type="button" data-blog-language="zh-CN" aria-label="Mandarin, Simplified Chinese" aria-pressed="false">中文</button></nav></div></header>
 <main class="wrap posts">
 {{ range .Site.RegularPages.ByDate.Reverse }}
