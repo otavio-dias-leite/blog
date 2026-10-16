@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://otavio-dias-leite.github.io/blog/sitemap.xml
