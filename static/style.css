@@ -140,3 +140,26 @@ header .wrap{justify-content:space-between;min-height:70px}
 /* Disable all glitch layers and glitch animations across the blog. */
 .glitch,.glitch::before,.glitch::after,.blog-intro h1::before,.blog-intro h1::after{animation:none!important;clip-path:none!important;transform:none!important;text-shadow:none!important;mix-blend-mode:normal!important}
 .glitch::before,.glitch::after,.blog-intro h1::before,.blog-intro h1::after{content:none!important;display:none!important}
+
+/* Shared portfolio/blog identity: midnight blue, lightning yellow and restrained teal. */
+:root{--bg:#071321;--line:rgba(76,157,213,.22);--purple:#ffd447;--lavender:#a9c9df;--text:#f4f8fc;--muted:#a9bac9}
+html{background:#071321}
+body{background-color:#071321;background-image:radial-gradient(ellipse at 50% -10%,rgba(21,91,139,.34),transparent 72%),linear-gradient(rgba(82,153,194,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(82,153,194,.045) 1px,transparent 1px),linear-gradient(rgba(82,153,194,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(82,153,194,.014) 1px,transparent 1px)}
+header{background:rgba(4,12,21,.94);border-color:rgba(76,157,213,.24)}
+.brand{color:#f4f8fc;text-shadow:0 0 14px rgba(255,212,71,.12)}
+.brand .lock-icon{fill:#ffd447!important;filter:drop-shadow(0 0 7px rgba(255,212,71,.35))}
+.posts article{border-color:rgba(76,157,213,.22)}
+.posts article:hover{background:rgba(15,39,61,.82)}
+.posts article>span,.content a:hover{color:#ffd447}
+.content a{color:#a9c9df}
+.content pre{background:#091725;border-color:rgba(76,157,213,.24)}
+.lang,.language-switch{border-color:rgba(76,157,213,.28)}
+.lang button.active,.language-switch button.active{background:#ffd447;color:#18202a;border-color:#ffd447;box-shadow:0 0 16px rgba(255,212,71,.14)}
+.lang button:hover,.language-switch button:hover{background:rgba(255,212,71,.12);color:#ffd447;border-color:#ffd447}
+.translation-status{border-left-color:#ffd447;background:rgba(8,20,33,.82)}
+.translation-status[data-state='error'],.video-error{color:#f1c96a;border-left-color:#d5a92c}
+.video-embed{border-color:rgba(76,157,213,.24)}
+:focus-visible{outline:2px solid #ffd447;outline-offset:3px}
+.profile-photo{width:46px;height:46px;object-fit:cover;border-radius:50%;border:2px solid #ffd447;padding:2px;background:#0b2740;box-shadow:0 0 0 3px rgba(255,212,71,.09),0 0 18px rgba(40,145,183,.2);margin-left:auto;flex:0 0 auto}
+header .wrap{gap:16px}
+@media(max-width:700px){.profile-photo{width:39px;height:39px}header .wrap{gap:10px}}
