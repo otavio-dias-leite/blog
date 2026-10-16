@@ -23,13 +23,13 @@
 <div class="translation-status" role="status" aria-live="polite" aria-atomic="true"></div>
 <main id="main" class="wrap">
 <section class="blog-intro">
-<p class="eyebrow">PERSONAL BLOG · ENGINEERING · SOFTWARE</p>
-<h1>Ideas become<br><span>things that work.</span></h1>
-<p class="description">Notes, experiments and projects at the intersection of engineering, software, hardware and curiosity.</p>
-<p class="availability">Exploring, learning and building — one project at a time.</p>
+<p class="eyebrow" data-translate>PERSONAL BLOG · ENGINEERING · SOFTWARE</p>
+<h1 data-translate>Ideas become<br><span>things that work.</span></h1>
+<p class="description" data-translate>Notes, experiments and projects at the intersection of engineering, software, hardware and curiosity.</p>
+<p class="availability" data-translate>Exploring, learning and building — one project at a time.</p>
 </section>
 <section class="posts" aria-labelledby="posts-heading">
-<div class="section-heading"><h2 id="posts-heading">Latest writing</h2><p>{{ len .Site.RegularPages }} ARTICLES</p></div>
+<div class="section-heading"><h2 id="posts-heading" data-translate>Latest writing</h2><p>{{ len .Site.RegularPages }} ARTICLES</p></div>
 <div class="posts-list">
 {{ range .Site.RegularPages.ByDate.Reverse }}
 <article data-post-slug="{{ .File.ContentBaseName }}" data-post-language="{{ .Params.lang | default "auto" }}">
