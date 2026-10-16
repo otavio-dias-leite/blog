@@ -55,24 +55,24 @@
 
 
 
-/* Portfolio identity: midnight blue, electric blue and lightning yellow */
+/* Portfolio identity: midnight blue, electric blue and neon cyan */
 :root{--bg:#05080d;--line:rgba(77,163,255,.24);--lavender:#91caff;--purple:#4da3ff;--text:#f2f8ff;--muted:#a8bad0}
 body{background-color:#05080d;background-image:radial-gradient(ellipse at 50% -10%,rgba(23,105,210,.30),transparent 70%),linear-gradient(rgba(77,163,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(77,163,255,.055) 1px,transparent 1px),linear-gradient(rgba(77,163,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(77,163,255,.018) 1px,transparent 1px);background-size:100% 100%,40px 40px,40px 40px,10px 10px,10px 10px}
 header{background:rgba(5,14,23,.88);border-color:rgba(77,163,255,.2)}
 .brand{color:#4da3ff;text-shadow:0 0 12px rgba(57,139,255,.25)}
 .posts article:hover{background:rgba(12,28,47,.82)}
-.posts article>span{color:#ffd43b}
+.posts article>span{color:#00e5ff}
 .content a{color:#91caff}.content pre{background:#080e17;border-color:rgba(77,163,255,.22)}
 .language-switch button{border-color:rgba(77,163,255,.24)}
 .language-switch button:hover,.language-switch button:focus{background:#1769d2;color:#fff;border-color:#4da3ff}
 .language-switch button.active{color:#061326;background:linear-gradient(135deg,#91caff,#1769d2);border-color:#4da3ff;box-shadow:0 0 16px rgba(57,139,255,.25)}
 .language-switch button.active:hover,.language-switch button.active:focus{color:#061326;background:#91caff;border-color:#91caff}
 .translation-status{border-left-color:#4da3ff;background:rgba(8,15,25,.78)}
-.translation-status[data-state='error']{color:#ffd43b;border-left-color:#ffd43b}
-.video-error{color:#ffd43b;border-left-color:#ffd43b}
-:focus-visible{outline:2px solid #ffd43b;outline-offset:3px}
+.translation-status[data-state='error']{color:#00e5ff;border-left-color:#00e5ff}
+.video-error{color:#00e5ff;border-left-color:#00e5ff}
+:focus-visible{outline:2px solid #00e5ff;outline-offset:3px}
 
-.brand .lock-icon{fill:#ffd43b;stroke:none;filter:drop-shadow(0 0 7px rgba(255,212,59,.22))}.lock-watermark svg{stroke:none;fill:#4da3ff;opacity:.045}
+.brand .lock-icon{fill:#00e5ff;stroke:none;filter:drop-shadow(0 0 7px rgba(0,229,255,.22))}.lock-watermark svg{stroke:none;fill:#4da3ff;opacity:.045}
 
 
 /* Portfolio parity: same header, palette and segmented language control */
@@ -99,7 +99,7 @@ body{
 header{background:rgba(3,7,12,.94);border-color:rgba(53,145,255,.28)}
 header .wrap{justify-content:space-between;min-height:70px}
 .brand{color:#f3f7fc;text-shadow:0 0 16px rgba(53,145,255,.26)}
-.brand .lock-icon{color:#ffd43b;filter:drop-shadow(0 0 7px rgba(255,212,59,.22))}
+.brand .lock-icon{color:#00e5ff;filter:drop-shadow(0 0 7px rgba(0,229,255,.22))}
 .lang{
   display:flex;align-items:center;gap:0;
   margin-left:auto;
@@ -117,20 +117,20 @@ header .wrap{justify-content:space-between;min-height:70px}
 }
 .lang button:hover{background:rgba(77,163,255,.12);color:#8fc7ff}
 .lang button.active{background:#4da3ff;color:#061326;font-weight:700;box-shadow:none}
-.lang button:focus-visible{outline:2px solid #ffd43b;outline-offset:-2px}
+.lang button:focus-visible{outline:2px solid #00e5ff;outline-offset:-2px}
 .posts article{border-color:rgba(53,145,255,.24)}
 .posts article:hover{background:rgba(12,28,47,.82)}
 .posts h2{color:#f3f7fc}
-.posts article>span{color:#ffd43b}
+.posts article>span{color:#00e5ff}
 .posts time,.article>time{color:#9eafc3}
 .article h1{color:#f3f7fc}
 .content{color:#dce8f5}
 .content a{color:#8fc7ff}
-.content a:hover{color:#ffd43b}
+.content a:hover{color:#00e5ff}
 .content pre{background:#080e17;border-color:rgba(53,145,255,.24)}
 .translation-status{border-left-color:#4da3ff;background:rgba(8,15,25,.78)}
-.translation-status[data-state='error']{color:#ffd43b;border-left-color:#ffd43b}
-.video-error{color:#ffd43b;border-left-color:#ffd43b}
+.translation-status[data-state='error']{color:#00e5ff;border-left-color:#00e5ff}
+.video-error{color:#00e5ff;border-left-color:#00e5ff}
 @media(max-width:700px){
   header .wrap{gap:12px;min-height:64px}
   .lang button{padding:.35rem .48rem;font-size:.68rem}
