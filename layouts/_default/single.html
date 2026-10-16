@@ -23,14 +23,14 @@
 <div class="translation-status" role="status" aria-live="polite" aria-atomic="true"></div>
 <main class="wrap article-shell">
 <article class="article" data-post-slug="{{ .File.ContentBaseName }}" data-post-language="{{ .Params.lang | default "auto" }}">
-<a class="back-link" href="{{ "/" | relURL }}">← <span>All articles</span></a>
+<a class="back-link" href="{{ "/" | relURL }}">← <span data-translate>All articles</span></a>
 <header class="article-header">
 <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 January 2006" }}</time>
 <h1 data-post-title>{{ .Title }}</h1>
-<div class="article-meta"><span>{{ .ReadingTime }} min read</span>{{ with .Params.categories }}<span>·</span><span>{{ delimit . ", " }}</span>{{ end }}</div>
+<div class="article-meta"><span data-translate>{{ .ReadingTime }} min read</span>{{ with .Params.categories }}<span>·</span><span>{{ delimit . ", " }}</span>{{ end }}</div>
 </header>
 <div class="content" id="article-content" data-post-content>{{ .Content }}</div>
-<div class="comments"><h2>Discussion</h2><script src="https://utteranc.es/client.js" repo="otavio-dias-leite/blog" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script></div>
+<div class="comments"><h2 data-translate>Discussion</h2><script src="https://utteranc.es/client.js" repo="otavio-dias-leite/blog" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script></div>
 </article></main>
 <footer><div class="wrap">© {{ now.Year }} Otávio Leite</div></footer>
 <script src="{{ "language.js" | relURL }}" defer></script></body></html>
