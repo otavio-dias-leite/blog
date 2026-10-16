@@ -2,7 +2,15 @@
 <html lang="en-US">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{ .Site.Title }}</title>
+<title>Otávio Leite — Blog | Embedded Systems, Programming & Information Security</title>
+<meta name="description" content="Notes, projects and experiments by Otávio Leite on embedded systems, electronics, computer science, programming and information security.">
+<link rel="canonical" href="{{ .Site.BaseURL }}">
+<meta property="og:type" content="website"><meta property="og:title" content="Otávio Leite — Blog">
+<meta property="og:description" content="Projects and technical notes on embedded systems, electronics, programming and information security.">
+<meta property="og:url" content="{{ .Site.BaseURL }}"><meta property="og:site_name" content="Otávio Leite">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Otávio Leite — Blog">
+<meta name="twitter:description" content="Embedded systems, electronics, programming and information security.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Otávio Leite — Blog","url":{{ .Site.BaseURL | jsonify }},"description":"Technical notes and projects on embedded systems, electronics, programming and information security.","inLanguage":["en","pt-BR","zh-CN"],"author":{"@type":"Person","name":"Otávio Leite","url":"https://otavio-dias-leite.github.io/portfolio/"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ "style.css" | relURL }}">
@@ -10,6 +18,15 @@
 <body><div class="lock-watermark" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z"/></svg></div>
 <header><div class="wrap"><a class="brand" href="{{ "/blog" | relURL }}"><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z" fill="#4da3ff"/></svg><span>Otávio Leite</span></a>
 <nav class="lang language-switch" aria-label="Language"><button type="button" data-blog-language="en-US" aria-pressed="true" class="active">EN-US</button><button type="button" data-blog-language="pt-BR" aria-pressed="false">PT-BR</button><button type="button" data-blog-language="zh-CN" aria-label="Mandarin, Simplified Chinese" aria-pressed="false">中文</button></nav></div></header>
+<section class="wrap featured-project" data-post-slug="mp3-player-featured" data-post-language="en">
+<div class="project-kicker" data-post-title>FEATURED PROJECT / EMBEDDED AUDIO</div>
+<h1 data-post-title>MP3 Player for M5Stack Cardputer ADV</h1>
+<p data-post-title>A dedicated MP3 firmware project for the Cardputer ADV. Browse the project, read the documentation and get the source code.</p>
+<div class="project-links">
+<a data-post-title href="https://otavio-dias-leite.github.io/mp3player/">OPEN MP3 PLAYER SITE ↗</a>
+<a data-post-title href="https://github.com/otavio-dias-leite/mp3player">GITHUB REPOSITORY ↗</a>
+</div>
+</section>
 <main class="wrap posts">
 {{ range .Site.RegularPages.ByDate.Reverse }}
 <article data-post-slug="{{ .File.ContentBaseName }}" data-post-language="{{ .Params.lang | default "auto" }}"><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2 data-post-title>{{ .Title }}</h2></a><span>↗</span></article>
