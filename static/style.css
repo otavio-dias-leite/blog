@@ -163,3 +163,8 @@ header{background:rgba(4,12,21,.94);border-color:rgba(76,157,213,.24)}
 .profile-photo{width:46px;height:46px;object-fit:cover;border-radius:50%;border:2px solid #ffd447;padding:2px;background:#0b2740;box-shadow:0 0 0 3px rgba(255,212,71,.09),0 0 18px rgba(40,145,183,.2);margin-left:auto;flex:0 0 auto}
 header .wrap{gap:16px}
 @media(max-width:700px){.profile-photo{width:39px;height:39px}header .wrap{gap:10px}}
+
+/* Profile image hover interaction */
+.profile-photo{position:relative;transform:scale(1);transform-origin:top right;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;z-index:10;cursor:pointer}
+.profile-photo:hover,.profile-photo:focus-visible{transform:scale(1.28);box-shadow:0 0 0 4px rgba(255,212,71,.16),0 8px 26px rgba(0,0,0,.32);border-color:#54c6a5}
+@media(prefers-reduced-motion:reduce){.profile-photo{transition:none}}
