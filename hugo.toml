@@ -6,3 +6,4 @@ title = 'Otávio Leite'
 [taxonomies]
   tag = "tags"
   category = "categories"
+enableRobotsTXT = true
