@@ -135,3 +135,12 @@ header .wrap{justify-content:space-between;min-height:70px}
   header .wrap{gap:12px;min-height:64px}
   .lang button{padding:.35rem .48rem;font-size:.68rem}
 }
+
+.featured-project{margin-top:38px;margin-bottom:8px;padding:26px 24px;border:1px solid rgba(77,163,255,.32);border-radius:12px;background:linear-gradient(135deg,rgba(10,35,62,.82),rgba(5,10,20,.9));box-shadow:0 0 32px rgba(45,135,255,.08)}
+.featured-project .project-kicker{font:500 .72rem var(--mono);letter-spacing:.12em;color:#00e5ff;margin-bottom:12px}
+.featured-project h1{font:700 clamp(1.1rem,2.4vw,1.65rem) var(--display);color:#eaf5ff;margin:0 0 10px}
+.featured-project p{color:var(--muted);max-width:760px;line-height:1.7;margin:0 0 18px}
+.project-links{display:flex;flex-wrap:wrap;gap:12px}
+.project-links a{font:600 .76rem var(--mono);letter-spacing:.04em;color:#8ccaff;text-decoration:none;border:1px solid rgba(77,163,255,.32);padding:10px 13px;border-radius:6px}
+.project-links a:hover{color:#00e5ff;border-color:#00e5ff;background:rgba(0,229,255,.06)}
+@media(max-width:600px){.featured-project{padding:20px 16px}.project-links{flex-direction:column;align-items:flex-start}}
