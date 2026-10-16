@@ -4,14 +4,12 @@ date: 2026-10-07T21:00:00-03:00
 draft: false
 ---
 
-I have decided to direct my studies and career toward **Information Security**. I am currently taking courses in the field and building a stronger foundation in networking, Linux, operating systems, programming, and security practices.
+My main technical interest is **embedded systems**: the intersection of electronics, programming, firmware, and hardware. I enjoy understanding how devices work at a low level and building solutions that connect software to the physical world.
 
-My certification roadmap includes the **Cisco CCNA**, **Certified Ethical Hacker (CEH)**, and **Offensive Security Certified Professional (OSCP)**. These are goals I am working toward, not certifications I have already earned. I want to combine solid networking knowledge with practical skills in security analysis and ethical offensive testing.
+I have developed and continue to develop embedded-systems projects in different contexts: personal projects, professional activities, and informal or independent initiatives. These experiences let me explore different platforms, components, microcontrollers, interfaces, and practical applications.
 
-By **2030**, my goal is to complete a postgraduate specialization in Information Security. After that, I intend to pursue a master's degree and, later, a doctorate with an emphasis on security research.
+My academic goal is to pursue a **postgraduate specialization in Embedded Systems for IoT (Internet of Things)**. I want to deepen my knowledge of connected devices, firmware development, electronics, communication protocols, and the design of reliable embedded solutions.
 
-The research direction that interests me most is **hardware hacking**: understanding how hardware, firmware, embedded devices, communication interfaces, and connected systems can be analyzed, tested, and secured. I want to study security beyond the application layer, reaching the physical devices and low-level components that make systems work.
+I am currently looking for **employment, internships, freelance projects, and other professional opportunities in embedded systems and related areas**. I am interested in contributing to teams and projects involving firmware, microcontrollers, electronics, IoT, prototyping, hardware-software integration, and technical development.
 
-This path brings together my technical background in Electrotechnics, my studies in Electrical Engineering and Computer Science, and my long-standing interest in programming and embedded systems. It is the intersection where I want to build my professional and academic career.
-
-**At the moment, I am looking for opportunities in Information Security.** I am open to collaborative projects, internships, freelance work, and other technical opportunities in the field. I am especially interested in ethical and authorized activities such as security research, network and system analysis, vulnerability assessment, and hardware or firmware testing.
+This blog will also serve as a growing record of my work and learning. It will bring together projects involving many different types of embedded systems, platforms, architectures, and applications — from small experiments and prototypes to more complete practical solutions. The goal is to document what I build, the problems I encounter, and what I learn along the way.
