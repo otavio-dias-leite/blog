@@ -135,3 +135,8 @@ header .wrap{justify-content:space-between;min-height:70px}
   header .wrap{gap:12px;min-height:64px}
   .lang button{padding:.35rem .48rem;font-size:.68rem}
 }
+
+
+/* Disable all glitch layers and glitch animations across the blog. */
+.glitch,.glitch::before,.glitch::after,.blog-intro h1::before,.blog-intro h1::after{animation:none!important;clip-path:none!important;transform:none!important;text-shadow:none!important;mix-blend-mode:normal!important}
+.glitch::before,.glitch::after,.blog-intro h1::before,.blog-intro h1::after{content:none!important;display:none!important}
