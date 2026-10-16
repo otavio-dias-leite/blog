@@ -77,3 +77,5 @@ header{background:rgba(5,14,23,.88);border-color:rgba(77,163,255,.2)}
 .translation-status[data-state='error']{color:#ffd43b;border-left-color:#ffd43b}
 .video-error{color:#ffd43b;border-left-color:#ffd43b}
 :focus-visible{outline:2px solid #ffd43b;outline-offset:3px}
+
+.brand .lock-icon{fill:#ffd43b;stroke:none;filter:drop-shadow(0 0 7px rgba(255,212,59,.22))}.lock-watermark svg{stroke:none;fill:#4da3ff;opacity:.045}
