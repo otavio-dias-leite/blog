@@ -1,6 +1,6 @@
 # Otávio Leite — Blog
 
-Blog estático em Hugo, com tema preto/vermelho e painel administrativo em `/blog/admin/`.
+Blog estático em Hugo, com tema preto/azul/amarelo e painel administrativo em `/blog/admin/`.
 
 ## Painel administrativo
 
@@ -39,7 +39,7 @@ Após o deploy, abra `https://SEU-DOMINIO/blog/admin/`. A conta GitHub autorizad
 
 ## Idiomas e tradução
 
-O seletor público oferece EN-US, PT-BR e chinês simplificado (中文). O inglês é o idioma intermediário: o blog detecta o idioma original do post, normaliza a tradução para inglês e, em seguida, traduz para o idioma selecionado. A preferência é salva no navegador e as traduções ficam em cache local. Se o serviço de tradução estiver indisponível, o conteúdo original continua acessível.
+O seletor público oferece EN-US, PT-BR e chinês simplificado (中文). A interface, títulos e resumos dos artigos também acompanham o idioma selecionado. O inglês é o idioma intermediário: o blog detecta o idioma original do post, normaliza a tradução para inglês e, em seguida, traduz para o idioma selecionado. A preferência é salva no navegador e as traduções ficam em cache local. Se o serviço de tradução estiver indisponível, o conteúdo original continua acessível.
 
 Posts podem ser escritos em qualquer idioma. Se desejar declarar a origem manualmente, informe `lang` no front matter; se omitir, a detecção automática será usada:
 
