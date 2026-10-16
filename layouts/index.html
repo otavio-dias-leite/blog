@@ -18,16 +18,6 @@
 <body><div class="lock-watermark" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z"/></svg></div>
 <header><div class="wrap"><a class="brand" href="{{ "/" | relURL }}"><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z" fill="#4da3ff"/></svg><span>Otávio Leite</span></a>
 <nav class="lang language-switch" aria-label="Language"><button type="button" data-blog-language="en-US" aria-pressed="true" class="active">EN-US</button><button type="button" data-blog-language="pt-BR" aria-pressed="false">PT-BR</button><button type="button" data-blog-language="zh-CN" aria-label="Mandarin, Simplified Chinese" aria-pressed="false">中文</button></nav></div></header>
-<section class="wrap featured-project" data-post-slug="mp3-player-featured" data-post-language="en">
-<div class="project-kicker" data-post-title>FEATURED PROJECT / EMBEDDED AUDIO</div>
-<h1 data-post-title>MP3 Player for M5Stack Cardputer ADV</h1>
-<p data-post-title>A dedicated MP3 firmware project for the Cardputer ADV. Browse the project, read the documentation and get the source code.</p>
-<div class="project-links">
-<a data-post-title href="https://otavio-dias-leite.github.io/mp3player/">OPEN MP3 PLAYER SITE ↗</a>
-<a data-post-title href="https://github.com/otavio-dias-leite/mp3player">GITHUB REPOSITORY ↗</a>
-<a data-post-title href="https://otavio-dias-leite.github.io/portfolio/">DEVELOPER PORTFOLIO ↗</a>
-</div>
-</section>
 <main class="wrap posts">
 {{ range .Site.RegularPages.ByDate.Reverse }}
 <article data-post-slug="{{ .File.ContentBaseName }}" data-post-language="{{ .Params.lang | default "auto" }}"><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2 data-post-title>{{ .Title }}</h2></a><span>↗</span></article>
