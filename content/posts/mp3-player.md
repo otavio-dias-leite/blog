@@ -33,4 +33,9 @@ A interface foi pensada para a tela e os controles compactos do Cardputer ADV. O
 
 O desenvolvimento exige atenção aos limites de memória e processamento do ESP32-S3. O decodificador de áudio trabalha em etapas curtas, enquanto buffers e fila de saída ajudam a manter a interface responsiva durante a reprodução.
 
-O objetivo do projeto é manter um firmware enxuto e dedicado a uma função: tocar músicas MP3 no M5Stack Cardputer ADV.\n\n## Projeto e código-fonte\n\n- **Site do MP3 Player:** https://otavio-dias-leite.github.io/mp3player/\n- **Repositório GitHub:** https://github.com/otavio-dias-leite/mp3player
+O objetivo do projeto é manter um firmware enxuto e dedicado a uma função: tocar músicas MP3 no M5Stack Cardputer ADV.
+
+## Projeto e código-fonte
+
+- **Site do MP3 Player:** https://otavio-dias-leite.github.io/mp3player/
+- **Repositório GitHub:** https://github.com/otavio-dias-leite/mp3player
