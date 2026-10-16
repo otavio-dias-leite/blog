@@ -1,7 +1,7 @@
 ---
 title: "MP3 Player"
 date: 2026-10-15T18:00:00-03:00
-description: "Firmware dedicado à reprodução de músicas MP3 no M5Stack Cardputer ADV."
+description: "Firmware de reprodução de músicas MP3 desenvolvido para o M5Stack Cardputer ADV, com biblioteca microSD, controles, equalizador e interface compacta."
 tags:
   - sistemas embarcados
   - ESP32
@@ -12,6 +12,7 @@ tags:
 categories:
   - projetos
 lang: "pt-BR"
+projectTranslation: true
 ---
 
 O **MP3 Player** é um firmware desenvolvido para o **M5Stack Cardputer ADV**, com foco específico em reproduzir músicas no formato MP3 diretamente pelo dispositivo.
@@ -32,4 +33,4 @@ A interface foi pensada para a tela e os controles compactos do Cardputer ADV. O
 
 O desenvolvimento exige atenção aos limites de memória e processamento do ESP32-S3. O decodificador de áudio trabalha em etapas curtas, enquanto buffers e fila de saída ajudam a manter a interface responsiva durante a reprodução.
 
-O objetivo do projeto é manter um firmware enxuto e dedicado a uma função: tocar músicas MP3 no M5Stack Cardputer ADV.
+O objetivo do projeto é manter um firmware enxuto e dedicado a uma função: tocar músicas MP3 no M5Stack Cardputer ADV.\n\n## Projeto e código-fonte\n\n- **Site do MP3 Player:** https://otavio-dias-leite.github.io/mp3player/\n- **Repositório GitHub:** https://github.com/otavio-dias-leite/mp3player
