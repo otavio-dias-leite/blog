@@ -4,7 +4,7 @@ slug: "mp3-player-en"
 date: 2026-10-16T00:00:00-03:00
 description: "An MP3 playback firmware project for the M5Stack Cardputer ADV, featuring microSD browsing, playback controls, ID3 metadata, equalizer and a compact interface."
 tags:
-  - embedded systems
+  - electronics
   - ESP32
   - M5Stack
   - firmware
