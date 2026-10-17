@@ -37,18 +37,13 @@ Conceda ao OAuth App o escopo `public_repo`. Não coloque Client Secret ou SESSI
 
 Após o deploy, abra `https://SEU-DOMINIO/blog/admin/`. A conta GitHub autorizada é exclusivamente `@otavio-dias-leite`; qualquer outra conta recebe acesso negado. O endereço antigo do GitHub Pages não executa as funções de autenticação, a menos que o domínio seja apontado para a implantação com backend.
 
-## Idiomas e tradução
+## Languages and static translations
 
-O seletor público oferece EN-US, PT-BR e chinês simplificado (中文). O inglês é o idioma intermediário: o blog detecta o idioma original do post, normaliza a tradução para inglês e, em seguida, traduz para o idioma selecionado. A preferência é salva no navegador e as traduções ficam em cache local. Se o serviço de tradução estiver indisponível, o conteúdo original continua acessível.
+English is the canonical authoring language for every post and page. During each deployment, the build generates complete static HTML copies for Brazilian Portuguese, Spanish, Simplified Chinese, and Japanese under `/pt-br/`, `/es/`, `/zh-cn/`, and `/ja/`.
 
-Posts podem ser escritos em qualquer idioma. Se desejar declarar a origem manualmente, informe `lang` no front matter; se omitir, a detecção automática será usada:
+Visitors are routed to the prebuilt version based on their detected country, with browser language as a fallback. The selected locale is cached in the browser for 24 hours. The site does not translate page content during normal navigation; each localized route is already generated before deployment. A build-time translation cache avoids retranslating unchanged text on later deployments.
 
-```yaml
----
-title: "Um post em português"
-lang: "pt-BR"
----
-```
+Write new posts in English and keep their front matter language set to `en`. The generated localized pages preserve the original HTML structure and leave scripts, styles, code blocks, and technical snippets untouched.
 
 ## Editor Markdown e mídia
 
