@@ -171,7 +171,7 @@ def main():
                 parsed = HTMLTranslationParser(original)
                 translated = translator.translate(parsed.texts, language.split("-")[0])
                 output = parsed.output(translated)
-                output = output.replace('<html ', f'<html lang="{language}" data-static-locale="{folder}" ', 1)
+                output = output.replace('<html>', f'<html lang="{language}" data-static-locale="{folder}">', 1)
                 destination.write_text(output, encoding="utf-8")
             target = root / folder
             if target.exists():
