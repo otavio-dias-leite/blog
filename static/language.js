@@ -155,8 +155,8 @@
   }
 
   async function applyLanguage(requestedLanguage) {
-    const language = Object.hasOwn(LANGUAGES, requestedLanguage) ? requestedLanguage : "en-US";
-    const target = LANGUAGES[language];
+    const language = requestedLanguage || "en-US";
+    const target = sourceCode(language);
     const currentRun = ++runId;
     document.documentElement.lang = language;
 
@@ -200,18 +200,22 @@
     try { localStorage.setItem(STORAGE_KEY, language); } catch {}
   }
 
-  function detectVisitorLanguage() {
-    const locales = [...(navigator.languages || []), navigator.language || ""]
-      .map(value => String(value).toLowerCase());
-    const locale = locales.find(Boolean) || "";
-    if (locales.some(value => value.startsWith("pt-br")) ||
-        (Intl.DateTimeFormat().resolvedOptions().timeZone || "").startsWith("America/") &&
-        locale.startsWith("pt")) return "pt-BR";
-    if (locales.some(value => value.startsWith("zh"))) return "zh-CN";
-    return "en-US";
+  async function detectVisitorLanguage() {
+    const map = {"BR":"pt-BR","PT":"pt-PT","AO":"pt","MZ":"pt","CV":"pt","GW":"pt","ST":"pt","TL":"pt","US":"en-US","GB":"en-GB","IE":"en-IE","AU":"en-AU","NZ":"en-NZ","CA":"en-CA","IN":"en-IN","ZA":"en-ZA","NG":"en","ES":"es","MX":"es","AR":"es","CO":"es","CL":"es","PE":"es","VE":"es","EC":"es","UY":"es","PY":"es","BO":"es","CR":"es","PA":"es","DO":"es","GT":"es","HN":"es","SV":"es","NI":"es","CU":"es","FR":"fr","BE":"fr","SN":"fr","CI":"fr","CD":"fr","CH":"fr","LU":"fr","DE":"de","AT":"de","LI":"de","NL":"nl","BE_NL":"nl","IT":"it","SM":"it","VA":"it","JP":"ja","CN":"zh-CN","TW":"zh-TW","HK":"zh-TW","MO":"zh-TW","KR":"ko","KP":"ko","RU":"ru","BY":"ru","KZ":"ru","UA":"uk","PL":"pl","CZ":"cs","SK":"sk","HU":"hu","RO":"ro","MD":"ro","BG":"bg","GR":"el","TR":"tr","SA":"ar","AE":"ar","EG":"ar","MA":"ar","DZ":"ar","TN":"ar","QA":"ar","KW":"ar","BH":"ar","OM":"ar","JO":"ar","LB":"ar","IQ":"ar","IL":"he","IR":"fa","AF":"fa","PK":"ur","BD":"bn","TH":"th","VN":"vi","ID":"id","MY":"ms","SG":"en","PH":"fil","SE":"sv","NO":"no","DK":"da","FI":"fi","IS":"is","EE":"et","LV":"lv","LT":"lt","HR":"hr","RS":"sr","BA":"bs","SI":"sl","MK":"mk","AL":"sq","GE":"ka","AM":"hy","AZ":"az","KE":"sw","TZ":"sw","UG":"en","ET":"am","RW":"rw"};
+    const fallback = (() => {
+      const locales = [...(navigator.languages || []), navigator.language || ""].map(x => String(x).toLowerCase());
+      const preferred = locales.find(Boolean) || "en";
+      return preferred.startsWith("pt") ? "pt-BR" : preferred.startsWith("zh") ? (preferred.includes("tw") || preferred.includes("hk") ? "zh-TW" : "zh-CN") : preferred.split("-")[0];
+    })();
+    try {
+      const response = await fetch("https://ipwho.is/", {headers:{Accept:"application/json"},cache:"no-store",signal:AbortSignal.timeout(4500)});
+      if (!response.ok) throw new Error("GeoIP unavailable");
+      const data = await response.json();
+      if (data.success && data.country_code) return map[data.country_code.toUpperCase()] || fallback;
+    } catch {}
+    return fallback;
   }
-
   document.addEventListener("DOMContentLoaded", () => {
-    applyLanguage(detectVisitorLanguage());
+    detectVisitorLanguage().then(applyLanguage);
   });
 })();
