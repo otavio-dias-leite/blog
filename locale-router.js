@@ -12,6 +12,7 @@
     document.documentElement.dataset.staticLocale = first;
     return;
   }
+  document.documentElement.lang = document.documentElement.lang || "en-US";
   var storageKey = "otavio-static-locale-v1";
   function route(locale) {
     if (!locales[locale] || location.pathname.indexOf(base + locale + "/") === 0) return;
