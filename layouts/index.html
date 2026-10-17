@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en-US">
+<html>
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Otávio Leite — Blog | Embedded Systems, Programming & Information Security</title>
-<meta name="description" content="Notes, projects and experiments by Otávio Leite on embedded systems, electronics, computer science, programming and information security.">
+<title>Otávio Leite — Blog | Electrotechnics, Electronics & Computing</title>
+<meta name="description" content="Notes, projects and experiments by Otávio Leite on electrotechnics, electronics, computing and technical learning.">
 <link rel="canonical" href="{{ .Site.BaseURL }}">
 <meta property="og:type" content="website"><meta property="og:title" content="Otávio Leite — Blog">
-<meta property="og:description" content="Projects and technical notes on embedded systems, electronics, programming and information security.">
+<meta property="og:description" content="Projects and technical notes on electrotechnics, electronics and computing.">
 <meta property="og:url" content="{{ .Site.BaseURL }}"><meta property="og:site_name" content="Otávio Leite">
 <meta name="twitter:card" content="summary"><meta name="twitter:title" content="Otávio Leite — Blog">
 <meta name="twitter:description" content="Embedded systems, electronics, programming and information security.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Otávio Leite — Blog","url":{{ .Site.BaseURL | jsonify }},"description":"Technical notes and projects on embedded systems, electronics, programming and information security.","inLanguage":["en","pt-BR","zh-CN"],"author":{"@type":"Person","name":"Otávio Leite","url":"https://otavio-dias-leite.github.io/portfolio/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Otávio Leite — Blog","url":{{ .Site.BaseURL | jsonify }},"description":"Technical notes and projects on electrotechnics, electronics and computing.","inLanguage":["en","pt-BR","zh-CN"],"author":{"@type":"Person","name":"Otávio Leite","url":"https://otavio-dias-leite.github.io/portfolio/"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ "style.css" | relURL }}">
@@ -25,4 +25,4 @@
 <article data-post-slug="{{ .File.ContentBaseName }}" data-post-language="{{ .Params.lang | default "auto" }}"><a href="{{ .RelPermalink }}"><time>{{ .Date.Format "02.01.2006" }}</time><h2 data-post-title>{{ .Title }}</h2></a><span>↗</span></article>
 {{ end }}
 </main>
-<script src="{{ "language.js" | relURL }}" defer></script></body></html>
+<script src="{{ "locale-router.js" | relURL }}"></script></body></html>
