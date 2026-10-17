@@ -86,41 +86,30 @@
 
   async function translateHTML(html, source, target) {
     const key=cacheKey(html,source,target);
-    if(cache.has(key))return cache.get(key);
-    if(savedCache[key]){cache.set(key,savedCache[key]);return savedCache[key];}
+    if(cache.has(key)) return cache.get(key);
+    if(savedCache[key]) { cache.set(key,savedCache[key]); return savedCache[key]; }
     const template=document.createElement("template");
     template.innerHTML=html;
     const walker=document.createTreeWalker(template.content,NodeFilter.SHOW_TEXT);
     const nodes=[];
-    while(walker.nextNode()){
-      const node=walker.currentNode;
-      if(!node.nodeValue.trim())continue;
-      const parent=node.parentElement;
-      if(parent&&parent.closest("script,style,code,pre,svg,math"))continue;
-      nodes.push(node);
+    while(walker.nextNode()) {
+      const node=walker.currentNode, parent=node.parentElement;
+      if(node.nodeValue.trim() && !(parent && parent.closest("script,style,code,pre,svg,math"))) nodes.push(node);
     }
-    for(let i=0;i<nodes.length;i++){
-      const node=nodes[i],original=node.nodeValue;
-      const leading=original.match(/^\s*/)?.[0]||"",trailing=original.match(/\s*$/)?.[0]||"";
-      const text=original.trim();
-      if(!text)continue;
-      let english=text;
-      if(source!=="en"){
-        const first=await api("/translate",{q:english,source,target:"en"});
-        english=first.translatedText||english;
-      }
-      let translated=english;
-      if(target!=="en"){
-        const second=await api("/translate",{q:english,source:"en",target});
-        translated=second.translatedText||english;
-      }
-      if(translated)node.nodeValue=leading+translated+trailing;
-    }
+    const jobs=nodes.map(async node=>{
+      const raw=node.nodeValue, leading=raw.match(/^\\s*/)?.[0]||"", trailing=raw.match(/\\s*$/)?.[0]||"", value=raw.trim();
+      if(!value) return;
+      try {
+        const result=await api("/translate",{q:value,source:source==="auto"?"auto":source,target});
+        if(result.translatedText) node.nodeValue=leading+result.translatedText+trailing;
+      } catch {}
+    });
+    for(let i=0;i<jobs.length;i+=4) await Promise.all(jobs.slice(i,i+4));
     const translated=template.innerHTML;
-    cache.set(key,translated);savedCache[key]=translated;
+    cache.set(key,translated); savedCache[key]=translated;
     const keys=Object.keys(savedCache);
-    if(keys.length>250)for(const oldKey of keys.slice(0,keys.length-250))delete savedCache[oldKey];
-    try{localStorage.setItem(CACHE_KEY,JSON.stringify(savedCache));}catch{}
+    if(keys.length>500) for(const oldKey of keys.slice(0,keys.length-500)) delete savedCache[oldKey];
+    try { localStorage.setItem(CACHE_KEY,JSON.stringify(savedCache)); } catch {}
     return translated;
   }
 
@@ -150,7 +139,7 @@
       } catch {
         if (currentRun === runId) element.innerHTML = original;
       }
-      await wait(180);
+
     }
   }
 
