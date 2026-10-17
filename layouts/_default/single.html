@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+<script src="{{ "locale-router.js" | relURL }}"></script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{ .Title }} — {{ .Site.Title }}</title>
 <meta name="description" content="{{ .Description | default .Summary | plainify | htmlEscape }}">
@@ -25,8 +26,8 @@
 </head>
 <body id="top"><div class="lock-watermark" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 1.8 5.8 13h5.1l-.5 9.2L18.3 10h-5.2l.3-8.2Z"/></svg></div>
 <header><div class="wrap"><a class="brand" href="{{ .Site.Home.RelPermalink }}#top"><svg class="lock-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="31" fill="#102A43"/><path d="M37 6 15 35h15l-3 23 23-32H34z" fill="#FFD447"/><path d="M45 13h7" stroke="#54C6A5" stroke-width="3" stroke-linecap="round"/></svg><span>Otávio Leite</span></a>
-<img class="profile-photo" src="https://avatars.githubusercontent.com/u/202568632?v=4&s=1024" alt="Foto de perfil de Otávio Leite" loading="eager" referrerpolicy="no-referrer">
+<img class="profile-photo" src="https://avatars.githubusercontent.com/u/202568632?v=4&s=1024" alt="Otávio Leite profile photo" loading="eager" referrerpolicy="no-referrer">
 </div></header>
 <main class="wrap article" data-post-slug="{{ .File.ContentBaseName }}" data-post-language="{{ .Params.lang | default "auto" }}"><time>{{ .Date.Format "02.01.2006" }}</time><h1 data-post-title>{{ .Title }}</h1><div class="content" data-post-content>{{ .Content }}</div>
 <div class="comments"><script src="https://utteranc.es/client.js" repo="otavio-dias-leite/blog" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script></div>
-</main><script src="{{ "locale-router.js" | relURL }}"></script></body></html>
+</main></body></html>
