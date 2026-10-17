@@ -90,9 +90,9 @@ class Translator:
         url = ENDPOINT + "?" + urlencode(params)
         request = Request(url, headers={"User-Agent": "Mozilla/5.0 static-i18n-builder/1.0", "Accept": "application/json"})
         last_error = None
-        for attempt in range(4):
+        for attempt in range(2):
             try:
-                with urlopen(request, timeout=25) as response:
+                with urlopen(request, timeout=12) as response:
                     data = json.loads(response.read().decode("utf-8"))
                 groups = data[0]
                 if len(texts) == 1:
@@ -120,14 +120,14 @@ class Translator:
             else:
                 missing.append(raw)
                 positions.append((i, key))
-        for offset in range(0, len(missing), 10):
-            batch = missing[offset:offset + 10]
+        for offset in range(0, len(missing), 20):
+            batch = missing[offset:offset + 20]
             try:
                 translated = self.one_batch(batch, target)
             except Exception:
                 # Keep the source text rather than breaking the deployment.
                 translated = batch
-            for local_index, ((position, key), value) in enumerate(zip(positions[offset:offset + 10], translated)):
+            for local_index, ((position, key), value) in enumerate(zip(positions[offset:offset + 20], translated)):
                 result[position] = value
                 if value != batch[local_index]:
                     self.cache[key] = value
