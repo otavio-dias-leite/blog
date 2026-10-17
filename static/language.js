@@ -2,7 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "otavio-blog-language-v7";
-  const CACHE_KEY = "otavio-blog-translation-cache-v7";
+  const CACHE_KEY = "otavio-blog-translation-cache-v8";
+  const GEO_KEY = "otavio-blog-geo-language-v1";
   const LANGUAGES = { "en-US": "en", "pt-BR": "pt", "zh-CN": "zh" };
   const TRANSLATORS = [
     async (text, source, target) => {
@@ -104,7 +105,7 @@
         if(result.translatedText) node.nodeValue=leading+result.translatedText+trailing;
       } catch {}
     });
-    for(let i=0;i<jobs.length;i+=4) await Promise.all(jobs.slice(i,i+4));
+    for(let i=0;i<jobs.length;i+=12) await Promise.all(jobs.slice(i,i+12));
     const translated=template.innerHTML;
     cache.set(key,translated); savedCache[key]=translated;
     const keys=Object.keys(savedCache);
@@ -129,17 +130,18 @@
   }
 
   async function translateElements(elements, source, target, currentRun) {
-    // Translate serially: parallel requests frequently trigger provider throttling.
-    for (const element of elements) {
+    const concurrency = 8;
+    for (let i = 0; i < elements.length; i += concurrency) {
       if (currentRun !== runId) return;
-      const original = getOriginal(element);
-      try {
-        const translated = await translateHTML(original, source, target);
-        if (currentRun === runId && translated) element.innerHTML = translated;
-      } catch {
-        if (currentRun === runId) element.innerHTML = original;
-      }
-
+      await Promise.all(elements.slice(i, i + concurrency).map(async element => {
+        const original = getOriginal(element);
+        try {
+          const translated = await translateHTML(original, source, target);
+          if (currentRun === runId && translated) element.innerHTML = translated;
+        } catch {
+          if (currentRun === runId) element.innerHTML = original;
+        }
+      }));
     }
   }
 
@@ -190,6 +192,7 @@
   }
 
   async function detectVisitorLanguage() {
+    try { const cached = JSON.parse(localStorage.getItem(GEO_KEY) || "null"); if (cached && cached.expires > Date.now() && cached.language) return cached.language; } catch {}
     const map = {"BR":"pt-BR","PT":"pt-PT","AO":"pt","MZ":"pt","CV":"pt","GW":"pt","ST":"pt","TL":"pt","US":"en-US","GB":"en-GB","IE":"en-IE","AU":"en-AU","NZ":"en-NZ","CA":"en-CA","IN":"en-IN","ZA":"en-ZA","NG":"en","ES":"es","MX":"es","AR":"es","CO":"es","CL":"es","PE":"es","VE":"es","EC":"es","UY":"es","PY":"es","BO":"es","CR":"es","PA":"es","DO":"es","GT":"es","HN":"es","SV":"es","NI":"es","CU":"es","FR":"fr","BE":"fr","SN":"fr","CI":"fr","CD":"fr","CH":"fr","LU":"fr","DE":"de","AT":"de","LI":"de","NL":"nl","BE_NL":"nl","IT":"it","SM":"it","VA":"it","JP":"ja","CN":"zh-CN","TW":"zh-TW","HK":"zh-TW","MO":"zh-TW","KR":"ko","KP":"ko","RU":"ru","BY":"ru","KZ":"ru","UA":"uk","PL":"pl","CZ":"cs","SK":"sk","HU":"hu","RO":"ro","MD":"ro","BG":"bg","GR":"el","TR":"tr","SA":"ar","AE":"ar","EG":"ar","MA":"ar","DZ":"ar","TN":"ar","QA":"ar","KW":"ar","BH":"ar","OM":"ar","JO":"ar","LB":"ar","IQ":"ar","IL":"he","IR":"fa","AF":"fa","PK":"ur","BD":"bn","TH":"th","VN":"vi","ID":"id","MY":"ms","SG":"en","PH":"fil","SE":"sv","NO":"no","DK":"da","FI":"fi","IS":"is","EE":"et","LV":"lv","LT":"lt","HR":"hr","RS":"sr","BA":"bs","SI":"sl","MK":"mk","AL":"sq","GE":"ka","AM":"hy","AZ":"az","KE":"sw","TZ":"sw","UG":"en","ET":"am","RW":"rw"};
     const fallback = (() => {
       const locales = [...(navigator.languages || []), navigator.language || ""].map(x => String(x).toLowerCase());
@@ -200,7 +203,7 @@
       const response = await fetch("https://ipwho.is/", {headers:{Accept:"application/json"},cache:"no-store",signal:AbortSignal.timeout(4500)});
       if (!response.ok) throw new Error("GeoIP unavailable");
       const data = await response.json();
-      if (data.success && data.country_code) return map[data.country_code.toUpperCase()] || fallback;
+      if (data.success && data.country_code) { const language = map[data.country_code.toUpperCase()] || fallback; try { localStorage.setItem(GEO_KEY, JSON.stringify({language, expires:Date.now()+86400000})); } catch {} return language; }
     } catch {}
     return fallback;
   }
