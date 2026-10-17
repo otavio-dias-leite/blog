@@ -5,7 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
 
 permissions:
   contents: read
@@ -37,8 +36,19 @@ jobs:
           hugo-version: latest
           extended: true
 
-      - name: Build
+      - name: Restore translation cache
+        uses: actions/cache@v4
+        with:
+          path: .translation-cache.json
+          key: ${{ runner.os }}-static-i18n-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-static-i18n-
+
+      - name: Build English source site
         run: hugo --buildFuture --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Generate pre-translated static versions
+        run: python scripts/build-static-translations.py public --languages pt-BR,es,zh-CN,ja
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
