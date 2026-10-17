@@ -22,7 +22,8 @@
   }
   try {
     var cached = JSON.parse(localStorage.getItem(storageKey) || "null");
-    if (cached && cached.expires > Date.now() && locales[cached.locale]) {
+    if (cached && cached.expires > Date.now() && (locales[cached.locale] || cached.locale === "en")) {
+      if (cached.locale === "en") { document.documentElement.lang = "en-US"; return; }
       route(cached.locale);
       return;
     }
@@ -36,7 +37,8 @@
       var locale = country === "BR" || country === "PT" || ["AO", "MZ", "CV", "GW", "ST", "TL"].includes(country) ? "pt-br"
         : ["ES", "MX", "AR", "CO", "CL", "PE", "VE", "EC", "UY", "PY", "BO", "CR", "PA", "DO", "GT", "HN", "SV", "NI", "CU"].includes(country) ? "es"
         : ["CN", "SG"].includes(country) ? "zh-cn"
-        : country === "JP" ? "ja" : fallback;
+        : country === "JP" ? "ja"
+        : ["US", "GB", "CA", "AU", "NZ", "FR", "DE", "IT", "NL", "BE", "CH", "AT", "SE", "NO", "DK", "FI"].includes(country) ? "en" : fallback;
       if (locale === "en") {
         try { localStorage.setItem(storageKey, JSON.stringify({ locale: "en", expires: Date.now() + 86400000 })); } catch (_) {}
       } else route(locale);
