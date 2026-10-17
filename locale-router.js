@@ -2,6 +2,7 @@
   "use strict";
   var script = document.currentScript;
   var base = new URL(".", script.src).pathname;
+  if (/\\/(pt-br|es|zh-cn|ja)\\/$/.test(base)) base = base.replace(/(pt-br|es|zh-cn|ja)\\/$/, "");
   var locales = { "pt-br": "pt-BR", "es": "es", "zh-cn": "zh-CN", "ja": "ja" };
   var current = location.pathname.slice(base.length).replace(/^\/+/, "");
   var first = current.split("/")[0];
@@ -21,7 +22,7 @@
     var cached = JSON.parse(localStorage.getItem(storageKey) || "null");
     if (cached && cached.expires > Date.now() && locales[cached.locale]) {
       route(cached.locale);
-      if (cached.locale === "en") return;
+      return;
     }
   } catch (_) {}
   var browser = (navigator.languages && navigator.languages[0] || navigator.language || "en").toLowerCase();
