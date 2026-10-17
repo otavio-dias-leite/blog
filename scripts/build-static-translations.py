@@ -127,9 +127,9 @@ class Translator:
             except Exception:
                 # Keep the source text rather than breaking the deployment.
                 translated = batch
-            for (position, key), value in zip(positions[offset:offset + 10], translated):
+            for local_index, ((position, key), value) in enumerate(zip(positions[offset:offset + 10], translated)):
                 result[position] = value
-                if value != missing[offset + (position - positions[offset][0])]:
+                if value != batch[local_index]:
                     self.cache[key] = value
         return result
 
