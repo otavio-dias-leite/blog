@@ -5,6 +5,8 @@
   var base = new URL(".", script.src).pathname;
   var folders = ["pt-br", "es", "zh-cn", "ja"];
   var locales = {"pt-br":"pt-BR","es":"es","zh-cn":"zh-CN","ja":"ja"};
+  var last = base.split("/").filter(Boolean).pop();
+  if (folders.includes(last)) base = base.slice(0, base.lastIndexOf(last + "/"));
   var current = location.pathname.slice(base.length).replace(/^\/+/, "");
   var first = current.split("/")[0];
   if (locales[first]) {
@@ -31,7 +33,6 @@
     } catch (_) {}
     return null;
   }
-  // Country takes priority over a stale browser preference; a Brazilian visitor gets pt-BR.
   fetch("https://ipwho.is/", {headers:{Accept:"application/json"},cache:"no-store",signal:AbortSignal.timeout(3500)})
     .then(function (response) { if (!response.ok) throw new Error("GeoIP unavailable"); return response.json(); })
     .then(function (data) {
