@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 """Generate cached static translations while preserving headings and technical terms."""
 from __future__ import annotations
-import argparse
-import html
-import json
-import re
-import shutil
-import tempfile
-import time
+import argparse, html, json, re, shutil, tempfile, time
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlencode
@@ -28,16 +22,21 @@ CACHE_FILE = ".translation-cache.json"
 class HTMLTranslationParser(HTMLParser):
     def __init__(self, source: str):
         super().__init__(convert_charrefs=False)
-        self.parts: list[str] = []
-        self.texts: list[str] = []
+        self.parts = []
+        self.texts = []
         self.skip_depth = 0
+        self.open_tags = []
         self.feed(source)
         self.close()
 
     def handle_starttag(self, tag, attrs):
         self.parts.append(self.get_starttag_text())
-        attrs_map = dict(attrs)
-        if tag.lower() in SKIP_TAGS or "data-no-translate" in attrs_map or attrs_map.get("translate") == "no" or "notranslate" in attrs_map.get("class", "").split():
+        values = dict(attrs)
+        should_skip = (tag.lower() in SKIP_TAGS or "data-no-translate" in values
+                       or values.get("translate") == "no"
+                       or "notranslate" in values.get("class", "").split())
+        self.open_tags.append((tag.lower(), should_skip))
+        if should_skip:
             self.skip_depth += 1
 
     def handle_startendtag(self, tag, attrs):
@@ -45,8 +44,13 @@ class HTMLTranslationParser(HTMLParser):
 
     def handle_endtag(self, tag):
         self.parts.append(f"</{tag}>")
-        if tag.lower() in SKIP_TAGS and self.skip_depth:
-            self.skip_depth -= 1
+        for index in range(len(self.open_tags) - 1, -1, -1):
+            opened, skipped = self.open_tags[index]
+            if opened == tag.lower():
+                removed = self.open_tags[index:]
+                self.open_tags = self.open_tags[:index]
+                self.skip_depth = max(0, self.skip_depth - sum(1 for _, flag in removed if flag))
+                break
 
     def handle_data(self, data):
         if self.skip_depth or not data.strip() or len(data.strip()) < 2:
@@ -56,33 +60,24 @@ class HTMLTranslationParser(HTMLParser):
         self.texts.append(data)
         self.parts.append(f"\x00STATIC_I18N_{index}\x00")
 
-    def handle_entityref(self, name):
-        self.parts.append(f"&{name};")
+    def handle_entityref(self, name): self.parts.append(f"&{name};")
+    def handle_charref(self, name): self.parts.append(f"&#{name};")
+    def handle_comment(self, data): self.parts.append(f"<!--{data}-->")
+    def handle_decl(self, decl): self.parts.append(f"<!{decl}>")
+    def unknown_decl(self, data): self.parts.append(f"<![{data}]>")
 
-    def handle_charref(self, name):
-        self.parts.append(f"&#{name};")
-
-    def handle_comment(self, data):
-        self.parts.append(f"<!--{data}-->")
-
-    def handle_decl(self, decl):
-        self.parts.append(f"<!{decl}>")
-
-    def unknown_decl(self, data):
-        self.parts.append(f"<![{data}]>")
-
-    def output(self, translated: list[str]) -> str:
+    def output(self, translated):
         result = "".join(self.parts)
         for index, value in enumerate(translated):
             result = result.replace(f"\x00STATIC_I18N_{index}\x00", html.escape(value, quote=False))
         return result
 
 class Translator:
-    def __init__(self, cache: dict):
+    def __init__(self, cache):
         self.cache = cache
         self.term_pattern = re.compile("|".join(re.escape(x) for x in sorted(PROTECTED_TERMS, key=len, reverse=True)), re.IGNORECASE)
 
-    def protect_terms(self, value: str):
+    def protect_terms(self, value):
         terms = []
         def replace(match):
             token = f"QZXTERM{len(terms):04d}XZQ"
@@ -90,7 +85,7 @@ class Translator:
             return token
         return self.term_pattern.sub(replace, value), terms
 
-    def one_batch(self, texts: list[str], target: str) -> list[str]:
+    def one_batch(self, texts, target):
         params = [("client", "gtx"), ("sl", "en"), ("tl", target), ("dt", "t")]
         params.extend(("q", value) for value in texts)
         request = Request(ENDPOINT + "?" + urlencode(params), headers={"User-Agent": "Mozilla/5.0 static-i18n-builder/2.0", "Accept": "application/json"})
@@ -100,8 +95,7 @@ class Translator:
                 with urlopen(request, timeout=18) as response:
                     data = json.loads(response.read().decode("utf-8"))
                 groups = data[0]
-                if len(texts) == 1:
-                    groups = [groups]
+                if len(texts) == 1: groups = [groups]
                 output = []
                 for index in range(len(texts)):
                     group = groups[index] if index < len(groups) else []
@@ -111,14 +105,12 @@ class Translator:
                 return output
             except Exception as exc:
                 last_error = exc
-                if attempt < 2:
-                    time.sleep(1.5 * (attempt + 1))
+                if attempt < 2: time.sleep(1.5 * (attempt + 1))
         raise RuntimeError(f"Free translation endpoint failed for {target}: {last_error}")
 
-    def translate(self, texts: list[str], target: str) -> list[str]:
+    def translate(self, texts, target):
         result = [None] * len(texts)
-        missing = []
-        positions = []
+        missing, positions = [], []
         for index, raw in enumerate(texts):
             key = target + "|" + raw
             if key in self.cache:
@@ -128,14 +120,14 @@ class Translator:
                 missing.append((protected, terms, raw))
                 positions.append((index, key))
         for offset in range(0, len(missing), 12):
-            batch_items = missing[offset:offset + 12]
+            batch = missing[offset:offset + 12]
             try:
-                translated = self.one_batch([item[0] for item in batch_items], target)
+                translated = self.one_batch([item[0] for item in batch], target)
             except Exception as exc:
                 print(f"WARNING: {exc}; leaving this batch in English.")
-                translated = [item[0] for item in batch_items]
+                translated = [item[0] for item in batch]
             for local_index, ((position, key), value) in enumerate(zip(positions[offset:offset + 12], translated)):
-                protected, terms, original = batch_items[local_index]
+                protected, terms, original = batch[local_index]
                 for term_index, term in enumerate(terms):
                     token = f"QZXTERM{term_index:04d}XZQ"
                     if token not in value:
@@ -143,17 +135,15 @@ class Translator:
                         break
                     value = value.replace(token, term)
                 result[position] = value
-                if value != original:
-                    self.cache[key] = value
+                if value != original: self.cache[key] = value
         return result
 
-def should_skip(path: Path) -> bool:
+def should_skip(path):
     return any(part in {".git", ".github", "node_modules", "firmware", "dist", *LOCALES.values()} for part in path.parts)
 
-def set_document_locale(source: str, language: str, folder: str) -> str:
+def set_document_locale(source, language, folder):
     def update(match):
-        attrs = match.group(1)
-        attrs = re.sub(r'\s+lang=(["\']).*?\1', "", attrs, flags=re.IGNORECASE)
+        attrs = re.sub(r'\s+lang=(["\']).*?\1', "", match.group(1), flags=re.IGNORECASE)
         attrs = re.sub(r'\s+data-static-locale=(["\']).*?\1', "", attrs, flags=re.IGNORECASE)
         return f'<html{attrs} lang="{language}" data-static-locale="{folder}">'
     return re.sub(r"<html\b([^>]*)>", update, source, count=1, flags=re.IGNORECASE)
@@ -164,38 +154,29 @@ def main():
     parser.add_argument("--languages", default="pt-BR,es,zh-CN,ja")
     args = parser.parse_args()
     root = args.site_dir.resolve()
-    if not root.is_dir():
-        raise SystemExit(f"Site directory does not exist: {root}")
+    if not root.is_dir(): raise SystemExit(f"Site directory does not exist: {root}")
     cache_path = root.parent / CACHE_FILE
-    try:
-        cache = json.loads(cache_path.read_text(encoding="utf-8"))
-    except Exception:
-        cache = {}
+    try: cache = json.loads(cache_path.read_text(encoding="utf-8"))
+    except Exception: cache = {}
     translator = Translator(cache)
     html_files = [path for path in root.rglob("*.html") if not should_skip(path.relative_to(root))]
     languages = [item.strip() for item in args.languages.split(",") if item.strip()]
     for language in languages:
         folder = LOCALES.get(language)
-        if not folder:
-            continue
+        if not folder: continue
         with tempfile.TemporaryDirectory(prefix="static-i18n-") as temp:
             staging = Path(temp) / folder
             shutil.copytree(root, staging, ignore=shutil.ignore_patterns(*LOCALES.values(), ".git", "node_modules", "dist"))
             for source_file in html_files:
                 relative = source_file.relative_to(root)
-                if "admin" in relative.parts:
-                    continue
+                if "admin" in relative.parts: continue
                 destination = staging / relative
-                if not destination.exists():
-                    continue
+                if not destination.exists(): continue
                 parsed = HTMLTranslationParser(source_file.read_text(encoding="utf-8"))
                 translated = translator.translate(parsed.texts, language.split("-")[0])
-                output = parsed.output(translated)
-                output = set_document_locale(output, language, folder)
-                destination.write_text(output, encoding="utf-8")
+                destination.write_text(set_document_locale(parsed.output(translated), language, folder), encoding="utf-8")
             target = root / folder
-            if target.exists():
-                shutil.rmtree(target)
+            if target.exists(): shutil.rmtree(target)
             shutil.copytree(staging, target)
         print(f"Generated static {language} pages: {root / folder}")
     cache_path.write_text(json.dumps(translator.cache, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
