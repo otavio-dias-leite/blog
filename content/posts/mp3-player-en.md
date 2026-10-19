@@ -40,6 +40,6 @@ Johnny is also an ongoing experiment in embedded development: exploring audio pl
 
 ## Project links
 
-- **Project website:** https://otavio-dias-leite.github.io/mp3player/
-- **GitHub source code:** https://github.com/otavio-dias-leite/mp3player
+- **Project website:** https://otavio-dias-leite.github.io/johnny/
+- **GitHub source code:** https://github.com/otavio-dias-leite/johnny
 - **Developer portfolio:** https://otavio-dias-leite.github.io/portfolio/
