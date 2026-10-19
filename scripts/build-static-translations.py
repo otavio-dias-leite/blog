@@ -75,7 +75,7 @@ class HTMLTranslationParser(HTMLParser):
 class Translator:
     def __init__(self, cache):
         self.cache = cache
-        self.term_pattern = re.compile("|".join(re.escape(x) for x in sorted(PROTECTED_TERMS, key=len, reverse=True)), re.IGNORECASE)
+        self.term_pattern = re.compile(r"(?<![A-Za-z0-9])(?:" + "|".join(re.escape(x) for x in sorted(PROTECTED_TERMS, key=len, reverse=True)) + r")(?![A-Za-z0-9])", re.IGNORECASE)
 
     def protect_terms(self, value):
         terms = []
