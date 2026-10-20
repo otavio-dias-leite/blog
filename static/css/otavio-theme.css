@@ -21,3 +21,23 @@ a{color:var(--otavio-blue)}a:hover{color:var(--otavio-yellow)}
 .video-error{color:var(--otavio-yellow);border-left-color:var(--otavio-yellow)}
 .lock-icon{stroke:var(--otavio-yellow)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+
+/* Shared portfolio layout details */
+.profile-photo{width:54px;height:54px;object-fit:cover;border-radius:50%;border:2px solid var(--otavio-yellow);padding:3px;background:#0b2740;box-shadow:0 0 0 4px rgba(255,212,71,.10),0 0 22px rgba(40,145,183,.22);margin-left:auto;flex:0 0 auto;position:relative;transform:scale(1);transform-origin:top right;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;z-index:10}
+.profile-photo:hover,.profile-photo:focus-visible{transform:scale(1.28);box-shadow:0 0 0 5px rgba(255,212,71,.16),0 8px 26px rgba(0,0,0,.32);border-color:var(--otavio-yellow)}
+header .wrap{gap:16px;justify-content:space-between}
+.posts{padding:68px 0 110px}
+.posts article{grid-template-columns:minmax(0,1fr) 20px;gap:18px;padding:24px 14px;border-top:1px solid var(--otavio-line);transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.posts article:last-child{border-bottom:1px solid var(--otavio-line)}
+.posts article:hover{background:rgba(12,28,47,.82);border-color:rgba(77,163,255,.42);transform:translateX(3px)}
+.posts h2{font-size:1.45rem;font-weight:600}
+.article{max-width:860px;padding:78px 0 110px}
+.article h1{font:800 clamp(2.4rem,5vw,4.2rem)/1.08 Orbitron,sans-serif;letter-spacing:-.04em;margin:12px 0 42px}
+.content{font-size:1.06rem;line-height:1.8}
+.content p{margin:0 0 1.4rem}
+.content pre{padding:18px;overflow:auto;border-radius:8px}
+.comments{margin-top:70px;padding-top:28px;border-top:1px dashed var(--otavio-line)}
+::selection{background:var(--otavio-yellow);color:#101820}
+@media(max-width:700px){.profile-photo{width:43px;height:43px}.posts{padding-top:44px}.posts h2{font-size:1.2rem}.article{padding-top:54px}header .wrap{gap:10px}}
+@media(prefers-reduced-motion:reduce){.profile-photo{transition:none}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
