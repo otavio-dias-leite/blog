@@ -177,3 +177,51 @@ html{background:#061326}body{font-family:var(--font-body);background-color:#0613
 header{background:rgba(5,14,23,.88);border-color:var(--line)}.brand{font-family:var(--font-heading);color:#4da3ff;text-shadow:0 0 12px rgba(57,139,255,.25)}.posts article{border-color:var(--line)}.posts article:hover{background:rgba(36,20,54,.78)}.posts article>span,.content a:hover{color:#00e5ff}.posts h2,.article h1{color:#f2f8ff}.posts time,.article>time{color:#a8bad0}.content{color:#dce8f5}.content a{color:#91caff}.content pre{background:#081525;border-color:var(--line)}.lang,.language-switch{border-color:var(--line)}.lang button.active,.language-switch button.active{background:#4da3ff;color:#061326;border-color:#4da3ff;box-shadow:0 0 16px rgba(57,139,255,.2)}.lang button:hover,.language-switch button:hover{background:rgba(77,163,255,.12);color:#00e5ff;border-color:#4da3ff}.translation-status{border-left-color:#4da3ff;background:rgba(8,15,25,.78)}.translation-status[data-state='error'],.video-error{color:#00e5ff;border-left-color:#00e5ff}.profile-photo{border-color:#4da3ff;box-shadow:0 0 0 3px rgba(77,163,255,.09),0 0 18px rgba(40,145,183,.2)}.profile-photo:hover,.profile-photo:focus-visible{border-color:#00e5ff;box-shadow:0 0 0 4px rgba(0,229,255,.16),0 8px 26px rgba(0,0,0,.32)}.brand .lock-icon{fill:#00e5ff!important;filter:drop-shadow(0 0 7px rgba(0,229,255,.22))}.lock-watermark svg{fill:#4da3ff;opacity:.045;stroke:none}
 .glitch,.glitch::before,.glitch::after,.blog-intro h1::before,.blog-intro h1::after{animation:none!important;clip-path:none!important;transform:none!important;text-shadow:none!important;mix-blend-mode:normal!important}.glitch::before,.glitch::after,.blog-intro h1::before,.blog-intro h1::after{content:none!important;display:none!important}
 :focus-visible{outline:2px solid #00e5ff;outline-offset:3px}
+
+
+/* Portfolio-matched visual system: midnight navy, blue grid and yellow lightning. */
+:root{
+  --bg:#061326;
+  --line:rgba(77,163,255,.22);
+  --purple:#4da3ff;
+  --lavender:#91caff;
+  --text:#f2f8ff;
+  --muted:#a8bad0;
+  --font-heading:'Orbitron',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'Fira Code',monospace;
+}
+html{background:#061326;scroll-behavior:smooth}
+body{
+  color:var(--text);
+  font-family:var(--font-body);
+  background-color:#061326;
+  background-image:
+    radial-gradient(ellipse at 50% -10%,rgba(23,105,210,.30),transparent 70%),
+    linear-gradient(rgba(77,163,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(77,163,255,.055) 1px,transparent 1px),
+    linear-gradient(rgba(77,163,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(77,163,255,.018) 1px,transparent 1px);
+  background-size:100% 100%,40px 40px,40px 40px,10px 10px,10px 10px;
+  background-attachment:fixed;
+}
+header{background:rgba(5,14,23,.88);border-color:var(--line)}
+.brand{font-family:var(--font-heading);color:#f2f8ff;text-shadow:0 0 12px rgba(57,139,255,.18)}
+.brand .lock-icon{width:1.35rem;height:1.35rem;fill:#ffd447!important;stroke:none!important;filter:drop-shadow(0 0 7px rgba(255,212,71,.3))}
+.lock-watermark svg{fill:#ffd447!important;stroke:none!important;opacity:.035;filter:drop-shadow(0 0 20px rgba(255,212,71,.12))}
+.posts article{border-color:var(--line)}
+.posts article:hover{background:rgba(12,28,47,.82);border-color:rgba(77,163,255,.42)}
+.posts h2,.article h1{color:#f2f8ff}
+.posts article>span{color:#91caff}
+.posts time,.article>time{color:#a8bad0}
+.content{color:#dce8f5}
+.content a{color:#91caff}
+.content a:hover{color:#ffd447}
+.content pre{background:#081525;border-color:var(--line)}
+.lang,.language-switch{border-color:var(--line)}
+.lang button.active,.language-switch button.active{background:#4da3ff;color:#061326;border-color:#4da3ff;box-shadow:0 0 16px rgba(57,139,255,.2)}
+.lang button:hover,.language-switch button:hover{background:rgba(77,163,255,.12);color:#91caff;border-color:#4da3ff}
+.translation-status{border-left-color:#4da3ff;background:rgba(8,15,25,.78)}
+.translation-status[data-state='error'],.video-error{color:#91caff;border-left-color:#4da3ff}
+:focus-visible{outline:2px solid #ffd447;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
