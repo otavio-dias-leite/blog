@@ -103,18 +103,26 @@ class Translator:
     def translate(self, texts, target):
         output, pending = [None] * len(texts), []
         for index, raw in enumerate(texts):
-            key = target + "|" + raw
+            # Preserve whitespace around inline HTML boundaries. Translators often
+            # trim these characters, which otherwise joins adjacent words/tags.
+            leading = raw[:len(raw) - len(raw.lstrip())]
+            trailing = raw[len(raw.rstrip()):]
+            core = raw.strip()
+            if not core:
+                output[index] = raw
+                continue
+            key = target + "|" + core
             if key in self.cache:
-                output[index] = self.cache[key]
+                output[index] = leading + self.cache[key] + trailing
             else:
-                protected, terms = self.protect_terms(raw)
-                pending.append((index, key, raw, protected, terms))
+                protected, terms = self.protect_terms(core)
+                pending.append((index, key, core, protected, terms, leading, trailing))
         def work(item):
             return self.translate_one(item[3], target)
         with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
             futures = [pool.submit(work, item) for item in pending]
             for item, future in zip(pending, futures):
-                index, key, raw, protected, terms = item
+                index, key, raw, protected, terms, leading, trailing = item
                 try:
                     value = future.result()
                     valid = True
@@ -125,10 +133,10 @@ class Translator:
                         value = value.replace(token, term)
                     if not valid: value = raw
                     if value != raw: self.cache[key] = value
-                    output[index] = value
+                    output[index] = leading + value + trailing
                 except Exception as exc:
                     print(f"WARNING: {exc}; retaining source text.")
-                    output[index] = raw
+                    output[index] = leading + raw + trailing
         return output
 
 def should_skip(path):
