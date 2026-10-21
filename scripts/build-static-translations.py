@@ -20,6 +20,8 @@ PROTECTED_TERMS = (
 )
 CACHE_FILE = ".translation-cache.json"
 
+VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
 class HTMLTranslationParser(HTMLParser):
     def __init__(self, source: str):
         super().__init__(convert_charrefs=False)
@@ -33,8 +35,10 @@ class HTMLTranslationParser(HTMLParser):
         skip = (tag.lower() in SKIP_TAGS or "data-no-translate" in values
                 or values.get("translate") == "no"
                 or "notranslate" in values.get("class", "").split())
-        self.open_tags.append((tag.lower(), skip))
-        if skip: self.skip_depth += 1
+        # Do not track void elements: they have no closing tag.
+        if tag.lower() not in VOID_TAGS:
+            self.open_tags.append((tag.lower(), skip))
+            if skip: self.skip_depth += 1
 
     def handle_startendtag(self, tag, attrs): self.parts.append(self.get_starttag_text())
 
