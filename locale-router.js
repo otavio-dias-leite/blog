@@ -33,7 +33,7 @@
     .then(function(data){
       var c=String(data.country_code||"").toUpperCase();
       var locale=["BR","PT","AO","MZ","CV","GW","ST","TL"].includes(c)?"pt-br":c==="JP"?"ja":["CN","TW","HK","MO"].includes(c)?"zh-cn":["ES","MX","AR","CO","CL","PE","VE","EC","UY","PY","BO","CR","PA","DO","GT","HN","SV","NI","CU"].includes(c)?"es":"en";
-      if(locale==="en"){var old=cached();if(old&&old!=="en")locale=old;}
+      // Successful country lookup is authoritative; VPN/location changes apply immediately.
       if(locale==="en")english();else route(locale);
     })
     .catch(function(){if(timer)clearTimeout(timer);var old=cached();var locale=old||fallback;if(locale==="en")english();else route(locale);});
