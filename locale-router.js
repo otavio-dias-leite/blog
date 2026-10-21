@@ -4,6 +4,11 @@
   if (!script || !script.src) return;
   var base = new URL(".", script.src).pathname;
   var locales = {"pt-br":"pt-BR", "es":"es", "zh-cn":"zh-CN", "ja":"ja"};
+  // Relative script URLs inside generated locale folders must resolve to the site root.
+  var baseParts = base.split("/").filter(Boolean);
+  if (baseParts.length && Object.prototype.hasOwnProperty.call(locales, baseParts[baseParts.length - 1])) {
+    base = base.slice(0, base.lastIndexOf(baseParts[baseParts.length - 1] + "/"));
+  }
   var current = location.pathname.slice(base.length).replace(/^\\/+/, "");
   var first = current.split("/")[0];
   if (Object.prototype.hasOwnProperty.call(locales, first)) {
