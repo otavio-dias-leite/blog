@@ -1,20 +1,17 @@
 {{ define "main" }}
-<section class="hero">
-  <h1>Notes on technology,<br>hardware and <em>security.</em></h1>
-  <p class="hero-copy">Personal writing about projects, things I learn and subjects worth exploring.</p>
-  <a class="text-link" href="{{ "/posts/" | relURL }}">All posts →</a>
+<section class="post-list-page">
+  <div class="post-list">
+    {{ $posts := where site.RegularPages "Section" "posts" }}
+    {{ range .Paginate ($posts.ByDate.Reverse) }}
+    <article class="list-entry">
+      <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
+      <div>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ with .Description }}<p>{{ . }}</p>{{ else }}<p>{{ .Summary | plainify | truncate 180 }}</p>{{ end }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+  {{ template "_internal/pagination.html" . }}
 </section>
-<section class="section-head">
-  <h2>Recent posts</h2>
-  <a class="text-link" href="{{ "/posts/" | relURL }}">View all →</a>
-</section>
-<div class="post-grid">
-{{ range first 6 (where site.RegularPages "Section" "posts").ByDate.Reverse }}
-  <article class="post-card">
-    <p class="post-meta">{{ .Date.Format "02 Jan 2006" }}</p>
-    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-    {{ with .Description }}<p>{{ . }}</p>{{ end }}
-  </article>
-{{ end }}
-</div>
 {{ end }}
