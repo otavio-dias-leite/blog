@@ -1,1 +1,16 @@
-<!doctype html><html lang="en"><head>{{ partial "head.html" . }}</head><body><div class="scanline"></div><header class="site-header"><a class="brand" href="{{ "/" | relURL }}"><span class="brand-mark">⌑</span><span>OTÁVIO<span class="brand-muted"> / NOTES</span></span></a><nav><a href="{{ "/" | relURL }}">Home</a><a href="{{ "/posts/" | relURL }}">Posts</a><a href="{{ site.Params.portfolioURL }}">Portfolio ↗</a><a class="admin-link" href="{{ "/admin/" | relURL }}">Admin</a></nav></header><main>{{ block "main" . }}{{ end }}</main><footer class="site-footer"><span>© {{ now.Year }} Otávio Dias Leite</span><span>BUILT WITH HUGO <i>·</i> STAY CURIOUS</span></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>{{ partial "head.html" . }}</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{{ "/" | relURL }}">OTÁVIO <span>/ BLOG</span></a>
+  <nav>
+    <a href="{{ "/posts/" | relURL }}">Posts</a>
+    <a href="{{ site.Params.portfolioURL }}">Portfolio</a>
+    <a href="{{ "/admin/" | relURL }}">Admin</a>
+  </nav>
+</header>
+<main>{{ block "main" . }}{{ end }}</main>
+<footer class="site-footer"><span>© {{ now.Year }} Otávio Dias Leite</span></footer>
+</body>
+</html>
