@@ -1,1 +1,12 @@
-{{ define "main" }}<article class="article"><a class="back-link" href="{{ "/posts/" | relURL }}">← BACK TO ARCHIVE</a><header class="article-header"><p class="eyebrow">{{ .Date.Format "02 JANUARY 2006" }} / {{ delimit .Params.tags " · " }}</p><h1>{{ .Title }}</h1><p class="article-desc">{{ .Description }}</p></header><div class="article-content">{{ .Content }}</div><div class="article-end"><span>END OF ENTRY</span><a href="{{ "/posts/" | relURL }}">MORE NOTES ↗</a></div></article>{{ end }}
+{{ define "main" }}
+<article class="article">
+  <a class="back-link" href="{{ "/posts/" | relURL }}">← All posts</a>
+  <header class="article-header">
+    <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="article-desc">{{ . }}</p>{{ end }}
+  </header>
+  <div class="article-content">{{ .Content }}</div>
+  <div class="article-end"><a href="{{ "/posts/" | relURL }}">All posts</a></div>
+</article>
+{{ end }}
