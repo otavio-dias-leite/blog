@@ -9,4 +9,4 @@ posts="/:slug/"
 [params]
 description="Notes on technology, hardware, security and the things ahead."
 author="Otávio Dias Leite"
-portfolioURL="https://otavio-dias-leite.github.io/portfólio/"
+portfolioURL="https://otavio-dias-leite.github.io/portfolio/"
