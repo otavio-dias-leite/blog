@@ -1,11 +1,19 @@
 {{ define "main" }}
-<section class="post-list">
-  {{ $posts := where site.RegularPages "Section" "posts" }}
-  {{ range sort $posts "Date" "desc" }}
-  <article class="post">
-    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
-    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-  </article>
-  {{ end }}
+<section class="hero">
+  <h1>Otávio Dias Leite<span>.</span></h1>
+  <p class="hero-copy">Personal notes on technology, engineering, information security and projects.</p>
+</section>
+<section class="post-list-page">
+  <div class="section-head"><h2>Posts</h2></div>
+  <div class="post-list">
+    {{ $posts := where site.RegularPages "Section" "posts" }}
+    {{ range sort $posts "Date" "desc" }}
+    <article class="list-entry">
+      <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
+      <div><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      {{ with .Description }}<p>{{ . }}</p>{{ else }}<p>{{ .Summary | plainify | truncate 180 }}</p>{{ end }}</div>
+    </article>
+    {{ end }}
+  </div>
 </section>
 {{ end }}
