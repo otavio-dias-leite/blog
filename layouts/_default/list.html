@@ -1,1 +1,16 @@
-{{ define "main" }}<section class="page-intro"><p class="eyebrow">THE ARCHIVE</p><h1>{{ .Title }}</h1><p>{{ .Description }}</p></section><div class="post-list">{{ range .Paginator.Pages }}<article class="list-entry"><p class="post-meta">{{ .Date.Format "02 JAN 2006" }} — {{ delimit (.Params.tags | default (slice)) " / " }}</p><div><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2><p>{{ .Description }}</p></div><a class="read-link" href="{{ .RelPermalink }}">OPEN ↗</a></article>{{ end }}</div>{{ template "_internal/pagination.html" . }}{{ end }}
+{{ define "main" }}
+<section class="post-list-page">
+  <div class="post-list">
+    {{ range .Paginator.Pages }}
+    <article class="list-entry">
+      <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
+      <div>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ with .Description }}<p>{{ . }}</p>{{ else }}<p>{{ .Summary | plainify | truncate 180 }}</p>{{ end }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+  {{ template "_internal/pagination.html" . }}
+</section>
+{{ end }}
