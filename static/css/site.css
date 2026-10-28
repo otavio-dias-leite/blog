@@ -34,3 +34,6 @@ main{min-height:calc(100vh - 155px)}.post-list-page{padding:0 0 70px}
 @media(max-width:900px){.post-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.site-header,main,.site-footer{width:calc(100% - 34px)}.site-header{min-height:78px}.brand{font-size:10px}.lock-icon{width:26px;height:26px;flex-basis:26px}.site-nav-link{padding:8px 10px;font-size:9px}.section-head{padding:42px 0 18px;align-items:flex-start;flex-direction:column;gap:9px}.post-list{grid-template-columns:1fr;gap:11px}.post-card{min-height:0;padding:19px 18px}.article{padding-top:30px}.article-header{padding:40px 0 25px}.article-content{font-size:13px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* Apply the same opposing-corner cuts to interface controls, not the page background. */
+.site-nav-link,.back-link,.article-end a{clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
