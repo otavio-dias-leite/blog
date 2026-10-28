@@ -34,3 +34,19 @@ main{min-height:calc(100vh - 145px)}
 .article-end a{color:var(--red);font:11px var(--mono);text-decoration:none}
 .site-footer{border-top:1px solid var(--line);padding:18px 0 24px;color:var(--muted);font:10px var(--mono)}
 @media(max-width:650px){.site-header,main,.site-footer{width:calc(100% - 34px)}.hero{padding:65px 0 50px}.post-list-page{padding-bottom:50px}.list-entry{grid-template-columns:1fr;gap:6px}.article{padding-top:30px}.article-header{padding:40px 0 25px}.article-content{font-size:16px}}
+/* Unified lock identity and full-width post buttons */
+.site-header{min-height:82px}
+.brand{display:inline-flex;align-items:center;gap:13px;font-size:12px;letter-spacing:.09em}
+.brand>span{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.brand small,.logo-title small{color:var(--red);font:700 9px var(--mono);letter-spacing:.18em}
+.lock-icon{width:29px;height:29px;flex:0 0 29px;color:var(--red);filter:drop-shadow(0 0 5px #ff303b99) drop-shadow(0 0 13px #ff303b55)}
+.post-list{display:grid;gap:10px;padding:8px 0 35px}
+.post-card{position:relative;display:grid;grid-template-columns:125px minmax(0,1fr) 22px;align-items:center;gap:20px;padding:20px 22px;background:linear-gradient(110deg,#1b1115,#130d10);border:1px solid var(--line);border-left:2px solid var(--red-dim);color:var(--text);text-decoration:none;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease}
+.post-card:hover,.post-card:focus-visible{transform:translateY(-2px);border-color:var(--red);background:linear-gradient(110deg,#251318,#170e12);box-shadow:0 9px 28px #0005,0 0 18px #ff303b13;outline:none}
+.post-card-content{display:grid;gap:7px;min-width:0}
+.post-card strong{font:600 15px/1.55 var(--mono);letter-spacing:.015em}
+.post-excerpt{color:var(--muted);font:11px/1.75 var(--sans)}
+.post-arrow{color:var(--red);font-size:18px;text-align:right;transition:transform .2s ease}
+.post-card:hover .post-arrow{transform:translate(3px,-3px)}
+.post-meta{font-size:9px}
+@media(max-width:650px){.brand{font-size:10px}.lock-icon{width:26px;height:26px;flex-basis:26px}.post-card{grid-template-columns:1fr 20px;gap:8px 12px;padding:17px}.post-meta{grid-column:1}.post-card-content{grid-column:1}.post-arrow{grid-column:2;grid-row:1/3}}
