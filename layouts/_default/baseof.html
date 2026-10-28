@@ -4,6 +4,7 @@
 <body>
 <header class="site-header">
   <a class="brand" href="{{ "/" | relURL }}"><svg class="lock-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M9 14V9a7 7 0 0 1 14 0v5M7 14h18v14H7z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/><path d="M16 19v4" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><span>OTÁVIO DIAS LEITE <small>BLOG</small></span></a>
+  <a class="site-nav-link" href="{{ site.Params.portfolioURL }}">PORTFOLIO <span aria-hidden="true">↗</span></a>
 </header>
 <main>{{ block "main" . }}{{ end }}</main>
 <footer class="site-footer">© {{ now.Year }} Otávio Dias Leite</footer>
