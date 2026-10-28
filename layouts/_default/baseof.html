@@ -2,6 +2,10 @@
 <html lang="en">
 <head>{{ partial "head.html" . }}</head>
 <body>
+<header class="site-header">
+  <a class="brand" href="{{ "/" | relURL }}">OTÁVIO DIAS LEITE</a>
+</header>
 <main>{{ block "main" . }}{{ end }}</main>
+<footer class="site-footer">© {{ now.Year }} Otávio Dias Leite</footer>
 </body>
 </html>
