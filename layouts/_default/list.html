@@ -1,13 +1,10 @@
 {{ define "main" }}
-<section class="post-list-page">
-  <div class="post-list">
-    {{ range sort .Pages "Date" "desc" }}
-    <article class="list-entry">
-      <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
-      <div><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-      {{ with .Description }}<p>{{ . }}</p>{{ else }}<p>{{ .Summary | plainify | truncate 180 }}</p>{{ end }}</div>
-    </article>
-    {{ end }}
-  </div>
+<section class="post-list">
+  {{ range sort .Pages "Date" "desc" }}
+  <article class="post">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  </article>
+  {{ end }}
 </section>
 {{ end }}
