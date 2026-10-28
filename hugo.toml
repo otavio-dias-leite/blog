@@ -1,6 +1,6 @@
 baseURL="https://otavio-dias-leite.github.io/blog/"
 languageCode="en-us"
-title="Otávio — Field Notes"
+title="Otávio Dias Leite — Blog"
 enableRobotsTXT=true
 [pagination]
 pagerSize=8
