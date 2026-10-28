@@ -3,14 +3,9 @@
 <head>{{ partial "head.html" . }}</head>
 <body>
 <header class="site-header">
-  <a class="brand" href="{{ "/" | relURL }}">OTÁVIO <span>/ BLOG</span></a>
-  <nav>
-    <a href="{{ "/posts/" | relURL }}">Posts</a>
-    <a href="{{ site.Params.portfolioURL }}">Portfolio</a>
-    <a href="{{ "/admin/" | relURL }}">Admin</a>
-  </nav>
+  <a class="brand" href="{{ "/" | relURL }}">Otávio Dias Leite</a>
 </header>
 <main>{{ block "main" . }}{{ end }}</main>
-<footer class="site-footer"><span>© {{ now.Year }} Otávio Dias Leite</span></footer>
+<footer class="site-footer">© {{ now.Year }} Otávio Dias Leite</footer>
 </body>
 </html>
