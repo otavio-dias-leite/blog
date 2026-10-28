@@ -1,10 +1,6 @@
 {{ define "main" }}
-<section class="hero">
-  <h1>Otávio Dias Leite<span>.</span></h1>
-  <p class="hero-copy">Personal notes on technology, engineering, information security and projects.</p>
-</section>
 <section class="post-list-page">
-  <div class="section-head"><h2>Posts</h2></div>
+  <div class="section-head"><h1>Posts</h1><span class="section-kicker">FIELD NOTES / JOURNAL</span></div>
   <div class="post-list">
     {{ $posts := where site.RegularPages "Section" "posts" }}
     {{ range sort $posts "Date" "desc" }}
