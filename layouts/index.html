@@ -1,1 +1,20 @@
-{{ define "main" }}<section class="hero"><p class="eyebrow"><span class="pulse"></span> PERSONAL LOG / 2026</p><h1>Ideas, experiments<br>and <em>field notes.</em></h1><p class="hero-copy">A personal space for technology, hardware, information security and the process of figuring things out.</p><a class="text-link" href="{{ "/posts/" | relURL }}">EXPLORE THE POSTS ↗</a></section><section class="section-head"><div><p class="eyebrow">THE ARCHIVE</p><h2>Recent writing</h2></div><a class="text-link" href="{{ "/posts/" | relURL }}">ALL POSTS ↗</a></section><div class="post-grid">{{ range first 6 (where site.RegularPages "Section" "posts").ByDate.Reverse }}<article class="post-card"><p class="post-meta">{{ .Date.Format "02 JAN 2006" }} — {{ delimit .Params.tags " / " }}</p><h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3><p>{{ .Description }}</p><a class="read-link" href="{{ .RelPermalink }}">READ ENTRY ↗</a></article>{{ end }}</div>{{ end }}
+{{ define "main" }}
+<section class="hero">
+  <h1>Notes on technology,<br>hardware and <em>security.</em></h1>
+  <p class="hero-copy">Personal writing about projects, things I learn and subjects worth exploring.</p>
+  <a class="text-link" href="{{ "/posts/" | relURL }}">All posts →</a>
+</section>
+<section class="section-head">
+  <h2>Recent posts</h2>
+  <a class="text-link" href="{{ "/posts/" | relURL }}">View all →</a>
+</section>
+<div class="post-grid">
+{{ range first 6 (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+  <article class="post-card">
+    <p class="post-meta">{{ .Date.Format "02 Jan 2006" }}</p>
+    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </article>
+{{ end }}
+</div>
+{{ end }}
