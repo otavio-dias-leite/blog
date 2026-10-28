@@ -56,3 +56,61 @@ main{min-height:calc(100vh - 145px)}
 .site-nav-link{color:var(--muted);font:10px var(--mono);letter-spacing:.1em;text-decoration:none;white-space:nowrap}
 .site-nav-link span{color:var(--red);margin-left:7px}
 .site-nav-link:hover{color:var(--red)}
+
+
+/* Match the portfolio's illuminated red cyberpunk controls and project-card language. */
+:root{
+ --red-hot:#ff2638;
+ --red-glow:rgba(255,38,56,.34);
+ --red-halo:rgba(255,38,56,.14);
+}
+.site-header{width:min(1120px,calc(100% - 64px));position:relative;border-bottom:1px solid #5b2932}
+.site-header:after{content:"";position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--red-hot) 0 13%,var(--line) 13% 82%,transparent 100%);pointer-events:none}
+main,.site-footer{width:min(1120px,calc(100% - 64px));}
+.brand{color:#fff;text-shadow:0 0 12px #ff26381c}
+.lock-icon{color:var(--red-hot);filter:drop-shadow(0 0 5px var(--red-glow)) drop-shadow(0 0 15px var(--red-halo))}
+.site-nav-link{padding:10px 14px;border:1px solid #6a2b36;background:linear-gradient(110deg,#ff26381f,transparent);box-shadow:inset 0 0 15px #ff26380c,0 0 12px #ff263812;transition:all .2s ease}
+.site-nav-link:hover{color:#fff;border-color:var(--red-hot);background:#ff26382b;box-shadow:0 0 10px #ff263855,0 0 24px #ff263822}
+.post-list-page{max-width:none;padding:0 0 70px}
+.section-head{padding:58px 0 24px}
+.section-head h1{font-size:clamp(30px,4vw,42px);text-shadow:0 0 20px #ff26381c}
+.section-kicker{padding-left:12px;border-left:2px solid var(--red-hot);text-shadow:0 0 10px #ff263855}
+.post-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:8px 0 45px}
+.post-card{
+ min-width:0;min-height:190px;position:relative;isolation:isolate;overflow:hidden;
+ display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:14px;
+ padding:22px 20px 18px;
+ border:1px solid #5b2932;border-left:0;
+ background:linear-gradient(135deg,#241117 0%,#160d11 58%,#100a0d 100%);
+ clip-path:polygon(18px 0,100% 0,100% 100%,0 100%,0 18px);
+ box-shadow:inset 0 0 24px #ff263809,0 7px 22px #0005;
+ transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+}
+.post-card:before{content:"";position:absolute;z-index:-1;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--red-hot),#a92330 72%,transparent);box-shadow:0 0 10px #ff2638a8,0 0 22px #ff263844}
+.post-card:after{content:"";position:absolute;top:0;left:0;width:18px;height:18px;border-top:1px solid var(--red-hot);border-left:1px solid var(--red-hot);pointer-events:none}
+.post-card:hover,.post-card:focus-visible{
+ transform:translateY(-3px);border-color:var(--red-hot);
+ background:linear-gradient(135deg,#30131b 0%,#1a0d12 68%,#100a0d 100%);
+ box-shadow:inset 0 0 30px #ff263817,0 0 10px #ff263844,0 12px 32px #0008;outline:none;
+}
+.post-meta{font:9px var(--mono);color:#c2aeb3;letter-spacing:.08em}
+.post-card-content{display:flex;flex:1;flex-direction:column;gap:10px}
+.post-card strong{font:600 14px/1.6 var(--mono);color:#fff;overflow-wrap:anywhere;text-shadow:0 0 12px #ff26381a}
+.post-excerpt{font:10px/1.8 var(--sans);color:var(--muted)}
+.post-arrow{align-self:flex-end;margin-top:auto;color:var(--red-hot);font-size:20px;filter:drop-shadow(0 0 6px #ff263866)}
+.post-card:hover .post-arrow{transform:translate(3px,-3px)}
+.back-link,.article-end a{display:inline-flex;align-items:center;min-height:38px;padding:8px 13px;border:1px solid #6a2b36;background:#ff263812;color:#ff5260;text-decoration:none;transition:all .2s ease}
+.back-link:hover,.article-end a:hover{color:#fff;border-color:var(--red-hot);background:#ff26382c;box-shadow:0 0 14px #ff263833}
+.article-header{border-bottom-color:#5b2932}
+.article-header h1{text-shadow:0 0 20px #ff26381c}
+.article-content a{color:#ff5260;text-shadow:0 0 8px #ff263833}
+.site-footer{border-top-color:#5b2932}
+@media(max-width:900px){.post-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+ .site-header,main,.site-footer{width:calc(100% - 34px)}
+ .site-header{min-height:78px}
+ .post-list{grid-template-columns:1fr;gap:11px}
+ .post-card{min-height:0;padding:19px 18px}
+ .section-head{padding:42px 0 18px;align-items:flex-start;flex-direction:column;gap:9px}
+ .site-nav-link{padding:8px 10px;font-size:9px}
+}
