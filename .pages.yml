@@ -1,0 +1,21 @@
+media:
+  input: static/uploads
+  output: /uploads
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: content/posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Publication date, type: date, required: true }
+      - { name: slug, label: URL slug, type: string }
+      - { name: description, label: Summary, type: text }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: draft, label: Draft, type: boolean }
+      - { name: body, label: Article, type: rich-text }

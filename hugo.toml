@@ -1,0 +1,12 @@
+baseURL="https://otavio-dias-leite.github.io/blog/"
+languageCode="en-us"
+title="Otávio — Field Notes"
+enableRobotsTXT=true
+[pagination]
+pagerSize=8
+[permalinks]
+posts="/:slug/"
+[params]
+description="Notes on technology, hardware, security and the things ahead."
+author="Otávio Dias Leite"
+portfolioURL="https://otavio-dias-leite.github.io/portfolio/"
