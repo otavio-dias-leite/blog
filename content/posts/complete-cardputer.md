@@ -11,4 +11,4 @@ Netrunner is an operating system project focused on security, networking and har
 
 Development is currently focused on the M5Stack Cardputer ADV. The project is intended to expand to Raspberry Pi, M5Stick and other hardware platforms as development progresses.
 
-The system is still under development. The goal is a complete, modular platform for security research, network work and hardware experimentation.
+The system is still under development. The goal is a complete, modular platform for security research, network work and hardware experimentation. The source code is available in the [Netrunner GitHub repository](https://github.com/otavio-dias-leite/netrunner).
