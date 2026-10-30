@@ -37,3 +37,17 @@ main{min-height:calc(100vh - 155px)}.post-list-page{padding:0 0 70px}
 
 /* Apply the same opposing-corner cuts to interface controls, not the page background. */
 .site-nav-link,.back-link,.article-end a{clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+
+
+/* SOUL KILLER — dual-channel blue/red interface */
+:root{--bg:#070b16;--panel:#0d1426;--line:#203c67;--line-soft:#172b4b;--text:#eaf4ff;--muted:#91a9c8;--red:#ff3158;--blue:#18c8ff;--blue-glow:rgba(24,200,255,.34)}
+body{background-color:var(--bg);background-image:linear-gradient(#18c8ff0a 1px,transparent 1px),linear-gradient(90deg,#18c8ff0a 1px,transparent 1px),radial-gradient(ellipse at 12% 0%,#0875b52b,transparent 45%),radial-gradient(ellipse at 88% 8%,#b20e3b20,transparent 48%);}
+.site-header{border-bottom-color:#203c67}.site-header:after{background:linear-gradient(90deg,var(--blue) 0 13%,var(--red) 13% 27%,var(--line) 27% 82%,transparent 100%);box-shadow:0 0 9px #18c8ff55}
+.brand small{color:var(--blue);text-shadow:0 0 10px #18c8ff66}.lock-icon{color:var(--blue);filter:drop-shadow(0 0 5px #18c8ff88) drop-shadow(0 0 13px #ff315855)}
+.site-nav-link{border-color:#24527a;background:linear-gradient(110deg,#18c8ff20,#ff31580c 75%,transparent)}.site-nav-link span{color:var(--blue)}.site-nav-link:hover,.site-nav-link:focus-visible{border-color:var(--blue);box-shadow:0 0 10px #18c8ff66,0 0 22px #ff315833}
+.section-head h1{ text-shadow:0 0 20px #18c8ff20}.section-kicker{border-left-color:var(--blue);color:var(--blue)}
+.post-card{background:linear-gradient(125deg,#10233b 0%,#11182b 48%,#1d101e 100%);border-color:#24527a;box-shadow:inset 0 0 24px #18c8ff0b,0 7px 22px #0007}.post-card:before{background:linear-gradient(180deg,var(--blue),var(--red) 58%,transparent);box-shadow:0 0 10px #18c8ff,0 0 22px #ff315855}.post-card:after{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M0 0L18 18' fill='none' stroke='%2318c8ff' stroke-width='1.4'/%3E%3C/svg%3E") top right/18px 18px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M0 0L18 18' fill='none' stroke='%23ff3158' stroke-width='1.4'/%3E%3C/svg%3E") bottom left/18px 18px no-repeat;filter:drop-shadow(0 0 3px #18c8ff) drop-shadow(0 0 7px #ff315877)}
+.post-card:hover,.post-card:focus-visible{border-color:var(--blue);background:linear-gradient(125deg,#123251 0%,#151b32 50%,#28111f 100%);box-shadow:inset 0 0 30px #18c8ff16,0 0 10px #18c8ff55,0 12px 32px #0009}.post-card:hover:after,.post-card:focus-visible:after{filter:drop-shadow(0 0 4px #18c8ff) drop-shadow(0 0 10px #ff3158)}
+.post-meta{color:#8dcce8}.post-arrow{color:var(--blue);filter:drop-shadow(0 0 7px #18c8ff99)}
+.back-link,.article-end a{border-color:#24527a;background:linear-gradient(110deg,#18c8ff18,#ff315810);color:var(--blue)}.back-link:hover,.article-end a:hover{border-color:var(--blue);box-shadow:0 0 14px #18c8ff55}.article-header{border-bottom-color:var(--line)}.article-header h1{ text-shadow:0 0 24px #18c8ff18}.article-content a{color:var(--blue)}.article-end{border-top-color:var(--line)}.site-footer{border-top-color:var(--line)}
+:focus-visible{outline-color:var(--blue)}
