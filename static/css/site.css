@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
 :root{color-scheme:dark;--bg:#060d1b;--surface:#0b1830;--surface-2:#10213d;--line:#1c3558;--line-hi:#31557e;--text:#eaf2ff;--muted:#91a6c2;--blue:#4aa8ff;--red:#ffd447;--font:"Inter",sans-serif;--display:"Orbitron",sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% -12%,#174a8270,transparent 42%),radial-gradient(ellipse at 100% 38%,#a17a1a18,transparent 34%),linear-gradient(145deg,#060d1b,#09152a 52%,#080f20);color:var(--text);font:14px/1.8 var(--font);-webkit-font-smoothing:antialiased}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:linear-gradient(#79a9dc0b 1px,transparent 1px),linear-gradient(90deg,#79a9dc0b 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,#000 0%,transparent 85%)}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% -12%,#12385a70,transparent 42%),radial-gradient(ellipse at 100% 38%,#102b5024,transparent 34%),linear-gradient(145deg,#080d18,#090f1d 52%,#0b101c);color:var(--text);font:14px/1.85 var(--font);-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:linear-gradient(#8da9c20c 1px,transparent 1px),linear-gradient(90deg,#8da9c20c 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,#000 0%,transparent 88%)}
 .site-header,main,.site-footer{width:min(1120px,calc(100% - 64px));margin-inline:auto}
 .site-header{min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;border-bottom:1px solid var(--line)}
 .site-header:after{content:"";position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--blue),#38658b 24%,var(--red) 43%,transparent 82%);opacity:.85}
@@ -36,6 +36,7 @@ main{min-height:calc(100vh - 165px)}.post-list-page{padding:0 0 76px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
 
 
-/* Keep the atmospheric background continuous after automatic translation */
-html{min-height:100%;background:#060d1b!important}
-body{min-height:100vh;background-attachment:fixed!important;background-repeat:no-repeat!important;background-size:cover!important;background-color:#060d1b!important;top:0!important}
+/* Match the portfolio's continuous atmospheric background and grid */
+html{min-height:100%;background:#080d18!important}
+body{min-height:100vh;background-attachment:fixed!important;background-repeat:no-repeat!important;background-size:cover!important;background-color:#080d18!important;top:0!important}
+body:before{position:fixed!important;inset:0!important}
