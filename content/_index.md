@@ -1,4 +1,4 @@
 ---
-title: "Field Notes"
-description: "A personal log about technology, hardware, security and the things ahead."
+title: "Anotações"
+description: "Um registro pessoal sobre tecnologia, hardware, segurança e projetos."
 ---
