@@ -1,13 +1,13 @@
 {{ define "main" }}
 {{ $postsPage := site.GetPage "/posts" }}
 <article class="article">
-  {{ with $postsPage }}<a class="back-link" href="{{ .RelPermalink }}">← All posts</a>{{ else }}<a class="back-link" href="{{ site.Home.RelPermalink }}">← Home</a>{{ end }}
+  {{ with $postsPage }}<a class="back-link" href="{{ .RelPermalink }}">← Todas as publicações</a>{{ else }}<a class="back-link" href="{{ site.Home.RelPermalink }}">← Início</a>{{ end }}
   <header class="article-header">
-    <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
+    <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02/01/2006" }}</time>
     <h1>{{ .Title }}</h1>
     {{ with .Description }}<p class="article-desc">{{ . }}</p>{{ end }}
   </header>
   <div class="article-content">{{ .Content }}</div>
-  <div class="article-end">{{ with $postsPage }}<a href="{{ .RelPermalink }}">All posts</a>{{ else }}<a href="{{ site.Home.RelPermalink }}">Home</a>{{ end }}</div>
+  <div class="article-end">{{ with $postsPage }}<a href="{{ .RelPermalink }}">Todas as publicações</a>{{ else }}<a href="{{ site.Home.RelPermalink }}">Início</a>{{ end }}</div>
 </article>
 {{ end }}
