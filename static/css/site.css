@@ -34,3 +34,8 @@ main{min-height:calc(100vh - 165px)}.post-list-page{padding:0 0 76px}
 @media(max-width:900px){.post-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.site-header,main,.site-footer{width:calc(100% - 34px)}.site-header{min-height:78px}.brand{font-size:10px}.lock-icon{width:26px;height:26px;flex-basis:26px}.site-nav-link{padding:8px 10px;font-size:8px}.section-head{padding:48px 0 20px;align-items:flex-start;flex-direction:column;gap:10px}.post-list{grid-template-columns:1fr;gap:12px}.post-card{min-height:0;padding:20px 19px}.article{padding-top:34px}.article-header{padding:39px 0 25px}.article-content{font-size:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+
+/* Keep the atmospheric background continuous after automatic translation */
+html{min-height:100%;background:#060d1b!important}
+body{min-height:100vh;background-attachment:fixed!important;background-repeat:no-repeat!important;background-size:cover!important;background-color:#060d1b!important;top:0!important}
