@@ -1,4 +1,4 @@
 ---
-title: "Posts"
-description: "Essays, experiments and notes from the workbench."
+title: "Publicações"
+description: "Textos, experimentos e anotações de projetos."
 ---
