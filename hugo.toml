@@ -1,5 +1,5 @@
 baseURL="https://otavio-dias-leite.github.io/blog/"
-languageCode="en-us"
+languageCode="pt-br"
 title="Otávio Dias Leite — Blog"
 enableRobotsTXT=true
 [pagination]
@@ -7,6 +7,6 @@ pagerSize=8
 [permalinks]
 posts="/:slug/"
 [params]
-description="Notes on technology, hardware, security and the things ahead."
+description="Anotações sobre tecnologia, hardware, segurança e projetos."
 author="Otávio Dias Leite"
 portfolioURL="https://otavio-dias-leite.github.io/portfolio/"
