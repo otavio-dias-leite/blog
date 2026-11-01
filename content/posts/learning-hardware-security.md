@@ -1,13 +1,14 @@
 ---
-title: "Learning Hardware Security"
+title: "Aprendendo Segurança de Hardware"
 date: 2026-10-28T09:00:00-03:00
 slug: "learning-hardware-security"
-description: "Why I am bringing hardware knowledge and information security closer together."
-tags: ["security", "hardware", "learning"]
+description: "Por que estou aproximando meus conhecimentos de hardware da segurança da informação."
+tags: ["segurança", "hardware", "aprendizado"]
 draft: false
 ---
-I have been interested in how devices work for as long as I can remember. That curiosity began with electronics, electrical systems and the physical side of technology, and it eventually led me to explore how hardware can be examined, tested and secured.
 
-I am currently studying information security and directing more of my independent learning toward hardware hacking. I am interested in the relationship between firmware, interfaces, communication protocols and the physical components that make a device function.
+Tenho interesse em entender como os dispositivos funcionam desde que me lembro. Essa curiosidade começou com eletrônica, sistemas elétricos e o lado físico da tecnologia, e acabou me levando a explorar como o hardware pode ser analisado, testado e protegido.
 
-This is a learning path, not a claim of expertise. I intend to build a solid foundation through coursework, practical labs and responsible experimentation, while continuing to document projects and lessons along the way.
+Atualmente, estudo segurança da informação e direciono parte dos meus estudos independentes para hardware hacking. Tenho interesse na relação entre firmware, interfaces, protocolos de comunicação e os componentes físicos que fazem um dispositivo funcionar.
+
+Este é um caminho de aprendizado, não uma afirmação de especialização. Pretendo construir uma base sólida por meio de cursos, laboratórios práticos e experimentação responsável, enquanto continuo documentando projetos e aprendizados.
