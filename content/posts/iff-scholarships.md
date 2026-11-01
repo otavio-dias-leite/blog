@@ -1,13 +1,13 @@
 ---
-title: "Scholarships at IFF: Research and Technological Support"
+title: "Bolsas no IFF: Pesquisa e Apoio Tecnológico"
 date: 2026-11-01
 slug: "iff-scholarships"
-description: "A look back at my research and technological support scholarship experiences at IFF."
-tags: ["IFF", "research", "technology", "education"]
+description: "Um resumo das minhas experiências em bolsas de pesquisa e apoio tecnológico no IFF."
+tags: ["IFF", "pesquisa", "tecnologia", "educação"]
 ---
 
-During my time at the Instituto Federal Fluminense (IFF), I had the opportunity to take part in two scholarship programs that brought me closer to academic research and the practical side of technology. These experiences were an important part of my development as a student and helped me connect what I was learning with real institutional projects.
+Durante minha trajetória no Instituto Federal Fluminense (IFF), tive a oportunidade de participar de programas de bolsas que me aproximaram da pesquisa acadêmica e da aplicação prática da tecnologia. Essas experiências fizeram parte da minha formação como estudante e ajudaram a conectar os conhecimentos adquiridos a projetos reais da instituição.
 
-As a research scholarship student, I worked with the **Laboratório Virtual de Telecomunicações (Virtual Telecommunications Laboratory)**, an initiative connected to the study and practical exploration of computer networks and telecommunications. The project also became part of my experience presenting technical work at IFF's *Feira Saber Fazer Saber*.
+Como bolsista de pesquisa, atuei no **Laboratório Virtual de Telecomunicações**, iniciativa relacionada ao estudo e à experimentação prática com redes de computadores e telecomunicações. O projeto também integrou minha experiência de apresentação de trabalhos técnicos na *Feira Saber Fazer Saber* do IFF.
 
-I also received a **Technological Support Scholarship at DAAT (Apoio Tecnológico DAAT)**. Together, these opportunities gave me experience in different dimensions of the institution's technical and academic environment, strengthening my interest in technology, infrastructure, and information security.
+Também recebi uma **bolsa de Apoio Tecnológico no DAAT**. Em conjunto, essas oportunidades proporcionaram contato com diferentes dimensões do ambiente técnico e acadêmico da instituição, fortalecendo meu interesse por tecnologia, infraestrutura e segurança da informação.
