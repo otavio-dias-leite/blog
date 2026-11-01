@@ -1,12 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>{{ partial "head.html" . }}</head>
 <body>
 <header class="site-header">
   <a class="brand" href="{{ .Site.Home.RelPermalink }}"><svg class="lock-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M18.5 2 7 18h7l-1 12L25 13h-7z" fill="currentColor" stroke="currentColor" stroke-linejoin="round"/></svg><span>OTÁVIO DIAS LEITE <small>BLOG</small></span></a>
-  <a class="site-nav-link" href="{{ site.Params.portfolioURL }}">PORTFOLIO <span aria-hidden="true">↗</span></a>
+  <a class="site-nav-link" href="{{ site.Params.portfolioURL }}">PORTFÓLIO <span aria-hidden="true">↗</span></a>
 </header>
 <main>{{ block "main" . }}{{ end }}</main>
 <footer class="site-footer">© {{ now.Year }} Otávio Dias Leite</footer>
+<div id="google_translate_element" aria-hidden="true"></div>
 </body>
 </html>
