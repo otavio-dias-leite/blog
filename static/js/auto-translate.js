@@ -17,6 +17,9 @@
     if (!target || target === "pt") return;
     const language = supported.split(",").includes(target) ? target : "en";
     document.cookie = "googtrans=/pt/" + language + ";path=/;SameSite=Lax";
+    const style = document.createElement("style");
+    style.textContent = ".goog-te-banner-frame.skiptranslate{display:none!important}body{top:0!important}#google_translate_element{position:fixed;left:-10000px;top:-10000px;width:1px;height:1px;overflow:hidden}.goog-logo-link,.goog-te-gadget{font-size:0!important}";
+    document.head.appendChild(style);
     window.googleTranslateElementInit = () => {
       new google.translate.TranslateElement({
         pageLanguage: "pt",
