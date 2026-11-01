@@ -1,13 +1,14 @@
 ---
-title: "The Future"
+title: "O Futuro"
 date: 2026-10-26T12:00:00-03:00
 slug: "the-future"
-description: "A personal note about leaving Brazil and building a different life."
-tags: ["personal", "future"]
+description: "Uma reflexão pessoal sobre sair do Brasil e construir uma vida diferente."
+tags: ["pessoal", "futuro"]
 draft: false
 ---
-My goals are simple to describe, even if they are difficult to achieve: I want to leave Brazil, build a life somewhere else, and not have to return. I want to live in a place where everyday stability, personal safety and the possibility of planning ahead are not constant concerns.
 
-I want ordinary reciprocity: to speak to people and be answered with respect, to take an exam and have my result matter, and to build relationships and opportunities without humiliation or arbitrary barriers. I want my effort, curiosity and persistence to have room to become something real.
+Meus objetivos são simples de descrever, embora difíceis de alcançar: quero sair do Brasil, construir uma vida em outro lugar e não precisar voltar. Quero viver em um lugar onde estabilidade cotidiana, segurança pessoal e possibilidade de planejar o futuro não sejam preocupações constantes.
 
-The instability around me and the feeling of not being safe have affected my mental well-being. This is not a complaint about work; it is about the environment in which I am trying to live. My next steps are to keep studying, develop practical skills in hardware and information security, and work toward a future outside the country.
+Quero reciprocidade básica: conversar com as pessoas e ser tratado com respeito, fazer uma prova e ter meu resultado considerado, construir relações e oportunidades sem humilhações ou barreiras arbitrárias. Quero que meu esforço, curiosidade e persistência possam se transformar em algo concreto.
+
+A instabilidade ao meu redor e a sensação de insegurança têm afetado meu bem-estar. Não se trata de uma reclamação sobre trabalho, mas do ambiente em que estou tentando viver. Meus próximos passos são continuar estudando, desenvolver habilidades práticas em hardware e segurança da informação e trabalhar para construir um futuro fora do país.
