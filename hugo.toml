@@ -7,6 +7,6 @@ pagerSize=8
 [permalinks]
 posts="/:slug/"
 [params]
-description="Anotações sobre tecnologia, hardware, segurança e projetos."
+description="Anotações e experimentos sobre sistemas embarcados, IoT, hardware, computação e desenvolvimento assistido por IA."
 author="Otávio Dias Leite"
 portfolioURL="https://otavio-dias-leite.github.io/portfolio/"
