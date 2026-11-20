@@ -7,7 +7,7 @@ tags: ["pessoal", "desenvolvimento de software", "sistemas embarcados", "firmwar
 draft: false
 ---
 
-Meu interesse por tecnologia começou em 2018, quando montei um pequeno projeto com RFID a partir de um kit de eletrônica. A experiência despertou minha curiosidade sobre programação, dispositivos e a comunicação entre hardware e software. Desde então, continuei explorando ferramentas e plataformas como Arduino, ESP32 e Raspberry Pi, enquanto avançava nos estudos de Eletrotécnica, Engenharia Elétrica e Ciência da Computação.
+Meu interesse por sistemas embarcados começou em 2015. Pouco tempo depois, ganhei meus primeiros kits de Arduino e Raspberry Pi, que me permitiram explorar na prática a programação e a interação entre hardware e software. Mais tarde, também tive contato com RFID e desenvolvi diversos projetos envolvendo eletrônica, automação e sistemas embarcados. Essas experiências despertaram uma curiosidade que continuo cultivando até hoje, enquanto avanço nos estudos de Eletrotécnica, Engenharia Elétrica e Ciência da Computação.
 
 Quero construir minha carreira como **desenvolvedor de software (Dev)** e direcionar parte importante da minha atuação para **sistemas embarcados e desenvolvimento de firmware**. Pretendo aprofundar meus conhecimentos em linguagens de programação, arquitetura de software, microcontroladores, integração de sensores e dispositivos conectados. Também quero desenvolver projetos de IoT que aproximem aplicações de software do mundo físico e ampliem minha experiência prática.
 
