@@ -164,3 +164,29 @@ footer a,.footer-links a{color:#b9cce0!important}
 footer .footer-disclaimer,.site-footer .footer-disclaimer{flex-basis:100%;color:#9aafc8;font:10px/1.7 var(--font);letter-spacing:0}
 footer .footer-links,.site-footer .footer-links{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto}}
+
+
+/* Otavio Leite — unified black / electric blue identity */
+:root{color-scheme:dark;--bg:#050505;--surface:#101010;--surface-2:#151515;--line:#252a32;--line-hi:#394554;--text:#f2f4f7;--muted:#9ba3ad;--blue:#168bff;--red:#168bff;--accent:#168bff;--accent-bright:#58adff;--glow:rgba(22,139,255,.18)}
+html{background:#050505!important}
+body{background:radial-gradient(ellipse at 15% -15%,rgba(22,139,255,.10),transparent 42%),linear-gradient(145deg,#050505,#090a0c 58%,#050505)!important;background-attachment:fixed!important;background-color:#050505!important;color:var(--text)}
+body:before{background-image:linear-gradient(rgba(140,160,180,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(140,160,180,.035) 1px,transparent 1px)!important;background-size:32px 32px!important}
+.header:after,.site-header:after,.contact-section:before{background:linear-gradient(90deg,#168bff,rgba(22,139,255,.28) 42%,transparent 92%)!important}
+.lock-icon{color:#168bff!important;filter:drop-shadow(0 0 8px rgba(22,139,255,.55))!important}
+.logo-title small,.brand small,.eyebrow,.contact-section .eyebrow,.aside-label,.hero-index span,.section-heading>span,.item-type,.project-topline,.project-topline span:first-child,.text-link span,.contact-section>a span,.post-meta,.post-arrow,.site-nav-link span,.article-content a,.detail-content a,.contact-action-icon,.contact-action-arrow,.copy-feedback{color:#58adff!important}
+.status-dot{background:#168bff!important;box-shadow:0 0 8px rgba(22,139,255,.7),0 0 18px rgba(22,139,255,.24)!important}
+.hero h1 span{color:#58adff!important;text-shadow:0 0 24px rgba(22,139,255,.2)!important}
+.primary-link,.contact-section>a,.contact-action,.detail .back-link,.back-link,.article-end a,.site-nav-link{border-color:rgba(22,139,255,.42)!important;background:linear-gradient(110deg,rgba(22,139,255,.10),rgba(22,139,255,.02) 72%,transparent)!important}
+.primary-link:hover,.contact-section>a:hover,.contact-action:hover,.contact-action:focus-visible,.detail .back-link:hover,.back-link:hover,.article-end a:hover,.site-nav-link:hover,.site-nav-link:focus-visible{border-color:#58adff!important;background:rgba(22,139,255,.12)!important;box-shadow:0 0 18px rgba(22,139,255,.13)!important}
+.section-heading>span{border-left-color:#168bff!important;background:rgba(22,139,255,.07)!important}
+.education-item,.project-card,.post-card,.hero-aside{border-color:#292d34!important;background:linear-gradient(145deg,#141414,#0d0d0e 68%,#121416)!important}
+.education-item:hover,.project-card:hover,.project-card:focus-visible,.post-card:hover,.post-card:focus-visible{border-color:rgba(22,139,255,.65)!important;background:linear-gradient(145deg,#171b20,#101215 64%,#14191e)!important;box-shadow:inset 0 1px rgba(255,255,255,.05),0 0 0 1px rgba(22,139,255,.07),0 18px 36px rgba(0,0,0,.4)!important}
+.project-card:before,.post-card:before{background:linear-gradient(180deg,#58adff,#168bff 65%,#0a4c91)!important}
+.item-marker{border-color:#168bff!important;box-shadow:0 0 8px rgba(22,139,255,.22)!important}
+.aside-rule{background:linear-gradient(90deg,#168bff,rgba(22,139,255,.35) 58%,transparent)!important}
+nav a:after{background:linear-gradient(90deg,#168bff,#58adff)!important}
+nav a:hover,nav a:focus-visible,footer a:hover{color:#58adff!important}
+footer a,.footer-links a{color:#aeb5bf!important}
+.footer-links a:hover{color:#58adff!important}
+:focus-visible{outline-color:#58adff!important}
+::selection{background:rgba(22,139,255,.28);color:#fff}
