@@ -1,4 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <filter id="blue-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feFlood flood-color="#168bff" flood-opacity="0.95"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
   <rect width="64" height="64" rx="11" fill="#050505"/>
-  <path d="M36.5 5 13 35h15l-2 24 25-33H35l1.5-21Z" fill="#168bff" stroke="#58adff" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M36.5 5 13 35h15l-2 24 25-33H35l1.5-21Z" fill="#168bff" stroke="#8bd0ff" stroke-width="1.5" stroke-linejoin="round" filter="url(#blue-glow)"/>
 </svg>
