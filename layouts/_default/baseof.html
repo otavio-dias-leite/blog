@@ -3,7 +3,7 @@
 <head>{{ partial "head.html" . }}</head>
 <body>
 <header class="site-header">
-  <a class="brand" href="{{ .Site.Home.RelPermalink }}"><svg class="lock-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M18.5 2 7 18h7.5L13.5 30 26 13h-7.5L18.5 2Z" fill="#ffd43b" stroke="#ffdf70" stroke-width="1" stroke-linejoin="round"/></svg><span>OTÁVIO DIAS LEITE <small>BLOG</small></span></a>
+  <a class="brand" href="{{ .Site.Home.RelPermalink }}"><svg class="lock-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><defs><filter id="bolt-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2" result="blur"/><feFlood flood-color="#168bff" flood-opacity=".95"/><feComposite in2="blur" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M18.5 2 7 18h7.5L13.5 30 26 13h-7.5L18.5 2Z" fill="#168bff" stroke="#8bd0ff" stroke-width="1" stroke-linejoin="round" filter="url(#bolt-glow)"/></svg><span>OTÁVIO DIAS LEITE <small>BLOG</small></span></a>
   <a class="site-nav-link" href="{{ site.Params.portfolioURL }}">PORTFÓLIO <span aria-hidden="true">↗</span></a>
 </header>
 <main>{{ block "main" . }}{{ end }}</main>
